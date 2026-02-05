@@ -1,0 +1,162 @@
+:root{
+  --accent:#2b7cff;
+  --muted:#666;
+  --bg:#fafafa;
+  --card:#fff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:var(--bg);
+  color:#222;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
+
+.container{
+  max-width:980px;
+  margin:32px auto;
+  padding:0 16px;
+}
+
+.site-header{
+  text-align:center;
+  padding:28px 16px 8px;
+}
+.site-header h1{margin:0 0 6px}
+.site-header .lead{margin:0;color:var(--muted)}
+
+.timeline{
+  position:relative;
+  margin:32px 0 64px;
+  padding:24px 0;
+}
+
+/* center vertical line */
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:4px;
+  height:100%;
+  background:linear-gradient(180deg,rgba(0,0,0,0.08),transparent);
+}
+.nav-icon ion-icon {
+            font-size: 2rem;
+            color: #636363;
+            transition: color 0.3s, filter 0.3s, transform 0.3s;
+        }
+        .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .linkedin-glow ion-icon {
+            --glow: 0 0 16px #0077b5, 0 0 32px #0077b5;
+        }
+        .instagram-glow ion-icon {
+            --glow: 0 0 16px #e1306c, 0 0 32px #fdc468;
+        }
+        .youtube-glow ion-icon {
+            --glow: 0 0 16px #ff0000, 0 0 32px #ff0000;
+        }
+        .nav-icon:hover ion-icon {
+            color: var(--accent-blue);
+            filter: drop-shadow(var(--glow));
+            transform: scale(1.2) rotate(-8deg);
+            cursor: pointer;
+        }
+        .linkedin-glow:hover ion-icon {
+            color: #0077b5;
+        }
+        .instagram-glow:hover ion-icon {
+            color: #e1306c;
+        }
+        .youtube-glow:hover ion-icon {
+            color: #ff0000;
+        }
+/* each item */
+.timeline-item{
+  position:relative;
+  width:100%;
+  margin:18px 0;
+  padding:8px 0;
+}
+
+/* point button */
+.timeline-point{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--card);
+  border:2px solid var(--accent);
+  color:var(--accent);
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 12px 32px rgba(0,0,0,0.16);
+}
+
+/* content card */
+.timeline-content{
+  max-width:420px;
+  background:var(--card);
+  border-radius:8px;
+  box-shadow:0 12px 32px rgba(0,0,0,0.16);
+  overflow:hidden;
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  padding:14px;
+}
+
+/* position left/right alternating */
+.timeline-item:nth-child(odd) .timeline-content{
+  margin-right:auto;
+  margin-left:calc(-50% - 32px);
+  transform:translateX(-8px);
+}
+.timeline-item:nth-child(even) .timeline-content{
+  margin-left:auto;
+  margin-right:calc(-50% - 32px);
+  transform:translateX(8px);
+}
+
+/* media and text */
+.timeline-media{flex:0 0 140px; height:100px; overflow:hidden; border-radius:6px}
+.timeline-media img{width:100%;height:100%;object-fit:cover;display:block}
+.timeline-desc{flex:1}
+.timeline-desc h3{margin:0 0 6px;font-size:1.05rem}
+.timeline-desc p{margin:0;color:var(--muted);font-size:0.95rem}
+
+/* hidden state / transitions */
+.timeline-content{transition:all 220ms ease; opacity:0; transform-origin:center; transform:scale(0.98)}
+.timeline-content[hidden]{display:block;height:0;padding:0;margin:0;overflow:hidden;opacity:0;transform:scale(0.98)}
+.timeline-item.open .timeline-content{opacity:1;transform:scale(1);}
+
+/* when open, bring point accent */
+.timeline-item.open .timeline-point{background:var(--accent); color:#fff; box-shadow:0 10px 26px rgba(43,124,255,0.18)}
+
+/* responsiveness */
+@media (max-width:820px){
+  .timeline::before{left:20px}
+  .timeline-point{left:20px; transform:none}
+  .timeline-item .timeline-content{
+    margin-left:64px !important;
+    margin-right:16px !important;
+    transform:none;
+    flex-direction:row;
+  }
+  .timeline-media{height:84px;flex:0 0 120px}
+}
