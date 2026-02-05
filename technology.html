@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Dragon Calaestis | Autonomous EV Mobility</title>
+    <meta name="description"
+        content=" Tech and Features - Reimagining urban movement with white-label modular technology.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="menu/gobal.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        :root {
+            --primary: #0066FF;
+            --accent: #FF3B30;
+            --bg-light: #FBFBFB;
+            --bg-pure: #FFFFFF;
+            --text-main: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --border: #E5E5E7;
+            --glass: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif, "Poppins", sans-serif;
+            ;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* --- Navigation --- */
+
+
+        .btn-cta {
+            background: var(--text-main);
+            color: white;
+            padding: 0.7rem 1.4rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Hero Section --- */
+
+
+
+        /* --- Showcase Sections (Wipe Effect) --- */
+        .showcase-section {
+            padding: 10vh 5%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: var(--bg-pure);
+        }
+
+        .showcase-container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .showcase-container.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .visual-box {
+            flex: 1.2;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            background: #eee;
+            box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.1), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+        }
+
+        .visual-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            z-index: 2;
+            transform-origin: right;
+        }
+
+        .visual-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .content-box {
+            flex: 1;
+        }
+
+        .content-box span {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .content-box h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .content-box p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Floating Stats --- */
+        .stats-grid {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item h4 {
+            font-size: 2rem;
+            color: var(--text-main);
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 5rem 5%;
+            text-align: center;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 968px) {
+
+            .showcase-container,
+            .showcase-container.reverse {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .content-box h2 {
+                font-size: 2.2rem;
+            }
+
+            .stats-grid {
+                justify-content: center;
+            }
+        }
+        
+    </style>
+
+
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="nav-center">
+            <div class="nav-links-left">
+                <a href="project.html">PROJECTS</a>
+            </div>
+
+            <a href="index.html" class="nav-logo">
+                <div class="logo-text">
+                    <span>DD</span>
+                    <span>C</span>
+                </div>
+            </a>
+
+            <div class="nav-links-right">
+                <a href="technology.html">TECHNOLOGY</a>
+            </div>
+        </div>
+
+        <div class="nav-right" style="color: azure;">
+            <a href="contact.html" class="btn-nav">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="menu/about.html" data-page="about" class="mobile-link">About Us</a>
+            <a href="menu/Tutorials.html" data-page="tutorials" class="mobile-link">Use Tutorials</a>
+            <a href="menu/booking.html" data-page="booking" class="mobile-link">EV Booking Platform</a>
+            <a href="menu/blog.html" data-page="blog" class="mobile-link">Blog / News</a>
+            <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
+             <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+           </div>
+        </div>
+    </div>
+
+
+    <section class="pt-40 pb-20 px-6 text-center">
+        <h2 class="text-sm font-bold tracking-[0.3em] uppercase mb-4 text-gray-400">Our Tech & Features</h2>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight max-w-5xl mx-auto">
+            Pioneering the <span class="text-gray-400">Architecture of Autonomy.</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Deep-dive into the proprietary sensor fusion, solid-state energy systems, and neural networks that make
+            Dark Dragon Calaestis the safest autonomous platform on Earth.
+        </p>
+    </section>
+
+
+    <!-- Showcase 1: Battery Swapping -->
+    <section class="showcase-section" id="swap">
+        <div class="showcase-container">
+            <div class="visual-box">
+                <div class="visual-mask"></div>
+                <video autoplay loop muted playsinline
+                    poster="https://via.placeholder.com/800x500/FFFFFF/0066FF?text=Stalaris+Tech">
+                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+            <div class="content-box">
+                <span>01 — ENERGY</span>
+                <h2>120-Second Swapping</h2>
+                <p>Eliminate downtime. Our hot-swap battery technology allows commercial pods to maintain 99%
+                    uptime,
+                    replacing energy modules faster than a traditional fuel stop.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h4>&lt;2 Min</h4>
+                        <p>Swap Time</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>800V</h4>
+                        <p>Architecture</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase 2: Crab Walk -->
+    <section class="showcase-section" id="crab">
+        <div class="showcase-container reverse">
+            <div class="visual-box">
+                <div class="visual-mask"></div>
+                <video autoplay loop muted playsinline>
+                    <!-- Using a high-quality tech placeholder/stock if original isn't available, but keeping the logic -->
+                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+            <div class="content-box">
+                <span>02 — DYNAMICS</span>
+                <h2>Crab Walk</h2>
+                <p>Equipped with independent 4-wheel steering, the Stalaris platform features "Crab Walk"
+                    capabilities
+                    for 90-degree lateral movement in tight urban corridors.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h4>90°</h4>
+                        <p>Steer Angle</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>±2mm</h4>
+                        <p>Precision</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase 3: Interior/Efficiency -->
+    <section class="showcase-section" id="stats">
+        <div class="showcase-container">
+            <div class="visual-box">
+                <div class="visual-mask"></div>
+                <video autoplay loop muted playsinline>
+                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+            <div class="content-box">
+                <span>03 — BEV Platform</span>
+                <h2>THE INTELLIGENT BACKBONE Content</h2>
+                <p></p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h4>Level 2</h4>
+                        <p>System Architecture</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>MODULAR</h4>
+                        <p>Chassis Design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Gallery Section -->
+    <section id="tech-gallery" style="padding: 100px 5%;">
+        <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem;">Future Ready Infrastructure</h2>
+        <div class="industries-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+
+            <!-- Card 1: AI Compute -->
+            <div class="industry-card"
+                style="background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                <div class="industry-overlay">
+                    <h3>AI Compute</h3>
+                    <p>Real-time edge processing for split-second decision making.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Smart Grid -->
+            <div class="industry-card"
+                style="background: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                <div class="industry-overlay">
+                    <h3>Smart Grid</h3>
+                    <p>V2G bi-directional charging integration.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Traffic Flow -->
+            <div class="industry-card"
+                style="background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                <div class="industry-overlay">
+                    <h3>Urban Flow</h3>
+                    <p>Optimized fleet routing to reduce congestion.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="tech-gallery" style="padding: 100px 5%;">
+        <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem;">EV pods</h2>
+        <div class="industries-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+
+            <!-- 12 Seater EV pod -->
+            <div class="industry-card" style="background: url('assets/ev-pod-hero.png') center/cover;">
+                <div class="industry-overlay">
+                    <h3>Stalaris</h3>
+                    <p>12 Seater EV pod.</p>
+                </div>
+            </div>
+
+            <!-- 8 Seater EV pod -->
+            <div class="industry-card" style="background: url('assets/logo-fusion.png') center/cover;">
+                <div class="industry-overlay">
+                    <h3>orian</h3>
+                    <p>6 Seater EV pod.</p>
+                </div>
+            </div>
+
+            <!-- 4 Seater EV pod -->
+            <div class="industry-card" style="background: url('assets/ev-pod-hero.png') center/cover;">
+                <div class="industry-overlay">
+                    <h3>Lunarite</h3>
+                    <p>8 Seater EV pod.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo-text" style="font-size: 2rem; margin-bottom: 1rem;">STAL<span>ARIS</span></div>
+        <p>© 2024 Stalaris Technologies. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- Mobile Menu Toggle Handler ---
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.menu-toggle') && !e.target.closest('.mobile-menu')) {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        }
+
+        // --- 1. Three.js Hero Visualizer (Refined for White Theme) ---
+
+
+
+        // --- 2. GSAP ScrollTrigger Effects ---
+        function initScrollAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const sections = document.querySelectorAll('.showcase-section');
+
+            sections.forEach((section) => {
+                const mask = section.querySelector('.visual-mask');
+                const content = section.querySelector('.content-box');
+                const visual = section.querySelector('.visual-box');
+
+                // Mask Wipe Animation
+                gsap.to(mask, {
+                    scaleX: 0,
+                    duration: 1.5,
+                    ease: "power4.inOut",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 60%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                // Image/Video Zoom on entry
+                gsap.from(visual, {
+                    scale: 0.9,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 70%",
+                    }
+                });
+
+                // Content Stagger
+                gsap.from(content.children, {
+                    y: 40,
+                    opacity: 0,
+                    stagger: 0.2,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 50%",
+                    }
+                });
+            });
+        }
+
+
+        // --- Handle Window Events ---
+        window.onload = () => {
+            initScrollAnimations();
+            // Mobile menu handled by main.js
+        };
+
+
+    </script>
+    <script>
+        // --- Three.js Setup (Pod Visualization) ---
+
+
+        // --- GSAP Animations ---
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Entrance
+            gsap.from(".hero-text > *", {
+                y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
+            });
+
+            // Impact Counters
+            const startCounter = (id, target) => {
+                let obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target,
+                    duration: 2.5,
+                    scrollTrigger: {
+                        trigger: "#impact",
+                        start: "top 80%"
+                    },
+                    onUpdate: () => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.innerText = Math.floor(obj.val) + (id === 'stat3' ? 'M+' : '+');
+                        }
+                    }
+                });
+            };
+
+            startCounter('stat1', 0);
+            startCounter('stat2', 50);
+            startCounter('stat3', 2);
+            startCounter('stat4', 15);
+        }
+
+
+
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('hero-canvas');
+            if (container && camera && renderer) {
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            }
+        });
+
+        /* --- Interactive Logo Split on Cursor Proximity --- */
+        const navLogo = document.querySelector('.nav-logo');
+        if (navLogo) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = navLogo.getBoundingClientRect();
+                const logoX = rect.left + rect.width / 2;
+                const logoY = rect.top + rect.height / 2;
+                const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
+
+                // Trigger split when cursor is within 80px
+                if (distance < 80) {
+                    navLogo.classList.add('split');
+                } else {
+                    navLogo.classList.remove('split');
+                }
+            });
+
+            // Add click/hover fallback for touch devices
+            navLogo.addEventListener('mouseenter', () => {
+                navLogo.classList.add('split');
+            });
+            navLogo.addEventListener('mouseleave', () => {
+                navLogo.classList.remove('split');
+            });
+        }
+    </script>
+
+
+    <script src="menu/main.js"></script>
+</body>
+</body>
+    <style>
+        .nav-icon ion-icon {
+            font-size: 2rem;
+            color: #636363;
+            transition: color 0.3s, filter 0.3s, transform 0.3s;
+        }
+        .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .linkedin-glow ion-icon {
+            --glow: 0 0 16px #0077b5, 0 0 32px #0077b5;
+        }
+        .instagram-glow ion-icon {
+            --glow: 0 0 16px #e1306c, 0 0 32px #fdc468;
+        }
+        .youtube-glow ion-icon {
+            --glow: 0 0 16px #ff0000, 0 0 32px #ff0000;
+        }
+        .nav-icon:hover ion-icon {
+            color: var(--accent-blue);
+            filter: drop-shadow(var(--glow));
+            transform: scale(1.2) rotate(-8deg);
+            cursor: pointer;
+        }
+        .linkedin-glow:hover ion-icon {
+            color: #0077b5;
+        }
+        .instagram-glow:hover ion-icon {
+            color: #e1306c;
+        }
+        .youtube-glow:hover ion-icon {
+            color: #ff0000;
+        }
+    </style>
+    <script>
+        document.querySelectorAll('.nav-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.querySelector('ion-icon').style.transform = 'scale(1.2) rotate(-8deg)';
+            });
+            icon.addEventListener('mouseleave', () => {
+                icon.querySelector('ion-icon').style.transform = '';
+            });
+        });
+    </script>
+
+</html>

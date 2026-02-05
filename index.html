@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Dragon Calaestis | Autonomous EV Mobility</title>
+    <meta name="description"
+        content="Experience the future of mobility with Dark Dragon Calaestis - Autonomous EV Pods powering smart communities, gated estates, and college campuses.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <link rel="stylesheet" href="gobal.css">
+    <link rel="stylesheet" href="contact-styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="nav-center">
+            <div class="nav-links-left">
+                <a href="project.html">PROJECTS</a>
+            </div>
+
+            <a href="index.html" class="nav-logo">
+                <div class="logo-text">
+                    <span>DD</span>
+                    <span>C</span>
+                </div>
+            </a>
+
+            <div class="nav-links-right">
+                <a href="technology.html">TECHNOLOGY</a>
+            </div>
+        </div>
+
+        <div class="nav-right" style="color: azure; display: flex; align-items: center; gap: 1rem;">
+            <a href="contact.html" class="btn-nav">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="menu/about.html" data-page="about" class="mobile-link">About Us</a>
+            <a href="menu/Tutorials.html" data-page="tutorials" class="mobile-link">Use Tutorials</a>
+            <a href="menu/booking.html" data-page="booking" class="mobile-link">EV Booking Platform</a>
+            <a href="menu/blog.html" data-page="blog" class="mobile-link">Blog / News</a>
+           <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
+              <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+           </div>
+        </div>
+    </div>
+
+    <div class="energy-wave"></div>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>A NEW WAVE OF <span style="color: grey;">MOBILIZING INDIA</span></h1>
+            <p>Dark Dragons Calaestis develops modular electric platforms and autonomous EV pods.</p>
+            <div class="cta-group">
+                <a href="journey/timeline.html" class="btn btn-red">journey</a>
+                <a href="#" class="btn btn-blue" onclick="display('tech-gallery')" >our models</a>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="what-we-do">
+        <h2 style="text-align: center; margin-bottom: 1rem;">Solutions Portfolio</h2>
+        <p style="text-align: center; color: var(--text-dim);">Integrated transportation ecosystem for the modern era.
+        </p>
+        <div class="cards-container">
+            <!-- Automated EV Pods -->
+            <div class="flip-card" onclick="this.classList.toggle('active')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="icon-box">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 8v8M8 12h8" />
+                            </svg>
+                        </div>
+                        <h3>platform</h3>
+                        <div class="flip-hint"></div>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Modular BEV Core Architecture</h3>
+                        <p>A universal BEV foundation engineered for modular expansion, structural balance, and
+                            long-term adaptability across multiple vehicle forms.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expansion Flex Cars -->
+            <div class="flip-card" onclick="this.classList.toggle('active')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="icon-box">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </div>
+                        <h3>Autonomy</h3>
+                        <div class="flip-hint"></div>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Smart Navigation & Autonomy</h3>
+                        <p>Intelligent navigation and controlled self-driving systems built for predictable, safe, and
+                            efficient movement in managed environments.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced EV Batteries -->
+            <div class="flip-card" onclick="this.classList.toggle('active')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="icon-box">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M11 2L3 14h9l-1 8 8-12h-9l1-8z" />
+                            </svg>
+                        </div>
+                        <h3>Advanced battery swap</h3>
+                        <div class="flip-hint"></div>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Instant Battery Swap Platform</h3>
+                        <p>Rapid exchange battery architecture enabling continuous operation with minimal downtime and
+                            maximum fleet readiness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- New Impact Detail Section -->
+    <section id="impact" class="impact-section">
+        <span class="section-tag">Our Footprint</span>
+        <h2 class="section-title">Measured Impact</h2>
+        <div class="impact-grid">
+            <div class="stat-item">
+                <h3 id="stat1">0</h3>
+                <p>Carbon Emissions</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat2">0</h3>
+                <p>Smart Hubs</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat3">0</h3>
+                <p>Miles Driven</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="stat4">0</h3>
+                <p>Countries</p>
+            </div>
+        </div>
+    </section>
+    <section id="industries">
+        <h2 style="text-align: center; margin-bottom: 4rem;">Industries Served</h2>
+        <div class="industries-grid">
+            <div class="industry-card"
+                style="background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                <div class="industry-canvas" id="canvas-community"></div>
+                <div class="industry-overlay">
+                    <h3>Gated Communities</h3>
+                    <p>Last-mile connectivity for modern housing estates.</p>
+                </div>
+            </div>
+            <div class="industry-card"
+                style="background: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000') center/cover;">
+                <div class="industry-canvas" id="canvas-college"></div>
+                <div class="industry-overlay">
+                    <h3>College Campuses</h3>
+                    <p>Safely transporting students across expansive university grounds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="partners">
+        <div class="partners-track">
+            <div class="partner-logo">
+                <svg viewBox="0 0 100 100">
+                    <path d="M10,50 L90,50 M50,10 L50,90" stroke="currentColor" stroke-width="5" />
+                </svg>
+            </div>
+            <div class="partner-logo">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg>
+            </div>
+            <div class="partner-logo">
+                <svg viewBox="0 0 100 100">
+                    <rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg>
+            </div>
+            <div class="partner-logo">
+                <svg viewBox="0 0 100 100">
+                    <path d="M20,80 L50,20 L80,80 Z" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg>
+            </div>
+            <div class="partner-logo">
+                <svg viewBox="0 0 100 100">
+                    <path d="M10,10 L90,90 M90,10 L10,90" stroke="currentColor" stroke-width="5" />
+                </svg>
+            </div>
+            <!-- Duplicate -->
+            <div class="partner-logo"><svg viewBox="0 0 100 100">
+                    <path d="M10,50 L90,50 M50,10 L50,90" stroke="currentColor" stroke-width="5" />
+                </svg></div>
+            <div class="partner-logo"><svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg></div>
+            <div class="partner-logo"><svg viewBox="0 0 100 100">
+                    <rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg></div>
+            <div class="partner-logo"><svg viewBox="0 0 100 100">
+                    <path d="M20,80 L50,20 L80,80 Z" stroke="currentColor" stroke-width="5" fill="none" />
+                </svg></div>
+            <div class="partner-logo"><svg viewBox="0 0 100 100">
+                    <path d="M10,10 L90,90 M90,10 L10,90" stroke="currentColor" stroke-width="5" />
+                </svg></div>
+        </div>
+    </div>
+
+
+
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <script>
+        // --- Three.js Setup (Pod Visualization) ---
+        let scene, camera, renderer, podGroup;
+
+        function createPod() {
+            const group = new THREE.Group();
+
+            // Chassis
+            const bodyGeo = new THREE.BoxGeometry(3, 1.2, 2);
+            const bodyMat = new THREE.MeshPhongMaterial({
+                color: 0xf0f0f0,
+                shininess: 100,
+                specular: 0x0066ff
+            });
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            body.position.y = 0.5;
+            group.add(body);
+
+            // Windows
+            const winGeo = new THREE.BoxGeometry(2.8, 0.6, 1.8);
+            const winMat = new THREE.MeshPhongMaterial({ color: 0x333333, transparent: true, opacity: 0.8 });
+            const win = new THREE.Mesh(winGeo, winMat);
+            win.position.y = 0.8;
+            group.add(win);
+
+            // Sensors (LiDAR)
+            const sensorGeo = new THREE.SphereGeometry(0.12, 16, 16);
+            const sensorMat = new THREE.MeshBasicMaterial({ color: 0x0066ff });
+            const s1 = new THREE.Mesh(sensorGeo, sensorMat);
+            s1.position.set(1.4, 1.1, 0);
+            group.add(s1);
+
+            return group;
+        }
+
+        function init3D() {
+            const container = document.getElementById('hero-canvas');
+            if (!container) return;
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            container.appendChild(renderer.domElement);
+
+            const ambient = new THREE.AmbientLight(0xffffff, 1);
+            scene.add(ambient);
+            const directional = new THREE.DirectionalLight(0xffffff, 1.2);
+            directional.position.set(5, 10, 7);
+            scene.add(directional);
+
+            podGroup = createPod();
+            scene.add(podGroup);
+
+            camera.position.set(6, 4, 8);
+            camera.lookAt(0, 0, 0);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                if (podGroup) {
+                    podGroup.rotation.y += 0.003;
+                    podGroup.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // --- GSAP Animations ---
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero Entrance
+            gsap.from(".hero-text > *", {
+                y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
+            });
+
+            // Impact Counters
+            const startCounter = (id, target) => {
+                let obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target,
+                    duration: 2.5,
+                    scrollTrigger: {
+                        trigger: "#impact",
+                        start: "top 80%"
+                    },
+                    onUpdate: () => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.innerText = Math.floor(obj.val) + (id === 'stat3' ? 'M+' : '+');
+                        }
+                    }
+                });
+            };
+
+            startCounter('stat1', 0);
+            startCounter('stat2', 0);
+            startCounter('stat3', 0);
+            startCounter('stat4', 0);
+        }
+
+        function initMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const body = document.body;
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    menuToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                    body.classList.toggle('menu-open');
+                });
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        menuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        body.classList.remove('menu-open');
+                    });
+                });
+            }
+        }
+
+        // --- Lifecycle ---
+        window.addEventListener('load', () => {
+            init3D();
+            initAnimations();
+            initMobileMenu();
+        });
+
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('hero-canvas');
+            if (container && camera && renderer) {
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            }
+        });
+
+        /* --- Interactive Logo Split on Cursor Proximity --- */
+        const navLogo = document.querySelector('.nav-logo');
+        if (navLogo) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = navLogo.getBoundingClientRect();
+                const logoX = rect.left + rect.width / 2;
+                const logoY = rect.top + rect.height / 2;
+                const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
+
+                // Trigger split when cursor is within 80px
+                if (distance < 80) {
+                    navLogo.classList.add('split');
+                } else {
+                    navLogo.classList.remove('split');
+                }
+            });
+
+            // Add click/hover fallback for touch devices
+            navLogo.addEventListener('mouseenter', () => {
+                navLogo.classList.add('split');
+            });
+            navLogo.addEventListener('mouseleave', () => {
+                navLogo.classList.remove('split');
+            });
+        }
+    </script>
+</body>
+
+    <style>
+        
+    </style>
+    <script>
+        // Optional: Add a little bounce effect on hover
+        document.querySelectorAll('.nav-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.querySelector('ion-icon').style.transform = 'scale(1.2) rotate(-8deg)';
+            });
+            icon.addEventListener('mouseleave', () => {
+                icon.querySelector('ion-icon').style.transform = '';
+            });
+        });
+    </script>
+    <script src="menu/main.js"></script>
+
+</html>

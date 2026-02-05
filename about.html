@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Dark Dragon Calaestic (DDC)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="gobal.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .section-subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-top: 20px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .back-link:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .back-link ion-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(126,219,242,0.08) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(126,219,242,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            z-index: 1;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            color: #1F2937;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-highlight {
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* Animated Gradient Text */
+        .gradient-text {
+            background: linear-gradient(90deg, #10B981, #06B6D4, #7C3AED);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: #1F2937;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card Hover Effects */
+        .card {
+            padding: 30px;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+            z-index: 1;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        /* Vision Mission Cards */
+        .vision-mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .vision-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border: 2px solid #e5e5e7;
+            padding: 40px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .vision-card.green { border-color: #10B981; }
+        .vision-card.blue { border-color: #06B6D4; }
+        .vision-card.purple { border-color: #7C3AED; }
+
+        .vision-card:hover {
+            border-color: currentColor;
+        }
+
+        .vision-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .vision-card.green .vision-icon { background: rgba(16,185,129,0.1); }
+        .vision-card.blue .vision-icon { background: rgba(6,182,212,0.1); }
+        .vision-card.purple .vision-icon { background: rgba(124,58,237,0.1); }
+
+        .vision-card h3 {
+            font-size: 1.4rem;
+            color: #1F2937;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .vision-card p {
+            font-size: 0.95rem;
+            color: #6B7280;
+            line-height: 1.7;
+        }
+
+        /* Philosophy Grid */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .philosophy-item {
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .philosophy-item:nth-child(1) { border-color: #10B981; }
+        .philosophy-item:nth-child(2) { border-color: #06B6D4; }
+        .philosophy-item:nth-child(3) { border-color: #7C3AED; }
+        .philosophy-item:nth-child(4) { border-color: #ff3b30; }
+
+        .philosophy-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .philosophy-item p {
+            color: #1F2937;
+            font-weight: 600;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 35px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e5e5e7;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 15px 40px rgba(126, 219, 242, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h4 {
+            font-size: 1.15rem;
+            color: #1F2937;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #6B7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(126,219,242,0.1) 100%);
+            padding: 80px 5%;
+            margin: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #1F2937;
+            font-weight: 600;
+        }
+
+        .stat-description {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #10B981, #06B6D4, #7C3AED);
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            padding: 20px;
+            margin-left: 50%;
+            padding-left: 30px;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 50%;
+            padding-left: 20px;
+            padding-right: 30px;
+            text-align: right;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(2)::before { border-color: #10B981; }
+        .timeline-item:nth-child(3)::before { border-color: #06B6D4; }
+        .timeline-item:nth-child(4)::before { border-color: #7C3AED; }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .timeline-year {
+            font-size: 1rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.1rem;
+            color: #1F2937;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        /* Closing CTA */
+        .closing-cta {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(126,219,242,0.1) 100%);
+        }
+
+        .closing-cta h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #1F2937;
+            margin-bottom: 30px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .closing-cta p {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 5%;
+            text-align: center;
+            background: #1F2937;
+            color: white;
+        }
+
+        footer span {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                margin-left: 0;
+                margin-right: 0;
+                padding-left: 50px;
+                text-align: left;
+            }
+
+            .timeline-item::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="back-link">
+        <ion-icon name="arrow-back-outline"></ion-icon> Back
+    </a>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Engineering the <span class="gradient-text">Future of Mobility</span></h1>
+            <p>Dark Dragon Calaestic (DDC) bridges timeless engineering with futuristic EV innovation, creating the ultimate platform for autonomous transport—where heritage meets tomorrow.</p>
+            <div class="cta-group">
+                <a href="#story" class="btn btn-blue">Discover Our Journey</a>
+                <a href="../contact.html" class="btn btn-red">Start Innovating</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission Section -->
+    <section class="section" id="story">
+        <div class="section-header">
+            <h2><ion-icon name="ribbon-sharp" ></ion-icon> Our Vision & Mission</h2>
+            <p>Shaping the future of autonomous mobility through innovation and sustainability</p>
+        </div>
+        <div class="vision-mission-grid">
+            <div class="card vision-card green">
+                <div class="vision-icon"  style="background-color: white;"><ion-icon name="aperture-sharp" style="color: #06B6D4;"></ion-icon></div>
+                <h3>The Vision</h3>
+                <p>A world where gated communities, universities, and B2B partners operate on silent, autonomous grids. Where EV adoption thrives through infrastructure, not despite it.</p>
+            </div>
+            <div class="card vision-card blue">
+                <div class="vision-icon"  style="background-color: white;"><ion-icon name="cube-sharp"></ion-icon></div>
+                <h3>The Mission</h3>
+                <p>Eliminating EV adoption obstacles through 2-3 minute battery swap technology and universal BEV platforms. Protecting asset value for our partners while accelerating clean mobility.</p>
+            </div>
+            <div class="card vision-card purple">
+                <div class="vision-icon"  style="background-color: white;"><ion-icon name="sparkles-sharp" style="color: #8B5CF6;"></ion-icon></div>
+                <h3>Our Innovation</h3>
+                <p>by design, premium by nature. Autonomous EV pods engineered to last.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Philosophy Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>💡 Our Philosophy</h2>
+            <p>The principles guiding everything we do</p>
+        </div>
+        <div class="philosophy-grid">
+            <div class="philosophy-item">
+                <p>Mobility should serve people, not trap them in ownership.</p>
+            </div>
+            <div class="philosophy-item">
+                <p>Vehicles should age gracefully, not depreciate into waste.</p>
+            </div>
+            <div class="philosophy-item">
+                <p>Technology should extend life, not shorten it.</p>
+            </div>
+            <div class="philosophy-item">
+                <p>Innovation must be inclusive, especially in emerging markets.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Build Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2><ion-icon name="build-outline"></ion-icon> What We Build</h2>
+            <p>Modular platforms for modern autonomous mobility</p>
+        </div>
+        <div class="features-grid">
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="car-sport-outline" style="color: crimson;"></ion-icon></span>
+                <h4>Universal BEV Platform</h4>
+                <p>Modular electric architecture designed for adaptability and longevity across multiple vehicle forms and configurations.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="battery-charging-outline" style="color: green;"></ion-icon></span>
+                <h4>Battery Swap Tech</h4>
+                <p>2-3 minute battery exchange eliminating charging anxiety and infrastructure bottlenecks for uninterrupted mobility.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="map-outline" style="color: #F59E0B;"></ion-icon></span>
+                <h4>Autonomous Systems</h4>
+                <p>Intelligent navigation and self-driving capability built for managed environments with precision and safety.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="leaf-outline" style="color: #10B981;"></ion-icon></span>
+                <h4>Sustainable Design</h4>
+                <p>Eco-friendly materials and processes that minimize environmental impact while maximizing performance.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="shield-checkmark-outline" style="color: #8B5CF6;"></ion-icon></span>
+                <h4>Safety First</h4>
+                <p>Enterprise-grade security systems protecting both vehicle and passenger with advanced encryption protocols.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="podium-outline" style="color: orangered;"></ion-icon></span>
+                <h4>Smart Analytics</h4>
+                <p>Real-time data monitoring and predictive maintenance ensuring optimal performance and reliability.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Timeline -->
+    <section class="section">
+        <div class="section-header">
+            <h2><ion-icon name="analytics-outline" style="color: orangered;"></ion-icon> Our Journey</h2>
+            <p>Milestones that define Dark Dragon Calaestic</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2020</div>
+                    <h4>Foundation & Vision</h4>
+                    <p>DDC was born from a radical belief: progress should not erase the past, it should carry it forward.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2022</div>
+                    <h4>First Prototype</h4>
+                    <p>Successfully developed and tested the first autonomous EV pod with universal BEV platform architecture.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <h4>Battery Swap Launch</h4>
+                    <p>Introduced revolutionary 2-3 minute battery swap technology, eliminating charging anxiety forever.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2025</div>
+                    <h4>Market Expansion</h4>
+                    <p>Deployed across 50+ campuses and gated communities, serving thousands of users daily.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why DDC Exists -->
+    <section class="section">
+        <div class="section-header">
+            <h2><ion-icon name="star" style="color: #F59E0B;"></ion-icon> Why DDC Exists</h2>
+            <p>The world doesn't need another electric car. It needs a mobility system that thinks ahead.</p>
+        </div>
+        <div class="features-grid">
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="cash-outline" style="color: #10B981;"></ion-icon></span>
+                <h4>Reduce EV Costs</h4>
+                <p>Make electric adoption accessible to all communities and institutions through innovative pricing.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="trending-up-outline" style="color: #F59E0B;"></ion-icon></span>
+                <h4>Preserve Vehicle Value</h4>
+                <p>Restore long-term resale and asset protection through sustainable, durable design principles.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="rocket-outline" style="color: #06B6D4;"></ion-icon></span>
+                <h4>Enable Autonomy</h4>
+                <p>Provide intelligent transport without human intervention in managed spaces and communities.</p>
+            </div>
+            <div class="card feature-card">
+                <span class="feature-icon"><ion-icon name="earth-outline" style="color: #8B5CF6;"></ion-icon></span>
+                <h4>Drive Sustainability</h4>
+                <p>Reduce carbon footprint and waste through circular design and eco-friendly materials.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closing-cta">
+        <h2>The Future of Mobility Starts Here</h2>
+        <p>Join us in reimagining how the world moves. Together, we're building not just vehicles, but a sustainable mobility ecosystem for generations to come.</p>
+        <div class="cta-buttons">
+            <a href="../contact.html" class="btn btn-blue">Get In Touch</a>
+            <a href="../project.html" class="btn btn-red">Explore Projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <span>DDC</span>
+        
+        <p>Dark Dragon Calaestic &copy; 2024 | Pioneering Sustainable Mobility</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Animation
+        gsap.from('.hero-content > *', {
+            y: 30,
+            opacity: 0,
+            stagger: 0.2,
+            duration: 1,
+            ease: 'power3.out'
+        });
+
+        // Section Headers Reveal
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.from(header.querySelectorAll('h2, p'), {
+                scrollTrigger: {
+                    trigger: header,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 40,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+
+        // Card Stagger Animation
+        gsap.utils.toArray('.card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Philosophy Items Reveal
+        gsap.utils.toArray('.philosophy-item').forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: index % 2 === 0 ? -50 : 50,
+                opacity: 0,
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: 'power2.out'
+            });
+        });
+
+        // Counter Animation
+        function animateCounter(element) {
+            const target = parseFloat(element.dataset.target);
+            let current = 0;
+            
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    current = gsap.getProperty({}, 'progress') * target;
+                    element.textContent = Math.floor(current) + (element.textContent.includes('.') ? '.' : '');
+                }
+            });
+        }
+
+        gsap.utils.toArray('.stat-number').forEach(stat => {
+            gsap.from(stat, {
+                scrollTrigger: {
+                    trigger: stat,
+                    start: 'top 80%',
+                    onEnter: () => animateCounter(stat)
+                }
+            });
+        });
+
+        // Timeline Item Animation
+        gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                x: index % 2 === 0 ? -100 : 100,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+
+        // Feature Icon Float Animation
+        gsap.utils.toArray('.feature-icon').forEach(icon => {
+            gsap.to(icon, {
+                y: -10,
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: {
+                            y: target,
+                            autoKill: false
+                        },
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

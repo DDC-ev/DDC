@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Dark Dragon Calaestis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+
+    <meta name="description" content="Innovative EV projects and modular mobility solutions by Dark Dragon Calaestis.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="gobal.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9fbf9;
+            color: var(--brand-dark);
+            scroll-behavior: smooth;
+        }
+
+        /* SVG Clipping Logic */
+        .custom-shape {
+            clip-path: url(#productClip);
+            -webkit-clip-path: url(#productClip);
+        }
+
+        /* Scroll Animation States */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Hover Effect for Buttons */
+        .btn-notch {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .btn-notch:hover {
+            transform: scale(1.1);
+            background-color: #39423f;
+        }
+
+
+        /* Specification Modal */
+        #modalOverlay {
+
+            backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease;
+        }
+
+        .svg::before {
+            color: black;
+        }
+
+        .svg::after {
+            color: whitesmoke;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="nav-center">
+            <div class="nav-links-left">
+                <a href="project.html">PROJECTS</a>
+            </div>
+
+            <a href="index.html" class="nav-logo">
+                <div class="logo-text">
+                    <span>DD</span>
+                    <span>C</span>
+                </div>
+            </a>
+
+            <div class="nav-links-right">
+                <a href="technology.html">TECHNOLOGY</a>
+            </div>
+        </div>
+
+        <div class="nav-right"  style="color: azure;">
+            <a href="contact.html" class="btn-nav">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="menu/about.html" data-page="about" class="mobile-link">About Us</a>
+            <a href="menu/Tutorials.html" data-page="tutorials" class="mobile-link">Use Tutorials</a>
+            <a href="menu/booking.html" data-page="booking" class="mobile-link">EV Booking Platform</a>
+            <a href="menu/blog.html" data-page="blog" class="mobile-link">Blog / News</a>
+            <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
+             <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+           </div>
+        </div>
+    </div>
+
+    <!-- REUSABLE SVG CLIP DEFINITION -->
+    <svg width="0" height="0" class="absolute">
+        <defs>
+            <clipPath id="productClip" clipPathUnits="objectBoundingBox">
+                <path d="M 0.3,0 
+                         H 0.9 C 0.95,0 1,0.05 1,0.1 
+                         V 0.8 C 1,0.9 0.9,1 0.8,1 
+                         H 0.4 C 0.3,1 0.3,0.9 0.3,0.85 
+                         V 0.75 
+                         C 0.3,0.65 0.25,0.6 0.1,0.6 
+                         H 0.05 C 0.02,0.6 0,0.58 0,0.55 
+                         V 0.1 C 0,0.05 0.05,0 0.1,0 
+                         H 0.3 Z" />
+            </clipPath>
+        </defs>
+    </svg>
+
+
+
+    <!-- HERO SECTION -->
+    <section class="pt-40 pb-20 px-6 text-center">
+        <h2 class="text-sm font-bold tracking-[0.3em] uppercase mb-4 text-gray-400">Our Project Pipeline</h2>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight max-w-5xl mx-auto">
+            Engineering the Future <span class="text-gray-400">of Urban Mobility.</span>
+        </h1>
+        <p>A showcase of the revolutionary technologies powering the next generation of autonomous electric
+            mobility.
+        </p>
+    </section>
+
+    <!-- PRODUCT LIST -->
+    <main class="max-w-7xl mx-auto px-6 space-y-48 pb-40">
+
+        <!-- BEV Platform -->
+        <section id="bev" class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+            <div class="relative group">
+                <div class="relative aspect-square md:aspect-video w-full max-w-xl mx-auto">
+                    <div class="custom-shape w-full h-full bg-gray-200 overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200"
+                            alt="BEV Platform" class="w-full h-full object-cover">
+                        <div
+                            class="absolute bottom-[10%] right-[10%] text-white font-extrabold text-2xl tracking-tighter uppercase opacity-80">
+                            PLATFORM</div>
+                    </div>
+                    <!-- The Signature Button (Moved to bottom-left corner of the notch) -->
+                    <button onclick="openModal('BEV Platform')"
+                        class="btn-notch absolute bottom-[8%] left-[10%] w-16 h-16 bg-[--brand-button] rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="text-4xl font-extrabold tracking-tight">BEV Modular Platform</h3>
+                <p class="text-gray-500 text-lg leading-relaxed">A standardized chassis architecture designed for
+                    seamless integration across passenger and commercial fleets. Low-floor design with integrated
+                    battery housing.</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-[--brand-green] rounded-2xl">
+                        <div class="font-bold">800V</div>
+                        <div class="text-xs">Architecture</div>
+                    </div>
+                    <div class="p-4 bg-[--brand-green] rounded-2xl">
+                        <div class="font-bold">500kW</div>
+                        <div class="text-xs">Peak Power</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Battery Swap Tech -->
+        <section id="swap" class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+            <div class="space-y-6 lg:order-1 order-2">
+                <h3 class="text-4xl font-extrabold tracking-tight text-right lg:text-left">Battery Swap Technology</h3>
+                <p class="text-gray-500 text-lg leading-relaxed text-right lg:text-left">Automatic swap systems that
+                    exchange depleted modules for fully charged ones in minutes. Designed for 24/7 autonomous taxi and
+                    logistics operations.</p>
+                <div class="flex justify-end lg:justify-start gap-4">
+                    <button onclick="openModal('Battery Swap')"
+                        class="px-8 py-3 border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all">View
+                        Specs</button>
+                </div>
+            </div>
+            <div class="relative lg:order-2 order-1">
+                <div class="relative aspect-square md:aspect-video w-full max-w-xl mx-auto">
+                    <div class="custom-shape w-full h-full bg-gray-200 overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?q=80&w=1200"
+                            alt="Battery Swap" class="w-full h-full object-cover">
+                        <div
+                            class="absolute bottom-[10%] right-[10%] text-white font-extrabold text-2xl tracking-tighter uppercase opacity-80">
+                            POWER</div>
+                    </div>
+                    <!-- The Signature Button (Moved to bottom-left corner of the notch) -->
+                    <button onclick="openModal('Battery Swap')"
+                        class="btn-notch absolute bottom-[8%] left-[10%] w-16 h-16 bg-[--brand-button] rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation System -->
+        <section id="nav" class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+            <div class="relative">
+                <div class="relative aspect-square md:aspect-video w-full max-w-xl mx-auto">
+                    <div class="custom-shape w-full h-full bg-gray-200 overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200"
+                            alt="Navigation Tech" class="w-full h-full object-cover">
+                        <div
+                            class="absolute bottom-[10%] right-[10%] text-white font-extrabold text-2xl tracking-tighter uppercase opacity-80">
+                            GUIDE</div>
+                    </div>
+                    <!-- The Signature Button (Moved to bottom-left corner of the notch) -->
+                    <button onclick="openModal('Navigation Tech')"
+                        class="btn-notch absolute bottom-[8%] left-[10%] w-16 h-16 bg-[--brand-button] rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="text-4xl font-extrabold tracking-tight">Navigation System Tech</h3>
+                <p class="text-gray-500 text-lg leading-relaxed">Our proprietary L5-ready navigation stack. Combining
+                    HD-Lidar mapping with real-time fleet intelligence to optimize energy consumption and route
+                    efficiency.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 px-4 py-2 rounded-lg text-xs font-bold">REAL-TIME TELEMETRY</span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-lg text-xs font-bold">EDGE AI</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL OVERLAY -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/40 z-[100] hidden items-center justify-center p-6 opacity-0">
+        <div class="bg-white rounded-[2rem] max-w-lg w-full p-10 relative">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black">&times;
+                Close</button>
+            <h4 id="modalTitle" class="text-3xl font-extrabold mb-4">Specs</h4>
+            <div id="modalContent" class="space-y-4 text-gray-600 mb-8">
+                <!-- Dynamic Content Here -->
+            </div>
+            <button onclick="closeModal()"
+                class="w-full bg-[--brand-button] text-white py-4 rounded-2xl font-bold">Download Full Brief</button>
+        </div>
+    </div>
+  <script>
+        // --- Mobile Menu Toggle Handler ---
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.menu-toggle') && !e.target.closest('.mobile-menu')) {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        }
+
+        // --- 1. Three.js Hero Visualizer (Refined for White Theme) ---
+
+
+
+        // --- 2. GSAP ScrollTrigger Effects ---
+        function initScrollAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const sections = document.querySelectorAll('.showcase-section');
+
+            sections.forEach((section) => {
+                const mask = section.querySelector('.visual-mask');
+                const content = section.querySelector('.content-box');
+                const visual = section.querySelector('.visual-box');
+
+                // Mask Wipe Animation
+                gsap.to(mask, {
+                    scaleX: 0,
+                    duration: 1.5,
+                    ease: "power4.inOut",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 60%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                // Image/Video Zoom on entry
+                gsap.from(visual, {
+                    scale: 0.9,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 70%",
+                    }
+                });
+
+                // Content Stagger
+                gsap.from(content.children, {
+                    y: 40,
+                    opacity: 0,
+                    stagger: 0.2,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 50%",
+                    }
+                });
+            });
+        }
+
+
+        // --- Handle Window Events ---
+        window.onload = () => {
+            initScrollAnimations();
+            // Mobile menu handled by main.js
+        };
+
+
+    </script>
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Reveal Animations on Scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 2. Modal Management
+        const modal = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+
+        const productData = {
+            'BEV Platform': 'The BEV Platform features a skateboard-style battery pack, integrated e-axles, and a steer-by-wire system. Optimized for weight distribution (50/50).',
+            'Battery Swap': 'Fully automated robotic arms swap 12 modules simultaneously. Equipped with thermal conditioning during the swap process for maximum longevity.',
+            'Navigation Tech': 'Sub-centimeter accuracy using multi-frequency GNSS and solid-state LiDAR fusion. Features an AI co-pilot for high-density traffic navigation.'
+        };
+
+        function openModal(product) {
+            modalTitle.innerText = product;
+            modalContent.innerText = productData[product];
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.remove('opacity-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        // Close modal on background click
+        window.onclick = function (event) {
+            if (event.target == modal) closeModal();
+        }
+
+        // --- Mobile Menu Logic (robust handler) ---
+
+        (function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            if (!menuToggle || !mobileMenu) return;
+
+            // Toggle function
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = mobileMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                document.body.classList.toggle('menu-open', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+
+            // Close when any mobile link is clicked
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Close when clicking outside the menu
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.menu-toggle') && !e.target.closest('.mobile-menu')) {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Close on ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    mobileMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                }
+            });
+        })();
+
+        /* --- Interactive Logo Split on Cursor Proximity --- */
+        const navLogo = document.querySelector('.nav-logo');
+        if (navLogo) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = navLogo.getBoundingClientRect();
+                const logoX = rect.left + rect.width / 2;
+                const logoY = rect.top + rect.height / 2;
+                const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
+
+                // Trigger split when cursor is within 80px
+                if (distance < 80) {
+                    navLogo.classList.add('split');
+                } else {
+                    navLogo.classList.remove('split');
+                }
+            });
+
+            // Add click/hover fallback for touch devices
+            navLogo.addEventListener('mouseenter', () => {
+                navLogo.classList.add('split');
+            });
+            navLogo.addEventListener('mouseleave', () => {
+                navLogo.classList.remove('split');
+            });
+        }
+        
+    </script>
+
+</body>
+</body>
+    <style>
+        .nav-icon ion-icon {
+            font-size: 2rem;
+            color: #636363;
+            transition: color 0.3s, filter 0.3s, transform 0.3s;
+        }
+        .nav-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .linkedin-glow ion-icon {
+            --glow: 0 0 16px #0077b5, 0 0 32px #0077b5;
+        }
+        .instagram-glow ion-icon {
+            --glow: 0 0 16px #e1306c, 0 0 32px #fdc468;
+        }
+        .youtube-glow ion-icon {
+            --glow: 0 0 16px #ff0000, 0 0 32px #ff0000;
+        }
+        .nav-icon:hover ion-icon {
+            color: var(--accent-blue);
+            filter: drop-shadow(var(--glow));
+            transform: scale(1.2) rotate(-8deg);
+            cursor: pointer;
+        }
+        .linkedin-glow:hover ion-icon {
+            color: #0077b5;
+        }
+        .instagram-glow:hover ion-icon {
+            color: #e1306c;
+        }
+        .youtube-glow:hover ion-icon {
+            color: #ff0000;
+        }
+    </style>
+    <script>
+        document.querySelectorAll('.nav-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.querySelector('ion-icon').style.transform = 'scale(1.2) rotate(-8deg)';
+            });
+            icon.addEventListener('mouseleave', () => {
+                icon.querySelector('ion-icon').style.transform = '';
+            });
+        });
+    </script>
+
+<script src="menu/main.js"></script>
+
+</html>

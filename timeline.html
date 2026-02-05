@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Top-View EV Journey Timeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../menu/gobal.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        :root {
+            --primary-color: #67bed9;
+            --bg-light: #e3eeea;
+            --text-main: #8de9ec;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto 0;
+            /* Removed bottom margin */
+            padding: 100px 20px 0;
+            /* Removed bottom padding to bring car closer to footer */
+            min-height: 3050px;
+            /* Reduced to bring end-of-path closer to next section */
+        }
+
+        /* The Curved Path (SVG) */
+        .svg-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #path-main {
+            stroke: #fefcfe;
+            stroke-width: 12;
+            stroke-linecap: round;
+        }
+
+        #path-progress {
+            fill: none;
+            stroke: var(--primary-color);
+            stroke-width: 12;
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 10px rgba(103, 190, 217, 0.8));
+        }
+
+        /* 3D Real EV Pod (Top View) */
+        .ev-pod {
+            position: absolute;
+            width: 45px;
+            height: 85px;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.05s linear;
+            will-change: transform, top, left;
+        }
+
+        .car-3d {
+            position: relative;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(145deg, #000000, #2d2d2d);
+            border-radius: 12px 12px 8px 8px;
+            box-shadow:
+                0 10px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 5px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .car-glass {
+            position: absolute;
+            top: 20px;
+            left: 5px;
+            width: 30px;
+            height: 35px;
+            background: #0f172a;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(103, 190, 217, 0.3);
+        }
+
+        .car-glass::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 20px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(20deg);
+        }
+
+        .car-roof {
+            position: absolute;
+            top: 25px;
+            left: 8px;
+            width: 24px;
+            height: 25px;
+            background: linear-gradient(to bottom, #ffffff, #f1f5f9);
+            border-radius: 2px;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-light {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+            box-shadow: 0 -8px 15px rgba(103, 190, 217, 1);
+        }
+
+        .light-left {
+            left: 4px;
+        }
+
+        .light-right {
+            right: 4px;
+        }
+
+        .car-rear {
+            position: absolute;
+            bottom: 2px;
+            left: 4px;
+            width: 32px;
+            height: 6px;
+            background: #475569;
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* Timeline Items Styling */
+        .timeline-item {
+            position: absolute;
+            width: 380px;
+            z-index: 10;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.8s ease, transform 0.3s ease;
+        }
+
+        .card-front {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-back {
+            background: rgb(255, 254, 254);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid #f1f5f9;
+            opacity: 0;
+            z-index: 1;
+            transform: translateY(10px);
+        }
+
+        .timeline-item.is-visible .card-front {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .timeline-item.is-visible .card-back {
+            opacity: 1;
+            z-index: 3;
+            transform: translateY(0);
+        }
+
+        .checkpoint-dot {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border: 5px solid #e2e8f0;
+            border-radius: 50%;
+            z-index: 5;
+            transition: all 0.4s ease;
+        }
+
+        .timeline-item.active-dot .checkpoint-dot {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(103, 190, 217, 0.6);
+            scale: 1.2;
+        }
+
+        .date-label {
+            color: var(--primary-color);
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .milestone-title {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+
+        .description-text {
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                width: 280px;
+            }
+
+            .card-inner {
+                height: 200px;
+            }
+        }
+
+        /* Adjusted Footer Spacing */
+        .journey-footer {
+            height: 60vh;
+            /* Reduced height to pull content up */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Detail modal for card items */
+        .detail-modal-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 40;
+            padding: 24px;
+        }
+
+        .detail-modal {
+            background: #fff;
+            color: #0f172a;
+            width: min(900px, 96%);
+            max-height: 90vh;
+            overflow: auto;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 25px 60px rgba(2, 6, 23, 0.35);
+            outline: none;
+        }
+
+        .detail-modal .close-btn {
+            position: absolute;
+            right: 18px;
+            top: 14px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            color: #475569;
+        }
+
+        .detail-content img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 720px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
+
+    <nav>
+        <div class="nav-left">
+        </div>
+
+        <div class="nav-center">
+            <div class="nav-links-left">
+                <a href="../project.html">PROJECTS</a>
+            </div>
+
+            <a href="../index.html" class="nav-logo">
+                <div class="logo-text">
+                    <span>DD</span>
+                    <span>C</span>
+                </div>
+            </a>
+
+            <div class="nav-links-right">
+                <a href="../technology.html">TECHNOLOGY</a>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <a href="../contact.html" class="btn-nav">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+
+
+    <header class="text-center py-32 bg-slate-50" style="background-color:#e3eeea;">
+        <h1 class="text-7xl font-black mb-6 tracking-tight" style="color: #1e293b;">The EV <span
+                style="color: #67bed9;">Evolution</span></h1>
+        <p class="text-slate-500 text-xl font-medium">Scroll to drive through our history</p>
+    </header>
+
+    <div class="timeline-container" id="timeline-container">
+        <!-- SVG Curved Path -->
+        <div class="svg-container">
+            <svg id="timeline-svg" viewBox="0 0 1000 3000" preserveAspectRatio="none"
+                style="width: 100%; height: 100%;">
+                <path id="path-main" d="M500,0 C850,500 150,1000 500,1500 C850,2000 150,2500 500,3000" fill="none" />
+                <path id="path-progress" d="M500,0 C850,500 150,1000 500,1500 C850,2000 150,2500 500,3000"
+                    fill="none" />
+            </svg>
+        </div>
+
+        <!-- 3D Top-View EV Pod -->
+        <div class="ev-pod" id="ev-pod">
+            <div class="car-3d">
+                <div class="car-light light-left"></div>
+                <div class="car-light light-right"></div>
+                <div class="car-glass"></div>
+                <div class="car-roof"></div>
+                <div class="car-rear"></div>
+            </div>
+        </div>
+
+        <!-- Milestones -->
+        <div class="timeline-item" data-pos="0.1">
+            <div class="checkpoint-dot"></div>
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=600"
+                        alt="Design">
+                </div>
+                <div class="card-back">
+                    <span class="date-label">EST. 2021</span>
+                    <h3 class="milestone-title">Blueprint Phase</h3>
+                    <p class="description-text">Our journey began with a single vision: redefining aerodynamic
+                        efficiency through computational fluid dynamics.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-pos="0.3">
+            <div class="checkpoint-dot"></div>
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&fit=crop&q=80&w=600"
+                        alt="Engine">
+                </div>
+                <div class="card-back">
+                    <span class="date-label">TECH 2022</span>
+                    <h3 class="milestone-title">Next-Gen Core</h3>
+                    <p class="description-text">Engineers successfully developed the dual-motor high-torque powertrain,
+                        setting a new industry standard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-pos="0.5">
+            <div class="checkpoint-dot"></div>
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="Screenshot 2026-01-29 154342.png" alt="Factory">
+                </div>
+                <div class="card-back">
+                    <span class="date-label">BUILD 2023</span>
+                    <h3 class="milestone-title">Sustainable Factory</h3>
+                    <p class="description-text">Opened our first 100% solar-powered assembly line, reducing our carbon
+                        footprint by 90% per vehicle.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-pos="0.7">
+            <div class="checkpoint-dot"></div>
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600"
+                        alt="AI">
+                </div>
+                <div class="card-back">
+                    <span class="date-label">MIND 2024</span>
+                    <h3 class="milestone-title">Neural Pilot</h3>
+                    <p class="description-text">Integrated advanced neural networks for Level 4 autonomy, enabling safer
+                        and smarter cross-country travel.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item" data-pos="0.9">
+            <div class="checkpoint-dot"></div>
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600"
+                        alt="Charging">
+                </div>
+                <div class="card-back">
+                    <span class="date-label">GRID 2025</span>
+                    <h3 class="milestone-title">Global Network</h3>
+                    <p class="description-text">Deployed 10,000 rapid charging stations globally, making the range
+                        anxiety a relic of the past.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="journey-footer">
+        <h2 class="text-4xl font-black mb-6">And More......</h2>
+        <button
+            class="px-12 py-4 text-white rounded-full text-lg font-bold shadow-xl hover:-translate-y-1 transition-all"
+            style="background-color: #67bed9;">Explore Models</button>
+    </footer>
+
+    <!-- Detail modal overlay -->
+    <div class="detail-modal-overlay" id="detail-modal-overlay" aria-hidden="true">
+        <div class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+            <button class="close-btn" id="detail-close" aria-label="Close details">×</button>
+            <div class="detail-content">
+                <div class="detail-grid">
+                    <div class="detail-media">
+                        <img id="detail-image" src="" alt="">
+                    </div>
+                    <div>
+                        <div class="date-label" id="detail-date"></div>
+                        <h2 class="milestone-title" id="detail-title"></h2>
+                        <p class="description-text" id="detail-long"></p>
+                        <div style="margin-top:16px; color:#475569;">
+                            <strong>More info:</strong>
+                            <p id="detail-extra" style="margin-top:8px; color:#64748b;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const path = document.getElementById('path-main');
+        const pathProgress = document.getElementById('path-progress');
+        const pod = document.getElementById('ev-pod');
+        const items = document.querySelectorAll('.timeline-item');
+        const container = document.getElementById('timeline-container');
+
+        let pathLength = 0;
+        try {
+            pathLength = path.getTotalLength();
+        } catch (e) {
+            console.error("SVG Path total length error", e);
+        }
+
+        pathProgress.style.strokeDasharray = pathLength;
+        pathProgress.style.strokeDashoffset = pathLength;
+
+        const updatePositions = () => {
+            if (!container || !path || pathLength === 0) return;
+
+            const containerRect = container.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+
+            // Adjust scrollCenter to allow car to finish earlier relative to footer
+            const scrollCenter = viewportHeight / 2;
+
+            let progress = (scrollCenter - containerRect.top) / Math.max(containerRect.height, 1);
+            progress = Math.max(0, Math.min(1, progress));
+
+            if (!isFinite(progress)) progress = 0;
+
+            // Check if car is close to any item and apply slowdown
+            let slowdownFactor = 1;
+            const proximityThreshold = 0.08; // 8% proximity range
+
+            items.forEach((item) => {
+                const itemPos = parseFloat(item.getAttribute('data-pos'));
+                if (!isNaN(itemPos)) {
+                    const distance = Math.abs(progress - itemPos);
+                    if (distance < proximityThreshold) {
+                        // Apply exponential slowdown as car gets closer to item
+                        const proximity = distance / proximityThreshold;
+                        slowdownFactor = Math.min(slowdownFactor, 0.3 + (proximity * 0.7));
+                    }
+                }
+            });
+
+            progress = progress * slowdownFactor + (progress * (1 - slowdownFactor));
+
+            const currentLen = progress * pathLength;
+
+            try {
+                const point = path.getPointAtLength(currentLen);
+
+                let nextPoint;
+                if (currentLen + 2 <= pathLength) {
+                    nextPoint = path.getPointAtLength(currentLen + 2);
+                } else {
+                    const backPoint = path.getPointAtLength(currentLen - 2);
+                    nextPoint = point;
+                    // Reference previous slope at the end
+                    var dx = point.x - backPoint.x;
+                    var dy = point.y - backPoint.y;
+                    nextPoint = { x: point.x + dx, y: point.y + dy };
+                }
+
+                const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
+
+                pod.style.left = `${point.x / 10}%`;
+                pod.style.top = `${point.y}px`;
+                pod.style.transform = `translate(-50%, -50%) rotate(${angle + 90}deg)`;
+
+                pathProgress.style.strokeDashoffset = pathLength - currentLen;
+
+                items.forEach((item) => {
+                    const itemPos = parseFloat(item.getAttribute('data-pos'));
+                    if (isNaN(itemPos)) return;
+
+                    const itemPoint = path.getPointAtLength(itemPos * pathLength);
+                    const dot = item.querySelector('.checkpoint-dot');
+
+                    item.style.top = `${itemPoint.y}px`;
+
+                    if (itemPoint.x > 500) {
+                        item.style.left = `${(itemPoint.x / 10) + 8}%`;
+                        if (dot) {
+                            dot.style.left = `-35px`;
+                            dot.style.top = `50%`;
+                            dot.style.transform = `translateY(-50%)`;
+                        }
+                    } else {
+                        item.style.left = `${(itemPoint.x / 10) - 46}%`;
+                        if (dot) {
+                            dot.style.right = `-35px`;
+                            dot.style.top = `50%`;
+                            dot.style.transform = `translateY(-50%)`;
+                        }
+                    }
+
+                    // Show description when car touches the checkpoint (within 5% range)
+                    const distanceToItem = Math.abs(progress - itemPos);
+                    if (distanceToItem < 0.05) {
+                        item.classList.add('is-visible');
+                        item.classList.add('active-dot');
+                    } else {
+                        item.classList.remove('is-visible');
+                        item.classList.remove('active-dot');
+                    }
+                });
+            } catch (error) {
+                console.warn("SVG geometry error in updatePositions:", error);
+            }
+        };
+
+        window.addEventListener('scroll', updatePositions);
+        window.addEventListener('resize', () => {
+            try {
+                pathLength = path.getTotalLength();
+                pathProgress.style.strokeDasharray = pathLength;
+            } catch (e) { }
+            updatePositions();
+        });
+
+        window.addEventListener('load', updatePositions);
+        setTimeout(updatePositions, 100);
+
+        // --- Detail modal behavior ---
+        const modalOverlay = document.getElementById('detail-modal-overlay');
+        const modalImage = document.getElementById('detail-image');
+        const modalDate = document.getElementById('detail-date');
+        const modalTitle = document.getElementById('detail-title');
+        const modalLong = document.getElementById('detail-long');
+        const modalExtra = document.getElementById('detail-extra');
+        const closeBtn = document.getElementById('detail-close');
+
+        function openDetail(data) {
+            modalImage.src = data.img || '';
+            modalImage.alt = data.title || '';
+            modalDate.textContent = data.date || '';
+            modalTitle.textContent = data.title || '';
+            modalLong.textContent = data.long || '';
+            modalExtra.textContent = data.extra || '';
+            modalOverlay.style.display = 'flex';
+            modalOverlay.setAttribute('aria-hidden', 'false');
+            // prevent background scroll while modal open
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+
+        function closeDetail() {
+            modalOverlay.style.display = 'none';
+            modalOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Attach click handlers to card backs
+        document.querySelectorAll('.card-back').forEach((back) => {
+            back.style.cursor = 'pointer';
+            back.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const item = back.closest('.timeline-item');
+                if (!item) return;
+                const frontImg = item.querySelector('.card-front img');
+                const imgSrc = frontImg ? frontImg.src : '';
+                const date = back.querySelector('.date-label') ? back.querySelector('.date-label').textContent.trim() : '';
+                const title = back.querySelector('.milestone-title') ? back.querySelector('.milestone-title').textContent.trim() : '';
+                const desc = back.querySelector('.description-text') ? back.querySelector('.description-text').textContent.trim() : '';
+                // optional extra details stored on the item
+                const extra = item.getAttribute('data-extra') || '';
+                openDetail({ img: imgSrc, date, title, long: desc, extra });
+            });
+        });
+
+        // Close handlers
+        closeBtn.addEventListener('click', closeDetail);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeDetail(); });
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
+    </script>
+    <script src="../menu/main.js"></script>
+</body>
+
+</html>
