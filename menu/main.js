@@ -9,48 +9,75 @@
 function initMobileMenu() {
     const body = document.body;
     const mobileMenu = document.querySelector('.mobile-menu');
+    const menuToggle = document.querySelector('.menu-toggle');
 
-    // Delegated clicks
+    if (!mobileMenu || !menuToggle) return;
+
+    // Direct toggle click
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = mobileMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        body.classList.toggle('menu-open', isActive);
+
+        // Prevent background scroll
+        if (isActive) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = '';
+        }
+    });
+
+    // Close when clicking outside
     document.addEventListener('click', (e) => {
-        const toggle = e.target.closest('.menu-toggle');
-        if (toggle) {
-            toggle.classList.toggle('active');
-            if (mobileMenu) mobileMenu.classList.toggle('active');
-            body.classList.toggle('menu-open');
-            return;
-        }
-
-        if (mobileMenu && !e.target.closest('.mobile-menu') && !e.target.closest('.menu-toggle')) {
-            const mt = document.querySelector('.menu-toggle');
-            if (mt) mt.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            body.classList.remove('menu-open');
+        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target) && mobileMenu.classList.contains('active')) {
+            closeMenu();
         }
     });
 
-    // Close when a mobile link is clicked
-    document.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => {
-            const mt = document.querySelector('.menu-toggle');
-            if (mt) mt.classList.remove('active');
-            if (mobileMenu) mobileMenu.classList.remove('active');
-            body.classList.remove('menu-open');
-        });
+    // Close on link click
+    mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', closeMenu);
     });
 
-    // Close on escape
+    // Close on Escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const mt = document.querySelector('.menu-toggle');
-            if (mt) mt.classList.remove('active');
-            if (mobileMenu) mobileMenu.classList.remove('active');
-            body.classList.remove('menu-open');
-        }
+        if (e.key === 'Escape') closeMenu();
     });
+
+    function closeMenu() {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+        body.style.overflow = '';
+    }
 }
 
 // ============================================
-// 2. CUSTOM CURSOR FUNCTIONALITY
+// 2. NAV SCROLL HANDLER
+// ============================================
+function initNavScroll() {
+    let lastScrollY = window.scrollY;
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > lastScrollY && currentScroll > 100) {
+            // Scrolling down → hide nav
+            nav.classList.add('nav-hidden');
+        } else {
+            // Scrolling up → show nav
+            nav.classList.remove('nav-hidden');
+        }
+
+        lastScrollY = currentScroll;
+    }, { passive: true });
+}
+
+// ============================================
+// 3. CUSTOM CURSOR FUNCTIONALITY
 // ============================================
 function initCustomCursor() {
     const cursor = document.getElementById('cursor');
@@ -67,20 +94,21 @@ function initCustomCursor() {
     });
 
     // Hover effects on interactive elements
-    document.querySelectorAll('a, button, .btn-nav, .mobile-link, .back-button, .nav-logo, .flip-card').forEach(el => {
+    const interactiveElements = 'a, button, .btn-nav, .mobile-link, .back-button, .nav-logo, .flip-card, .nav-icon';
+    document.querySelectorAll(interactiveElements).forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.style.transform = 'scale(2.5)';
             cursor.style.borderColor = 'var(--accent-blue)';
         });
         el.addEventListener('mouseleave', () => {
             cursor.style.transform = 'scale(1)';
-            cursor.style.borderColor = 'var(--text-main)';
+            cursor.style.borderColor = 'var(--text-main, #333)';
         });
     });
 }
 
 // ============================================
-// 3. IMAGE SLIDER (Contact Page)
+// 4. IMAGE SLIDER (Contact Page)
 // ============================================
 function initImageSlider() {
     const imageSlider = document.getElementById('imageSlider');
@@ -101,10 +129,12 @@ function initImageSlider() {
             item.style.display = 'none';
         });
 
-        sliderItems[currentImageSlide].style.display = 'block';
-        setTimeout(() => {
-            sliderItems[currentImageSlide].style.opacity = '1';
-        }, 10);
+        if (sliderItems[currentImageSlide]) {
+            sliderItems[currentImageSlide].style.display = 'block';
+            setTimeout(() => {
+                sliderItems[currentImageSlide].style.opacity = '1';
+            }, 10);
+        }
 
         dots.forEach((dot, index) => {
             if (index === currentImageSlide) {
@@ -117,47 +147,22 @@ function initImageSlider() {
         });
     }
 
-    window.goToSlide = function (n) {
-        currentImageSlide = n;
-        showImageSlide(currentImageSlide);
-    };
+    window.goToSlide = n => { currentImageSlide = n; showImageSlide(currentImageSlide); };
+    window.nextSlide = () => { currentImageSlide++; showImageSlide(currentImageSlide); };
+    window.prevSlide = () => { currentImageSlide--; showImageSlide(currentImageSlide); };
 
-    window.nextSlide = function () {
-        currentImageSlide++;
-        showImageSlide(currentImageSlide);
-    };
-
-    window.prevSlide = function () {
-        currentImageSlide--;
-        showImageSlide(currentImageSlide);
-    };
-
-    // Touch swipe functionality
-    imageSlider.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
+    imageSlider.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, false);
     imageSlider.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) {
-            window.nextSlide();
-        } else if (touchEndX - touchStartX > 50) {
-            window.prevSlide();
-        }
+        if (touchStartX - touchEndX > 50) window.nextSlide();
+        else if (touchEndX - touchStartX > 50) window.prevSlide();
     }, false);
 
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') window.prevSlide();
-        if (e.key === 'ArrowRight') window.nextSlide();
-    });
-
-    // Initialize
     showImageSlide(currentImageSlide);
 }
 
 // ============================================
-// 4. VIDEO SLIDER (Technology Page)
+// 5. VIDEO SLIDER (Technology Page)
 // ============================================
 function initVideoSlider() {
     const videoSlider = document.getElementById('videoSlider');
@@ -166,8 +171,6 @@ function initVideoSlider() {
     let currentSlide = 0;
     const slides = document.querySelectorAll('.video-slide');
     const dotIndicators = document.querySelectorAll('.dot-indicator');
-    let touchStartX = 0;
-    let touchEndX = 0;
 
     const slideData = [
         { title: '60-Second Swapping', desc: 'Eliminate downtime with hot-swap battery technology' },
@@ -175,24 +178,22 @@ function initVideoSlider() {
         { title: '98% Efficiency', desc: 'Level 5 autonomous driving platform with industry-leading efficiency' }
     ];
 
-    // Show slide function
     function showSlide(n) {
         if (n >= slides.length) currentSlide = 0;
         if (n < 0) currentSlide = slides.length - 1;
 
-        // Hide all slides
         slides.forEach(slide => {
             slide.style.opacity = '0';
             slide.style.display = 'none';
         });
 
-        // Show current slide
-        slides[currentSlide].style.display = 'block';
-        setTimeout(() => {
-            slides[currentSlide].style.opacity = '1';
-        }, 10);
+        if (slides[currentSlide]) {
+            slides[currentSlide].style.display = 'block';
+            setTimeout(() => {
+                slides[currentSlide].style.opacity = '1';
+            }, 10);
+        }
 
-        // Update dot indicators
         dotIndicators.forEach((dot, index) => {
             if (index === currentSlide) {
                 dot.style.background = '#10B981';
@@ -203,210 +204,93 @@ function initVideoSlider() {
             }
         });
 
-        // Update title and description
         const slideTitle = document.getElementById('slideTitle');
         const slideDesc = document.getElementById('slideDesc');
         if (slideTitle) slideTitle.textContent = slideData[currentSlide].title;
         if (slideDesc) slideDesc.textContent = slideData[currentSlide].desc;
     }
 
-    // Go to slide function
-    window.goToVideoSlide = function (n) {
-        currentSlide = n;
-        showSlide(currentSlide);
-    };
+    window.goToVideoSlide = n => { currentSlide = n; showSlide(currentSlide); };
+    window.nextVideoSlide = () => { currentSlide++; showSlide(currentSlide); };
+    window.prevVideoSlide = () => { currentSlide--; showSlide(currentSlide); };
 
-    // Next slide
-    window.nextVideoSlide = function () {
-        currentSlide++;
-        showSlide(currentSlide);
-    };
-
-    // Previous slide
-    window.prevVideoSlide = function () {
-        currentSlide--;
-        showSlide(currentSlide);
-    };
-
-    // Touch swipe functionality
-    videoSlider.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-
-    videoSlider.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) {
-            window.nextVideoSlide();
-        } else if (touchEndX - touchStartX > 50) {
-            window.prevVideoSlide();
-        }
-    }, false);
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') window.prevVideoSlide();
-        if (e.key === 'ArrowRight') window.nextVideoSlide();
-    });
-
-    // Button event listeners
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    if (nextBtn) nextBtn.onclick = window.nextVideoSlide;
-    if (prevBtn) prevBtn.onclick = window.prevVideoSlide;
-
-    // Initialize
     showSlide(currentSlide);
 }
 
 // ============================================
-// 5. FLIP CARD ANIMATIONS
+// 6. GSAP ANIMATIONS
 // ============================================
-function initFlipCards() {
-    const flipCards = document.querySelectorAll('.flip-card');
+function initGSAPAnimations() {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
 
-    flipCards.forEach(card => {
-        // Already has onclick toggle handler in HTML
-        // Just ensure hover state for desktop
-    });
-}
-
-// ============================================
-// 6. SCROLL REVEAL ANIMATIONS (About Page)
-// ============================================
-function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+    // Hero entrance
+    const heroText = document.querySelector('.hero-content h1, .hero-text h1');
+    if (heroText) {
+        gsap.from(heroText.parentNode.children, {
+            y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
         });
-    }, { threshold: 0.1 });
+    }
 
-    document.querySelectorAll('section').forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'all 0.8s ease-out';
-        observer.observe(section);
-    });
-}
+    // Impact Counters (if on page)
+    const impactSection = document.getElementById('industries') || document.getElementById('impact');
+    if (impactSection) {
+        const startCounter = (id, target) => {
+            let obj = { val: 0 };
+            const el = document.getElementById(id);
+            if (!el) return;
 
-// ============================================
-// 7. CONTACT FORM HANDLER
-// ============================================
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Thank you! Your message has been received.');
-            this.reset();
-        });
+            gsap.to(obj, {
+                val: target,
+                duration: 2.5,
+                scrollTrigger: {
+                    trigger: impactSection,
+                    start: "top 80%"
+                },
+                onUpdate: () => {
+                    el.innerText = Math.floor(obj.val) + (id === 'stat3' ? 'M+' : '+');
+                }
+            });
+        };
+
+        startCounter('stat1', 0);
+        startCounter('stat2', 50);
+        startCounter('stat3', 2);
+        startCounter('stat4', 15);
     }
 }
 
 // ============================================
-// 8. GSAP ANIMATIONS (Index & Booking)
+// 7. INTERACTIVE LOGO SPLIT
 // ============================================
-function initGSAPAnimations() {
-    // Check if GSAP is available
-    if (typeof gsap === 'undefined') return;
+function initLogoSplit() {
+    const navLogo = document.querySelector('.nav-logo');
+    if (!navLogo) return;
 
-    gsap.registerPlugin(ScrollTrigger);
+    document.addEventListener('mousemove', (e) => {
+        const rect = navLogo.getBoundingClientRect();
+        const logoX = rect.left + rect.width / 2;
+        const logoY = rect.top + rect.height / 2;
+        const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
 
-    // Hero text entrance for index page
-    gsap.from(".hero-text > *", {
-        y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
-    });
-
-    // Impact Counters
-    const startCounter = (id, target) => {
-        let obj = { val: 0 };
-        gsap.to(obj, {
-            val: target,
-            duration: 2.5,
-            scrollTrigger: {
-                trigger: "#impact",
-                start: "top 80%"
-            },
-            onUpdate: () => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.innerText = Math.floor(obj.val) + (id === 'stat3' ? 'M+' : '+');
-                }
-            }
-        });
-    };
-
-    startCounter('stat1', 0);
-    startCounter('stat2', 50);
-    startCounter('stat3', 2);
-    startCounter('stat4', 15);
-
-    // Hero Shutter Logic (Booking Page)
-    window.addEventListener('load', () => {
-        const heroShutter = document.getElementById('hero-shutter');
-        if (heroShutter) {
-            const tl = gsap.timeline();
-            tl.from(heroShutter, {
-                clipPath: "inset(0% 50% 0% 50%)",
-                duration: 1.8,
-                ease: "expo.inOut"
-            })
-                .from(heroShutter.querySelector('img'), {
-                    scale: 1.4,
-                    duration: 2,
-                    ease: "expo.out"
-                }, "-=1.5");
+        if (distance < 80) {
+            navLogo.classList.add('split');
+        } else {
+            navLogo.classList.remove('split');
         }
-
-        // Scroll Triggered Shutter Reveals
-        const shutters = document.querySelectorAll('.reveal-shutter');
-        shutters.forEach(shutter => {
-            const img = shutter.querySelector('img');
-            gsap.fromTo(shutter,
-                { clipPath: "inset(100% 0% 0% 0%)" },
-                {
-                    clipPath: "inset(0% 0% 0% 0%)",
-                    duration: 1.4,
-                    ease: "power4.inOut",
-                    scrollTrigger: {
-                        trigger: shutter,
-                        start: "top 70%",
-                        end: "bottom 20%",
-                        toggleActions: "play none none reverse"
-                    }
-                }
-            );
-
-            if (img) {
-                gsap.fromTo(img,
-                    { scale: 1.4 },
-                    {
-                        scale: 1,
-                        duration: 1.4,
-                        ease: "power4.inOut",
-                        scrollTrigger: {
-                            trigger: shutter,
-                            start: "top 70%",
-                            end: "bottom 20%",
-                            toggleActions: "play none none reverse"
-                        }
-                    }
-                );
-            }
-        });
     });
+
+    navLogo.addEventListener('mouseenter', () => navLogo.classList.add('split'));
+    navLogo.addEventListener('mouseleave', () => navLogo.classList.remove('split'));
 }
 
 // ============================================
-// 8B. THREE.JS VISUALIZATION (Index Page)
+// 8. THREE.JS VISUALIZATION
 // ============================================
 let scene, camera, renderer, podGroup;
 
 function createPod() {
     if (typeof THREE === 'undefined') return null;
-
     const group = new THREE.Group();
 
     // Chassis
@@ -439,7 +323,6 @@ function createPod() {
 
 function init3D() {
     if (typeof THREE === 'undefined') return;
-
     const container = document.getElementById('hero-canvas');
     if (!container) return;
 
@@ -450,8 +333,7 @@ function init3D() {
     renderer.setSize(container.offsetWidth, container.offsetHeight);
     container.appendChild(renderer.domElement);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambient);
+    scene.add(new THREE.AmbientLight(0xffffff, 1));
     const directional = new THREE.DirectionalLight(0xffffff, 1.2);
     directional.position.set(5, 10, 7);
     scene.add(directional);
@@ -473,68 +355,25 @@ function init3D() {
     animate();
 
     window.addEventListener('resize', () => {
-        if (container && camera && renderer) {
-            camera.aspect = container.offsetWidth / container.offsetHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.offsetWidth, container.offsetHeight);
-        }
+        camera.aspect = container.offsetWidth / container.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
     });
 }
 
 // ============================================
-// 8C. INTERACTIVE LOGO (Index Page)
+// 9. INITIALIZATION
 // ============================================
-function initLogoSplit() {
-    const navLogo = document.querySelector('.nav-logo');
-    if (!navLogo) return;
-
-    document.addEventListener('mousemove', (e) => {
-        const rect = navLogo.getBoundingClientRect();
-        const logoX = rect.left + rect.width / 2;
-        const logoY = rect.top + rect.height / 2;
-        const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
-
-        if (distance < 80) {
-            navLogo.classList.add('split');
-        } else {
-            navLogo.classList.remove('split');
-        }
-    });
-
-    navLogo.addEventListener('mouseenter', () => {
-        navLogo.classList.add('split');
-    });
-    navLogo.addEventListener('mouseleave', () => {
-        navLogo.classList.remove('split');
-    });
-}
-
-// ============================================
-// 9. LUCIDE ICONS (About Page)
-// ============================================
-function initLucideIcons() {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-}
-
-// ============================================
-// 10. INITIALIZATION
-// ============================================
-document.addEventListener('DOMContentLoaded', () => {
+function initAll() {
     initMobileMenu();
+    initNavScroll();
     initCustomCursor();
     initImageSlider();
     initVideoSlider();
-    initFlipCards();
-    initScrollReveal();
-    initContactForm();
-    initGSAPAnimations();
-    initLucideIcons();
     initLogoSplit();
-});
+    initGSAPAnimations();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
 
-window.addEventListener('load', () => {
-    initMobileMenu();
-    init3D();
-});
+document.addEventListener('DOMContentLoaded', initAll);
+window.addEventListener('load', init3D);

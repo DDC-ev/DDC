@@ -60,10 +60,10 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu">
         <div class="mobile-menu-content">
-            <a href="menu/about.html" data-page="about" class="mobile-link">About Us</a>
-            <a href="menu/Tutorials.html" data-page="tutorials" class="mobile-link">Use Tutorials</a>
-            <a href="menu/booking.html" data-page="booking" class="mobile-link">EV Booking Platform</a>
-            <a href="menu/blog.html" data-page="blog" class="mobile-link">Blog / News</a>
+            <a href="menu/about.html" class="mobile-link">About Us</a>
+            <a href="menu/Tutorials.html" class="mobile-link">Use Tutorials</a>
+            <a href="menu/booking.html" class="mobile-link">EV Booking Platform</a>
+            <a href="menu/blog.html" class="mobile-link">Blog / News</a>
             <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
                 <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon
                         name="logo-linkedin"></ion-icon></a>
@@ -85,7 +85,7 @@
                 <a href="#" class="btn btn-blue" onclick="display('tech-gallery')">our models</a>
             </div>
         </div>
-
+        <div id="hero-canvas"></div>
     </section>
 
     <section id="what-we-do">
@@ -276,195 +276,7 @@
             © 2026 Dark Dragon Calaestic — All Rights Reserved
         </div>
     </footer>
-    <script>
-        // --- Three.js Setup (Pod Visualization) ---
-        let scene, camera, renderer, podGroup;
-
-        function createPod() {
-            const group = new THREE.Group();
-
-            // Chassis
-            const bodyGeo = new THREE.BoxGeometry(3, 1.2, 2);
-            const bodyMat = new THREE.MeshPhongMaterial({
-                color: 0xf0f0f0,
-                shininess: 100,
-                specular: 0x0066ff
-            });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.5;
-            group.add(body);
-
-            // Windows
-            const winGeo = new THREE.BoxGeometry(2.8, 0.6, 1.8);
-            const winMat = new THREE.MeshPhongMaterial({ color: 0x333333, transparent: true, opacity: 0.8 });
-            const win = new THREE.Mesh(winGeo, winMat);
-            win.position.y = 0.8;
-            group.add(win);
-
-            // Sensors (LiDAR)
-            const sensorGeo = new THREE.SphereGeometry(0.12, 16, 16);
-            const sensorMat = new THREE.MeshBasicMaterial({ color: 0x0066ff });
-            const s1 = new THREE.Mesh(sensorGeo, sensorMat);
-            s1.position.set(1.4, 1.1, 0);
-            group.add(s1);
-
-            return group;
-        }
-
-        function init3D() {
-            const container = document.getElementById('hero-canvas');
-            if (!container) return;
-
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.offsetWidth, container.offsetHeight);
-            container.appendChild(renderer.domElement);
-
-            const ambient = new THREE.AmbientLight(0xffffff, 1);
-            scene.add(ambient);
-            const directional = new THREE.DirectionalLight(0xffffff, 1.2);
-            directional.position.set(5, 10, 7);
-            scene.add(directional);
-
-            podGroup = createPod();
-            scene.add(podGroup);
-
-            camera.position.set(6, 4, 8);
-            camera.lookAt(0, 0, 0);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                if (podGroup) {
-                    podGroup.rotation.y += 0.003;
-                    podGroup.position.y = Math.sin(Date.now() * 0.001) * 0.1;
-                }
-                renderer.render(scene, camera);
-            }
-            animate();
-        }
-
-        // --- GSAP Animations ---
-        function initAnimations() {
-            gsap.registerPlugin(ScrollTrigger);
-
-            // Hero Entrance
-            gsap.from(".hero-text > *", {
-                y: 30, opacity: 0, stagger: 0.2, duration: 1, ease: "power3.out"
-            });
-
-            // Impact Counters
-
-        }
-
-        function initMobileMenu() {
-
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const menuToggle = document.querySelector('.menu-toggle');
-
-            // open / close via toggle button
-            menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation(); // prevent immediate close
-                mobileMenu.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-                document.body.classList.toggle('menu-open');
-            });
-
-            // close when clicking outside the menu
-            document.addEventListener('click', (e) => {
-                const clickedInsideMenu = mobileMenu.contains(e.target);
-                const clickedToggle = menuToggle.contains(e.target);
-
-                if (!clickedInsideMenu && !clickedToggle && mobileMenu.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-
-            // prevent closing when clicking inside the menu (including links)
-            mobileMenu.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-
-            function closeMenu() {
-                mobileMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
-
-        }
-
-        // --- Lifecycle ---
-        window.addEventListener('load', () => {
-            init3D();
-            initAnimations();
-            initMobileMenu();
-        });
-
-        window.addEventListener('resize', () => {
-            const container = document.getElementById('hero-canvas');
-            if (container && camera && renderer) {
-                camera.aspect = container.offsetWidth / container.offsetHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.offsetWidth, container.offsetHeight);
-            }
-        });
-
-        /* --- Interactive Logo Split on Cursor Proximity --- */
-        const navLogo = document.querySelector('.nav-logo');
-        if (navLogo) {
-            document.addEventListener('mousemove', (e) => {
-                const rect = navLogo.getBoundingClientRect();
-                const logoX = rect.left + rect.width / 2;
-                const logoY = rect.top + rect.height / 2;
-                const distance = Math.hypot(e.clientX - logoX, e.clientY - logoY);
-
-                // Trigger split when cursor is within 80px
-                if (distance < 80) {
-                    navLogo.classList.add('split');
-                } else {
-                    navLogo.classList.remove('split');
-                }
-            });
-
-            // Add click/hover fallback for touch devices
-            navLogo.addEventListener('mouseenter', () => {
-                navLogo.classList.add('split');
-            });
-            navLogo.addEventListener('mouseleave', () => {
-                navLogo.classList.remove('split');
-            });
-        }
-
-        // Optional: Add a little bounce effect on hover
-        document.querySelectorAll('.nav-icon').forEach(icon => {
-            icon.addEventListener('mouseenter', () => {
-                icon.querySelector('ion-icon').style.transform = 'scale(1.2) rotate(-8deg)';
-            });
-            icon.addEventListener('mouseleave', () => {
-                icon.querySelector('ion-icon').style.transform = '';
-            });
-        });
-    </script>
     <script src="menu/main.js"></script>
-    <script>
-        let lastScrollY = window.scrollY;
-        const nav = document.querySelector('nav');
-
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.scrollY;
-
-            if (currentScroll > lastScrollY && currentScroll > 100) {
-                // scrolling down → hide nav
-                nav.classList.add('nav-hidden');
-            } else {
-                // scrolling up → show nav
-                nav.classList.remove('nav-hidden');
-            }
-
-            lastScrollY = currentScroll;
-        });
-    </script>
 
 </body>
 

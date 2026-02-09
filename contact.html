@@ -12,29 +12,52 @@
 
 	<nav>
 		<div class="nav-left">
+			<div class="menu-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
 		</div>
 
 		<div class="nav-center">
 			<div class="nav-links-left">
 				<a href="project.html">PROJECTS</a>
 			</div>
-
-			<a href="index.html" class="nav-logo">
-				<div class="logo-text">
-					<span>DD</span>
-					<span>C</span>
-				</div>
-			</a>
+			<div style="position: center;">
+				<a href="index.html" class="nav-logo">
+					<div class="logo-text">
+						<span>DD</span>
+						<span>C</span>
+					</div>
+				</a>
+			</div>
 
 			<div class="nav-links-right">
 				<a href="technology.html">TECHNOLOGY</a>
 			</div>
 		</div>
 
-		<div class="nav-right" style="color: azure;">
+		<div class="nav-right" style="color: azure; display: flex; align-items: center; gap: 1rem;">
 			<a href="contact.html" class="btn-nav">Contact</a>
 		</div>
 	</nav>
+
+	<!-- Mobile Menu Overlay -->
+	<div class="mobile-menu">
+		<div class="mobile-menu-content">
+			<a href="menu/about.html" class="mobile-link">About Us</a>
+			<a href="menu/Tutorials.html" class="mobile-link">Use Tutorials</a>
+			<a href="menu/booking.html" class="mobile-link">EV Booking Platform</a>
+			<a href="menu/blog.html" class="mobile-link">Blog / News</a>
+			<div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
+				<a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon
+						name="logo-linkedin"></ion-icon></a>
+				<a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon
+						name="logo-instagram"></ion-icon></a>
+				<a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+			</div>
+		</div>
+	</div>
 	<main style="padding:140px 10%; max-width:900px; margin:0 auto;">
 		<h1 style="text-align:center;">Contact Us</h1>
 		<p style="text-align:center; color:var(--text-dim);">“Have a question? We’re happy to help.”</p>
@@ -132,6 +155,8 @@
 			this.reset();
 		});
 	</script>
+	<div id="cursor"></div>
+	<div id="cursor-dot"></div>
 	<script src="menu/main.js"></script>
 </body>
 

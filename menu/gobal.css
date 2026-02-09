@@ -1076,13 +1076,13 @@ nav a:focus-visible,
 /* --- Mobile Navigation Adjustments --- */
 @media (max-width: 1100px) {
     .nav-center {
-        display: flex;
+        display: flex !important;
         gap: 1rem;
     }
 
     .nav-links-left,
     .nav-links-right {
-        display: flex;
+        display: flex !important;
         gap: 0.8rem;
     }
 
@@ -2460,68 +2460,6 @@ footer {
     }
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.about-image {
-    background: url("./assets/collaboration-glass-training-business-people-260nw-2479151937.webp");
-    border-radius: 30px;
-    height: 500px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.about {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 15rem 10% 5rem;
-    background: radial-gradient(circle at 70% 50%, rgba(0, 122, 255, 0.05), transparent),
-        url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=2000');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.about::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.85);
-    z-index: 1;
-}
-
-.about-content {
-    position: relative;
-    z-index: 2;
-}
-
-.about-content h4 {
-    color: var(--accent-red);
-    font-size: 0.8rem;
-    margin-bottom: 1rem;
-}
-
-.about-content h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-}
-
-.about-content p {
-    font-size: 1.1rem;
-    color: var(--text-dim);
-    margin-bottom: 2.5rem;
-    max-width: 500px;
-    line-height: 1.6;
-}
 
 .story-section {
     padding: 120px 15%;
@@ -2583,59 +2521,99 @@ footer {
 }
 
 /* --- Founder Section --- */
+/* SECTION */
 .founder-section {
-    padding: clamp(3rem, 8vw, 7rem) 1.5rem;
-    display: grid;
-    max-width: 1400px;
-    margin: 0 auto;
-    grid-template-columns: 1fr 1.1fr;
-    gap: clamp(2rem, 5vw, 6rem);
-    align-items: center;
-    background: #fff;
-}
-
-.founder-image {
-    height: 600px;
     width: 100%;
-    aspect-ratio: 4 / 5;
-    background: #e0e0e0 url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1000') center;
-    background-size: cover;
-    border-radius: 40px;
-    filter: grayscale(100%);
-    transition: filter 0.5s;
-    background-size: cover;
-    background-position: center;
+    padding: 4rem 1.5rem;
+    box-sizing: border-box;
 }
 
-.founder-image:hover {
-    filter: grayscale(0%);
-}
-
-.founder-content {
-    max-width: 700px;
+/* WRAPPER */
+.founder-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 3rem;
+    align-items: center;
 }
 
-.founder-intro {
-    max-width: 650px;
-    color: var(--text-dim);
-    font-size: clamp(1rem, 1.2vw, 1.15rem);
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
+/* IMAGE */
+.founder-image {
+    flex: 1;
+    min-height: 360px;
+    background: url("https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=2000") center / cover no-repeat;
+    border-radius: 16px;
 }
 
+/* CONTENT */
+.founder-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.gradient-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.gradient-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #00e5ff, #7c4dff);
+    border-radius: 4px;
+}
+
+.section-header {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.founder-intro,
 .founder-body {
-    color: var(--text-main);
-    font-size: clamp(1rem, 1.2vw, 1.15rem);
-    line-height: 1.8;
+    max-width: 100%;
+    line-height: 1.6;
+}
+
+/* BUTTON */
+.manifesto-btn {
+    display: inline-block;
     margin-top: 2rem;
 }
 
-.manifesto-btn {
-    margin-top: 3rem;
-    display: inline-flex;
+/* =========================
+   RESPONSIVE BREAKPOINTS
+   ========================= */
+
+@media (max-width: 1024px) {
+    .founder-wrapper {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .founder-wrapper {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .founder-image {
+        width: 100%;
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .founder-section {
+        padding: 3rem 1rem;
+    }
+
+    .founder-image {
+        min-height: 220px;
+    }
 }
 
 footer {
