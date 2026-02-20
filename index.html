@@ -4,281 +4,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Dragon Calaestis | Autonomous EV Mobility</title>
-    <meta name="description"
-        content="Experience the future of mobility with Dark Dragon Calaestis - Autonomous EV Pods powering smart communities, gated estates, and college campuses.">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap"
+    <title>Dark Dragons Caelestis - Mobilizing India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap"
         rel="stylesheet">
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <link rel="stylesheet" href="gobal.css">
-    <link rel="stylesheet" href="./menu/gobal.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <!--=============== GOOGLE FONTS FOR CARDS ===============-->
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
-    <nav>
-        <div class="nav-left">
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <!-- Navigation -->
+    <nav id="mainNav"
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+
+        <!-- Left Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
+            <a href="technology.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
+            <a href="product.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
+                Build</a>
+            <a href="menu/blog.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
-        <div class="nav-center">
-            <div class="nav-links-left">
-                <a href="project.html">PROJECTS</a>
-            </div>
-            <div style="position: center;">
-                <a href="index.html" class="nav-logo">
-                    <div class="logo-text">
-                        <span>DD</span>
-                        <span>C</span>
-                    </div>
-                </a>
+        <!-- Center Logo -->
+        <div class="flex items-center gap-2 shrink-0">
+            <div class="logo-icon w-full h-full flex items-center justify-center">
+                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="h-12 sm:h-14 w-auto drop-shadow-md" style="color: var(--mint-500);">
+                    <!-- Octagon Border -->
+                    <!-- Changed stroke color from accent (#99eff0) to primary/body background (#d3e4df) -->
+                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
+                        stroke-width="3" fill="none" style="color :var(--mint-500);" />
+
+                    <!-- Interlocking DDC Letters -->
+                    <!-- Using Playfair Display (Serif) to match reference -->
+                    <g font-family="'Nanum Myeongjo" font-weight="50" text-anchor="middle">
+
+                        <!-- Left "D" -->
+                        <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
+
+                        <!-- Right "C" -->
+                        <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
+
+                        <!-- Center "D" (Larger, Overlapping with Cutout) -->
+                        <!-- Stroke color matches navbar background (#474d4d) to create the "gap" -->
+                        <!-- Changed fill color from accent (#99eff0) to primary (#d3e4df) -->
+                        <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#22c55e"
+                            paint-order="stroke">D</text>
+
+
+                    </g>
+                </svg>
             </div>
 
-            <div class="nav-links-right">
-                <a href="technology.html">TECHNOLOGY</a>
-            </div>
         </div>
 
-        <div class="nav-right" style="color: azure; display: flex; align-items: center; gap: 1rem;">
-            <a href="contact.html" class="btn-nav">Contact</a>
+        <!-- Right Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
+            <a href="menu/about.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
+                Are
+            </a>
+            <a href="menu/tutor.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
+                go</a>
+            <a href="menu/contact.html"
+                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
+                Us</a>
         </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu">
-        <div class="mobile-menu-content">
-            <a href="menu/about.html" class="mobile-link">About Us</a>
-            <a href="menu/Tutorials.html" class="mobile-link">Use Tutorials</a>
-            <a href="menu/booking.html" class="mobile-link">EV Booking Platform</a>
-            <a href="menu/blog.html" class="mobile-link">Blog / News</a>
-            <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
-                <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon
-                        name="logo-linkedin"></ion-icon></a>
-                <a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon
-                        name="logo-instagram"></ion-icon></a>
-                <a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
-            </div>
-        </div>
-    </div>
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 px-6 min-h-[80vh] flex items-center">
+        <div class="hero-shape"></div>
+        <div class="max-w-4xl mx-auto text-center items-center">
+            <div class="flex flex-col justify-center h-full">
+                <span
+                    class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-emerald-700 bg-mint-200 rounded-full w-fit mx-auto">
+                    A DDC INITIATIVE
+                </span>
 
-    <div class="energy-wave"></div>
+                <!-- Main Gradient Headline (Motive) -->
+                <h1 class="text-5xl md:text-7xl font-bold leading-[1.1] mb-6">
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-cyan-500 to-blue-600">
+                        A new wave of mobilizing India.
+                    </span>
+                </h1>
 
-    <section id="hero" class="hero">
-        <div class="hero-content">
-            <h1>A NEW WAVE OF <span class="gradient-test">MOBILIZING INDIA</span></h1>
-            <p>Dark Dragons Calaestis develops modular electric platforms and autonomous EV pods.</p>
-            <div class="cta-group">
-                <a href="journey/timeline.html" class="btn btn-red">journey</a>
-                <a href="#" class="btn btn-blue" onclick="display('tech-gallery')">our models</a>
-            </div>
-        </div>
-        <div id="hero-canvas"></div>
-    </section>
+                <p class="text-lg text-emerald-800/80 mb-10 max-w-lg leading-relaxed mx-auto">
+                    We are building the next generation of autonomous EV pods with instant battery swapping and 90°
+                    geometry.
+                </p>
 
-    <section id="what-we-do">
-        <h2 style="text-align: center; margin-bottom: 1rem;">Solutions Portfolio</h2>
-        <p style="text-align: center; color: var(--text-dim);">Integrated transportation ecosystem for the modern era.
-        </p>
-        <div class="cards-container">
-            <!-- Automated EV Pods -->
-            <div class="flip-card" onclick="this.classList.toggle('active')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="icon-box">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <circle cx="12" cy="12" r="10" />
-                                <path d="M12 8v8M8 12h8" />
-                            </svg>
-                        </div>
-                        <h3>platform</h3>
-                        <div class="flip-hint"></div>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Modular BEV Core Architecture</h3>
-                        <p>A universal BEV foundation engineered for modular expansion, structural balance, and
-                            long-term adaptability across multiple vehicle forms.</p>
-                    </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button class="px-8 py-4 bg-emerald-900 text-white rounded-2xl font-semibold hover-lift">
+                        View The Prototype
+                    </button>
+                    <button
+                        class="px-8 py-4 bg-white text-emerald-900 border border-mint-200 rounded-2xl font-semibold hover-lift">
+                        Our Logic
+                    </button>
                 </div>
-            </div>
 
-            <!-- Expansion Flex Cars -->
-            <div class="flip-card" onclick="this.classList.toggle('active')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="icon-box">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                        </div>
-                        <h3>Autonomy</h3>
-                        <div class="flip-hint"></div>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Smart Navigation & Autonomy</h3>
-                        <p>Intelligent navigation and controlled self-driving systems built for predictable, safe, and
-                            efficient movement in managed environments.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Advanced EV Batteries -->
-            <div class="flip-card" onclick="this.classList.toggle('active')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <div class="icon-box">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 2L3 14h9l-1 8 8-12h-9l1-8z" />
-                            </svg>
-                        </div>
-                        <h3>Advanced battery swap</h3>
-                        <div class="flip-hint"></div>
-                    </div>
-                    <div class="flip-card-back">
-                        <h3>Instant Battery Swap Platform</h3>
-                        <p>Rapid exchange battery architecture enabling continuous operation with minimal downtime and
-                            maximum fleet readiness.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-
-    <!-- New Impact Detail Section -->
-
-    <section id="industries">
-        <h2 style="text-align: center; margin-bottom: 4rem;">Industries Served</h2>
-        <div class="industries-grid">
-            <div class="industry-card"
-                style="background: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1000') center/cover;">
-                <div class="industry-canvas" id="canvas-community"></div>
-                <div class="industry-overlay">
-                    <h3>Gated Communities</h3>
-                    <p>Last-mile connectivity for modern housing estates.</p>
-                </div>
-            </div>
-            <div class="industry-card"
-                style="background: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=1000') center/cover;">
-                <div class="industry-canvas" id="canvas-college"></div>
-                <div class="industry-overlay">
-                    <h3>College Campuses</h3>
-                    <p>Safely transporting students across expansive university grounds.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="partners">
-        <div class="partners-track">
-            <div class="partner-logo">
-                <svg viewBox="0 0 100 100">
-                    <path d="M10,50 L90,50 M50,10 L50,90" stroke="currentColor" stroke-width="5" />
-                </svg>
-            </div>
-            <div class="partner-logo">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg>
-            </div>
-            <div class="partner-logo">
-                <svg viewBox="0 0 100 100">
-                    <rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg>
-            </div>
-            <div class="partner-logo">
-                <svg viewBox="0 0 100 100">
-                    <path d="M20,80 L50,20 L80,80 Z" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg>
-            </div>
-            <div class="partner-logo">
-                <svg viewBox="0 0 100 100">
-                    <path d="M10,10 L90,90 M90,10 L10,90" stroke="currentColor" stroke-width="5" />
-                </svg>
-            </div>
-            <!-- Duplicate -->
-            <div class="partner-logo"><svg viewBox="0 0 100 100">
-                    <path d="M10,50 L90,50 M50,10 L50,90" stroke="currentColor" stroke-width="5" />
-                </svg></div>
-            <div class="partner-logo"><svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg></div>
-            <div class="partner-logo"><svg viewBox="0 0 100 100">
-                    <rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg></div>
-            <div class="partner-logo"><svg viewBox="0 0 100 100">
-                    <path d="M20,80 L50,20 L80,80 Z" stroke="currentColor" stroke-width="5" fill="none" />
-                </svg></div>
-            <div class="partner-logo"><svg viewBox="0 0 100 100">
-                    <path d="M10,10 L90,90 M90,10 L10,90" stroke="currentColor" stroke-width="5" />
-                </svg></div>
-        </div>
-    </div>
-
-
-
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
-    <footer class="py-20 border-t border-gray-100 px-[5%]">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
-            <div class="col-span-2">
-                <div class="flex flex-col items-start">
-                    <div class="nav-logo mb-6 text-xl font-bold tracking-tight text-white uppercase">
-                        Dark Dragons Calaestic
-                    </div>
-
-                    <p class="text-sm text-gray-400 max-w-sm mb-9 leading-relaxed">
-                        Building the next generation of autonomous electric mobility for managed environments.
+                <!-- Tagline at the bottom -->
+                <div class="mt-auto pt-6 border-t border-emerald-200/50 max-w-md mx-auto w-full">
+                    <p class="text-emerald-900 font-bold tracking-wide uppercase text-sm">
+                        Connecting past to future, one platform at a time.
                     </p>
                 </div>
-                <div class="flex gap-4">
-                    <a href="#" class="text-gray-400 hover:text-[#0077b5] transition">LinkedIn</a>
-                    <a href="#" class="text-gray-400 hover:text-[#ff0000] transition">youtube</a>
-                    <a href="#" class="text-gray-400 hover:text-[#e1306c] transition">Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems & Solutions -->
+    <section id="solutions" class="py-24 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-emerald-950 mb-4">Solving the Mobility Crisis</h2>
+                <p class="text-emerald-700 max-w-2xl mx-auto">We aren't just building cars; we are fixing the
+                    infrastructure of movement.</p>
+            </div>
+
+            <!-- Video Section -->
+            <div
+                class="mb-24 w-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-emerald-30 relative aspect-video group bg-black">
+                <video id="solutionVideo" class="w-full h-full object-cover opacity-60" muted loop autoplay src="images/v1760605652/video.mp4" type="video/mp4"/>
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent pointer-events-none">
+                </div>
+                <!-- Label -->
+                <div class="absolute bottom-8 left-8 text-white pointer-events-none">
+                    <span
+                        class="bg-mint-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Demo</span>
+                    <h3 class="text-2xl font-bold">Autonomous Navigation</h3>
                 </div>
             </div>
-            <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest mb-6">Knowledge Base</h4>
-                <ul class="space-y-4 text-sm text-gray-500">
-                    <li><a href="#" class="hover:text-white">Support</a></li>
-                    <li><a href="#" class="hover:text-white">About</a></li>
-                    <li><a href="#" class="hover:text-white">Blog</a></li>
-                </ul>
+
+            <!-- Expanding Image Scroll Section -->
+            <div id="expand-trigger" class="relative h-[250vh] mb-24 rounded-[40px] overflow-visible">
+                <div
+                    class="sticky top-0 h-screen w-full flex overflow-hidden rounded-[40px] border border-mint-200 shadow-2xl">
+                    <!-- Text Side (Left) -->
+                    <div
+                        class="w-full md:w-1/2 h-full bg-mint-50 flex flex-col justify-center p-12 md:p-20 z-0 relative">
+                        <span class="text-mint-600 font-bold tracking-wider uppercase mb-4 text-sm">The Material
+                            Evolution</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-emerald-950 mb-6 leading-tight">From Fiberglass
+                            to <span class="text-emerald-500">Gold Sample.</span></h3>
+                        <p class="text-emerald-800/80 text-lg leading-relaxed max-w-md">
+                            We didn't let a lack of capital stop our engineering. We used low-fidelity materials like
+                            PVC and fiberglass to prove our execution.
+                            <br><br>
+                            Now, we are transitioning from functional mock-ups to the <strong>Industrial Gold
+                                Sample</strong> using professional-grade materials.
+                        </p>
+                    </div>
+
+                    <!-- Image Side (Right - Expands) -->
+                    <div id="expanding-image" class="absolute right-0 top-0 h-full w-1/2 bg-emerald-900 z-10 shadow-2xl"
+                        style="will-change: width; width: 50%;">
+                        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1600&q=80"
+                            class="w-full h-full object-cover" alt="Industrial Design High Fidelity">
+                        <!-- Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/20 to-transparent"></div>
+
+                        <!-- Caption that fades in -->
+                        <div id="image-caption"
+                            class="absolute bottom-12 right-12 text-white text-right opacity-0 transition-opacity duration-700">
+                            <h4 class="text-3xl font-bold mb-2">Ready for Scale</h4>
+                            <p class="text-emerald-100/80 text-sm">High-fidelity manufacturing.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest mb-6">Contact</h4>
-                <ul class="space-y-4 text-sm text-gray-500">
-                    <li><a href="#" class="hover:text-white">Partner Relations</a></li>
-                    <li><a href="#" class="hover:text-white">Contact Us</a></li>
-                    <li><a href="#" class="hover:text-white">Media Kit</a></li>
-                </ul>
+
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-10 rounded-3xl bg-mint-50 border border-mint-100 hover-lift">
+                    <div
+                        class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Time Efficiency</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">Traditional EVs take hours to charge. Our swapping
+                        ecosystem gets you back on the road in <span class="font-bold text-emerald-600">3
+                            minutes</span>.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-10 rounded-3xl bg-mint-100 border border-mint-200 hover-lift">
+                    <div
+                        class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Crab-Walk Geometry</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">Proprietary 90° steering logic validated via
+                        simulation. Unmatched maneuverability for tight urban spaces.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-10 rounded-3xl bg-mint-50 border border-mint-100 hover-lift">
+                    <div
+                        class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Value Retention</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">We decouple the battery cost from the vehicle,
+                        solving the resale value crisis and lowering upfront costs.</p>
+                </div>
             </div>
         </div>
-        <div class="mt-20 pt-8 border-t text-center text-[10px] text-gray-300 uppercase tracking-widest">
-            © 2026 Dark Dragon Calaestic — All Rights Reserved
+    </section>
+
+    <!-- The Journey Section -->
+    <section id="journey" class="py-20 px-6 bg-mint-50">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1">
+                <h2 class="text-3xl font-bold text-emerald-950 mb-6">The Journey Section </h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="font-bold text-3xl text-mint-500">01</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-emerald-900">The Validation</h4>
+                            <p class="text-emerald-800/70 text-sm">Developed proprietary geometry for steering.
+                                Validated logic via full-stack CAD digital simulations.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="font-bold text-3xl text-mint-500">02</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-emerald-900">The Hustle</h4>
+                            <p class="text-emerald-800/70 text-sm">When funding delayed, we self-contributed ₹8,000. We
+                                didn't let capital stop engineering. We used fiberglass, PVC, and grit to prove our IP.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="font-bold text-3xl text-mint-500">03</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-emerald-900">The Material Evolution</h4>
+                            <p class="text-emerald-800/70 text-sm">Moved from low-fidelity mockups to structural
+                                reinforcement. Finalized ingress/egress, cabin volume, and battery bay alignment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80"
+                    alt="Engineering Prototype" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section (The Logic is Proven) -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto mint-gradient rounded-[40px] p-8 md:p-12 text-center text-emerald-950">
+            <h2 class="text-4xl font-bold mb-6">The Logic is Proven.</h2>
+            <p class="text-lg mb-12 opacity-80 max-w-2xl mx-auto">We don't use capital for trial & error. We use it for
+                industrial scale. Here is what we have already validated:</p>
+
+            <!-- Logic Cards Grid (Replacing Old Cards) -->
+            <div class="founders__content">
+
+                <!-- Card 1: founder Architecture -->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Battery Tech" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">Founder</span>
+                        <h3 class="card__name">MR. ADHITHA PURUSOTHAMAN</h3>
+                        <p class="card__description">Finalized the automated docking sequence, battery-bay alignment and
+                            power station loop cycle.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-file-list-3-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-check-double-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-share-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-information-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: co-founder Proof -->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Ergonomics" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">CO FOUNDER</span>
+                        <h3 class="card__name">PRAVEEN KUMAR</h3>
+                        <p class="card__description">Life-size mock-up used to finalize ingress/egress points and cabin
+                            volume validation.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-ruler-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-eye-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-team-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-folder-open-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Mechanical Logic -->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Mechanics" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">MECHNAICAL</span>
+                        <h3 class="card__name">SANJAY.R</h3>
+                        <p class="card__description">Frozen designs for the crab-walk enabler coupling and steering
+                            mechanisms.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-settings-4-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-compasses-2-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-tools-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-save-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: navigation Scale -->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">NAVIGATION DEPART</span>
+                        <h3 class="card__name">DiNESH</h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!-- Card 5: web-developer -->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">WEBSITE DEVELOPER</span>
+                        <h3 class="card__name">YESHWANT.G.N</h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <!--card 6 :-->
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">WEBSITE DEVELOPER</span>
+                        <h3 class="card__name">YESHWANT.G.N</h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-12">
+                <button
+                    class="px-8 py-4 bg-emerald-950 text-white rounded-2xl font-bold hover:scale-105 transition-transform">
+                    Partner With Us
+                </button>
+                <button
+                    class="px-8 py-4 bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl font-bold hover:bg-white/40 transition-all text-emerald-950">
+                    Contact Founder
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Deployment Scenarios -->
+    <section class="py-24 bg-white text-emerald-950 relative overflow-hidden">
+        <!-- Background Texture -->
+        <div
+            class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Where We Operate</h2>
+                <p class="text-emerald-700/80 max-w-2xl mx-auto">Our autonomous pods are designed for closed-loop
+                    environments like Gated Communities and University Campuses.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <!-- Visual Container (Map/Aerial View) -->
+                <div
+                    class="relative h-[400px] w-full bg-mint-50 rounded-3xl border border-mint-200 flex items-center justify-center overflow-hidden shadow-xl group">
+
+                    <!-- Aerial Image representing a community -->
+                    <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1000&auto=format&fit=crop"
+                        class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        alt="Gated Community Modern Apartments">
+
+                    <!-- Overlay Gradient (FADE EFFECT) -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
+
+                    <!-- Connecting Lines (SVG) -->
+                    <!-- Removed markers and SVG lines as requested -->
+
+                </div>
+
+                <!-- Location List -->
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-bold mb-6 text-emerald-950">Deployment Scenarios</h3>
+
+                    <!-- Item 1: Gated Communities -->
+                    <div
+                        class="location-item p-4 rounded-xl bg-mint-50 border border-mint-100 flex items-center justify-between cursor-pointer group hover:bg-mint-100/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="ri-community-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-emerald-950">Gated Communities</h4>
+                                <p class="text-emerald-700/80 text-sm">Seamless internal transit for residents.</p>
+                            </div>
+                        </div>
+                        <i
+                            class="ri-arrow-right-line text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <!-- Item 2: College Campuses -->
+                    <div
+                        class="location-item p-4 rounded-xl bg-mint-50 border border-mint-100 flex items-center justify-between cursor-pointer group hover:bg-mint-100/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="ri-book-open-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-emerald-950">College Campuses</h4>
+                                <p class="text-emerald-700/80 text-sm">Hostel to Class connectivity.</p>
+                            </div>
+                        </div>
+                        <i
+                            class="ri-arrow-right-line text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <!-- Item 3: Corporate Parks -->
+                    <div
+                        class="location-item p-4 rounded-xl bg-mint-50 border border-mint-100 flex items-center justify-between cursor-pointer group hover:bg-mint-100/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="ri-briefcase-4-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-emerald-950">Tech Parks</h4>
+                                <p class="text-emerald-700/80 text-sm">Last-mile employee mobility.</p>
+                            </div>
+                        </div>
+                        <i
+                            class="ri-arrow-right-line text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <!-- Item 4: Resorts -->
+                    <div
+                        class="location-item p-4 rounded-xl bg-mint-50 border border-mint-100 flex items-center justify-between cursor-pointer group hover:bg-mint-100/50 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="ri-hotel-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-emerald-950">Luxury Resorts</h4>
+                                <p class="text-emerald-700/80 text-sm">Quiet, eco-friendly guest transport.</p>
+                            </div>
+                        </div>
+                        <i
+                            class="ri-arrow-right-line text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-emerald-950 text-emerald-100/60 py-16 px-6 border-t border-emerald-900">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 border-b border-emerald-900 pb-12 mb-12">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center gap-2 mb-6">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-mint-500 flex items-center justify-center text-emerald-950 font-bold text-xs">
+                        DDC</div>
+                    <span class="text-xl font-bold text-white tracking-tight">Dark Dragons Caelestis</span>
+                </div>
+                <p class="text-sm leading-relaxed">Connecting past to future, one platform at a time.</p>
+                <p class="mt-4 text-xs text-emerald-400">Founder: Aditya Purushotham</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Innovation</h4>
+                <ul class="space-y-4 text-sm">
+                    <li><a href="#" class="hover:text-mint-400">Battery Swapping</a></li>
+                    <li><a href="#" class="hover:text-mint-400">Crab-Walk Steering</a></li>
+                    <li><a href="#" class="hover:text-mint-400">Retrofitting</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Company</h4>
+                <ul class="space-y-4 text-sm">
+                    <li><a href="#" class="hover:text-mint-400">Our Story</a></li>
+                    <li><a href="#" class="hover:text-mint-400">Invest</a></li>
+                    <li><a href="#" class="hover:text-mint-400">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Connect</h4>
+                <p class="text-sm mb-4">Let's drive the future together.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="email@address.com"
+                        class="bg-emerald-900/50 border border-emerald-800 rounded-lg px-4 py-2 text-sm w-full focus:outline-none focus:border-mint-500 text-white placeholder-emerald-500/50">
+                    <button
+                        class="bg-mint-500 text-emerald-950 px-4 py-2 rounded-lg text-sm font-bold hover:bg-mint-400 transition-colors">Send</button>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto flex flex-col md:row-reverse md:flex-row justify-between items-center text-xs text-emerald-500/60">
+            <p>&copy; 2024 Dark Dragons Caelestis Pvt Ltd. All rights reserved.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
         </div>
     </footer>
-    <script src="menu/main.js"></script>
 
+    <script src="js/main.js"></script>
 </body>
 
 </html>

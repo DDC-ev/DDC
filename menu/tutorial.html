@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hop On Go | DDC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-emerald-950 font-sans">
+
+    <!-- CSS-only state tracking input -->
+    <input type="checkbox" id="mobileMenuToggle" class="hidden peer" />
+
+    <!-- Container wrapper with tracking class -->
+    <header class="header-wrapper" id="headerWrapper">
+        <nav id="mainNav" class="bg-white/70 backdrop-blur-lg border border-white/40 rounded-full p-2 flex items-center justify-between shadow-lg shadow-emerald-900/5">
+
+            <!-- Left Links Wrapper -->
+            <div class="nav-left anim-content px-4 text-sm font-medium text-emerald-800">
+                <a href="../technology.html" class="desktop-link prio-1 hover:text-emerald-500 transition-colors">Features</a>
+                <a href="../product.html" class="desktop-link prio-1 hover:text-emerald-500 transition-colors">What We Build</a>
+                <a href="blog.html" class="desktop-link prio-2 hover:text-emerald-500 transition-colors">NEWS / Media</a>
+            </div>
+
+            <!-- Center Logo -->
+            <div class="flex items-center justify-center shrink-0 z-10">
+                <a href="../index.html" class="logo-icon flex items-center justify-center drop-shadow-sm transition-transform hover:scale-105">
+                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-full w-auto">
+                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df" stroke-width="3" fill="none" />
+                        <g font-family="'Nanum Myeongjo'" font-weight="50" text-anchor="middle">
+                            <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
+                            <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
+                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#22c55e" paint-order="stroke">D</text>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Right Wrapper -->
+            <div class="nav-right anim-content px-2 text-sm font-medium text-emerald-800">
+                <a href="about.html" class="desktop-link prio-3 hover:text-emerald-500 transition-colors">Who We Are</a>
+                <a href="tutorial.html" class="desktop-link prio-3 hover:text-emerald-500 transition-colors">Hop On Go</a>
+                <a href="contact.html" class="desktop-link prio-1 bg-emerald-500 text-white px-6 py-2.5 rounded-full hover:bg-emerald-600 hover:shadow-md hover:shadow-emerald-500/20 transition-all text-xs tracking-wide uppercase font-bold">Contact Us</a>
+                
+                <!-- Hamburger icon -->
+                <label for="mobileMenuToggle" class="hamburger-btn cursor-pointer text-emerald-600 p-2 rounded-full hover:bg-emerald-100/50 transition-colors" aria-label="Open menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </label>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Fullscreen Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-emerald-50/95 backdrop-blur-xl z-[60] flex flex-col transition-transform duration-300 translate-x-full peer-checked:translate-x-0">
+        <!-- Mobile Menu Header -->
+        <div class="flex items-center justify-between p-6 border-b border-emerald-200/50">
+            <span class="text-lg font-bold text-emerald-800 font-serif">Menu</span>
+            <label for="mobileMenuToggle" class="cursor-pointer text-emerald-600 p-2 rounded-full hover:bg-emerald-200/50 transition-colors" aria-label="Close menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </label>
+        </div>
+
+        <!-- Menu Links -->
+        <div class="flex flex-col gap-6 p-8 text-xl font-medium text-emerald-800 overflow-y-auto pb-24">
+            <a href="../technology.html" class="menu-link mobile-link prio-1 hover:text-emerald-500 transition-colors">Features</a>
+            <a href="../product.html" class="menu-link mobile-link prio-1 hover:text-emerald-500 transition-colors">What We Build</a>
+            <a href="blog.html" class="menu-link mobile-link prio-2 hover:text-emerald-500 transition-colors">NEWS / Media</a>
+            <a href="about.html" class="menu-link mobile-link prio-3 hover:text-emerald-500 transition-colors">Who We Are</a>
+            <a href="tutorial.html" class="menu-link mobile-link prio-3 hover:text-emerald-500 transition-colors">Hop On Go</a>
+            <a href="contact.html" class="menu-link mobile-link prio-1 mt-4 bg-emerald-500 text-white text-center px-6 py-4 rounded-full hover:bg-emerald-600 transition-all text-sm tracking-widest uppercase font-bold">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-32 px-6 max-w-7xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-serif font-bold text-emerald-900 mb-6">Hop On Go</h1>
+        <p class="text-lg text-emerald-800/80 max-w-2xl mx-auto">
+            Experience the future of mobility. Content coming soon.
+        </p>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

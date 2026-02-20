@@ -22,58 +22,7 @@
     <link rel="stylesheet" href="gobal.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f9fbf9;
-            color: var(--brand-dark);
-            scroll-behavior: smooth;
-        }
-
-        /* SVG Clipping Logic */
-        .custom-shape {
-            clip-path: url(#productClip);
-            -webkit-clip-path: url(#productClip);
-        }
-
-        /* Scroll Animation States */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Hover Effect for Buttons */
-        .btn-notch {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn-notch:hover {
-            transform: scale(1.1);
-            background-color: #39423f;
-        }
-
-
-        /* Specification Modal */
-        #modalOverlay {
-
-            backdrop-filter: blur(8px);
-            transition: opacity 0.3s ease;
-        }
-
-        .svg::before {
-            color: black;
-        }
-
-        .svg::after {
-            color: whitesmoke;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>

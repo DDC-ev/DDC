@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Dragon Calaestis | Autonomous EV Mobility</title>
-    <meta name="description"
-        content=" Tech and Features - Reimagining urban movement with white-label modular technology.">
-
+    <title>EV Pod Collection</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Fonts -->
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Fonts: Playfair (Serif), Plus Jakarta (Brand Sans), DM Sans (Slider Sans), Nanum Myeongjo (Logo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-
-    <!-- External Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="gobal.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        :root {
-            --primary: #0066FF;
-            --accent: #FF3B30;
-            --bg-light: #FBFBFB;
-            --bg-pure: #FFFFFF;
-            --text-main: #1D1D1F;
-            --text-secondary: #6E6E73;
-            --border: #E5E5E7;
-            --glass: rgba(255, 255, 255, 0.8);
-        }
-
+        /* --- RESET & BASE --- */
         * {
             margin: 0;
             padding: 0;
@@ -45,458 +34,796 @@
         }
 
         body {
-            background: var(--bg-light);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif, "Poppins", sans-serif;
-            ;
+            background: #f0fdf4; /* Light Mint Background */
+            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
+            color: #1a4d2e;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-
-        /* --- Navigation --- */
-
-
-        .btn-cta {
-            background: var(--text-main);
-            color: white;
-            padding: 0.7rem 1.4rem;
-            border-radius: 99px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- Hero Section --- */
-
-
-
-        /* --- Showcase Sections (Wipe Effect) --- */
-        .showcase-section {
-            padding: 10vh 5%;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        /* --- HERO SECTION --- */
+        
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+
+    /* Softer luxury overlay */
+    background: linear-gradient(
+        to bottom,
+        rgba(240, 253, 244, 0.92),
+        rgba(220, 252, 231, 0.85)
+    ),
+    url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop');
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Elegant Serif Headline */
+.hero-title {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.05;
+    color: #052e26;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
+}
+
+/* Refined Accent */
+.hero-highlight {
+    background: linear-gradient(90deg, #059669, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Descriptive & Elegant Subtitle */
+.hero-subtitle {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.35rem;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    color: #1f2937;
+    opacity: 0.9;
+}
+
+/* Optional: Add a refined secondary description */
+.hero-description {
+    margin-top: 1.2rem;
+    font-size: 1.05rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #374151;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.75;
+}
+.collection-section h2,
+.feature-item,
+.panel-label {
+    font-family: 'Exo 2', sans-serif;
+}
+
+.content h3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.05em;
+}
+
+        /* --- SCROLL TECHNOLOGY SECTION --- */
+        .section-height {
+            height: 300vh;
+            position: relative;
+        }
+
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            background: var(--bg-pure);
-        }
-
-        .showcase-container {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .showcase-container.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .visual-box {
-            flex: 1.2;
-            position: relative;
-            border-radius: 24px;
             overflow: hidden;
-            aspect-ratio: 16 / 10;
-            background: #eee;
-            box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.1), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
         }
 
-        .visual-mask {
+        .main-container {
+            position: relative;
+            height: 100vh;
+            width: 92%;
+            overflow: hidden;
+            border-radius: 32px;
+            z-index: 10; 
+        }
+
+        .dark-layer {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            z-index: 2;
-            transform-origin: right;
+            inset: 0;
+            background: #fff;
         }
 
-        .visual-box video {
+        .dark-layer img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: brightness(0.85);
+        }
+
+        .feature-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: min(430px, 90%);
+            height: min(410px, 59%);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 48px;
+            border-top-right-radius: 32px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
+        }
+
+        .panel-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #059669;
+            margin-bottom: 2rem;
             display: block;
         }
 
-        .content-box {
-            flex: 1;
-        }
-
-        .content-box span {
-            display: inline-block;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        .content-box h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .content-box p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        /* --- Floating Stats --- */
-        .stats-grid {
+        .feature-item {
             display: flex;
-            gap: 3rem;
-            margin-top: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111;
         }
 
-        .stat-item h4 {
-            font-size: 2rem;
-            color: var(--text-main);
+        .plus-btn {
+            width: 42px;
+            height: 42px;
+            background: #10b981;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .stat-item p {
-            font-size: 0.8rem;
-            margin-bottom: 0;
+        .plus-btn:hover {
+            transform: rotate(90deg);
+            background: #059669;
         }
 
-        /* --- Footer --- */
-        footer {
-            padding: 5rem 5%;
+        /* --- COLLECTION SECTION --- */
+        .collection-section {
+            padding-block: min(20vh, 5rem);
+            width: calc(min(76.5rem, 90%));
+            margin-inline: auto;
+            position: relative;
+            z-index: 20;
+            background: #f0fdf4;
+        }
+
+        .collection-section h2 {
+            text-transform: capitalize;
+            letter-spacing: 0.025em;
+            font-size: clamp(2rem, 1.8125rem + 0.75vw, 2.6rem);
             text-align: center;
-            background: var(--bg-light);
-            border-top: 1px solid var(--border);
+            margin-bottom: 1rem;
+            color: #166534;
+        }
+        
+        .collection-section h2 span {
+            color: #4ade80;
         }
 
-        .gradient-text-1 {
-            background: linear-gradient(90deg, #00ffb3, #32447e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .container {
+            margin-top: 3em;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+            gap: 2.5rem;
         }
 
-        @media (max-width: 968px) {
+        /* Card Component */
+        .card {
+            background: transparent;
+        }
 
-            .showcase-container,
-            .showcase-container.reverse {
-                flex-direction: column;
-                text-align: center;
-            }
+        .card:nth-child(1) .card-inner { --clr: #99f6e4; }
+        .card:nth-child(1) .box .icon .iconBox { background: #115e59; }
+        
+        .card:nth-child(2) .card-inner { --clr: #86efac; }
+        .card:nth-child(2) .box .icon .iconBox { background: #14532d; }
+        
+        .card:nth-child(3) .card-inner { --clr: #a7f3d0; }
+        .card:nth-child(3) .box .icon .iconBox { background: #064e3b; }
 
-            .nav-links {
-                display: none;
-            }
+        .card-inner {
+            position: relative;
+            width: inherit;
+            height: 18.75rem;
+            background: var(--clr);
+            border-radius: 1.25rem;
+            border-bottom-right-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
 
-            .content-box h2 {
-                font-size: 2.2rem;
-            }
+        .box {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 1.25rem;
+            overflow: hidden;
+        }
+        
+        .imgBox {
+            position: absolute;
+            inset: 0;
+        }
 
-            .stats-grid {
-                justify-content: center;
-            }
+        .imgBox img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .imgBox img {
+            transform: scale(1.1);
+        }
+
+        .icon {
+            position: absolute;
+            bottom: -0.375rem;
+            right: -0.375rem;
+            width: 6rem;
+            height: 6rem;
+            background: var(--clr);
+            border-top-left-radius: 50%;
+        }
+
+        .icon:hover .iconBox {
+            transform: scale(1.1);
+        }
+
+        .icon::before {
+            position: absolute;
+            content: "";
+            bottom: 0.375rem;
+            left: -1.25rem;
+            background: transparent;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-bottom-right-radius: 1.25rem;
+            box-shadow: 0.313rem 0.313rem 0 0.313rem #fff;
+        }
+
+        .icon::after {
+            position: absolute;
+            content: "";
+            top: -1.25rem;
+            right: 0.375rem;
+            background: transparent;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-bottom-right-radius: 1.25rem;
+            box-shadow: 0.313rem 0.313rem 0 0.313rem var(--clr);
+        }
+
+        .iconBox {
+            position: absolute;
+            inset: 0.625rem;
+            background: #282828;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .iconBox span {
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .content {
+            padding: 1.2rem 0.625rem;
+        }
+
+        .content h3 {
+            text-transform: capitalize;
+            font-size: clamp(1.5rem, 1.3909rem + 0.4364vw, 1.8rem);
+            color: #064e3b;
+        }
+
+        .content p {
+            margin: 0.625rem 0 1.25rem;
+            color: #4b5563;
+            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .card ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.625rem;
+        }
+
+        .card li {
+            text-transform: uppercase;
+            background: var(--clr-tag);
+            color: #1a2e1a;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            padding: 0.375rem 0.75rem;
+            border-radius: 2rem;
+        }
+
+        /* --- FOOTER SECTION --- */
+        footer {
+            background-color: #064e3b; /* Dark Green */
+            color: #d1fae5; /* Light Mint Text */
+            padding: 4rem 2rem 2rem;
+            margin-top: auto;
+            position: relative;
+            z-index: 30;
+        }
+
+        .footer-content {
+            max-width: 76.5rem;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .footer-brand p {
+            line-height: 1.6;
+            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
+            opacity: 0.8;
+            max-width: 300px;
+        }
+
+        .footer-links h5, .footer-newsletter h5 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #d1fae5;
+            opacity: 0.7;
+        }
+
+        .footer-links a:hover {
+            color: #34d399;
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            flex-grow: 1;
+            outline: none;
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-form button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #059669;
+        }
+
+        .footer-bottom {
+            max-width: 76.5rem;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .collection-section h2 { text-align: left; }
+            .container { gap: 3rem; }
+            .feature-panel { width: 100%; border-radius: 0; bottom: 0; padding: 24px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
-
-
 </head>
-
 <body>
+<nav id="mainNav"
+        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
 
-    <nav>
-        <div class="nav-left">
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+        <!-- Left Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
+            <a href="technology.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
+            <a href="product.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
+                Build</a>
+            <a href="menu/blog.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
-        <div class="nav-center">
-            <div class="nav-links-left">
-                <a href="project.html">PROJECTS</a>
-            </div>
-            <div style="position: center;">
-                <a href="index.html" class="nav-logo">
-                    <div class="logo-text">
-                        <span>DD</span>
-                        <span>C</span>
-                    </div>
-                </a>
+        <!-- Center Logo -->
+        <div class="flex items-center gap-2 shrink-0">
+            <div class="logo-icon w-full h-full flex items-center justify-center">
+                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="h-12 sm:h-14 w-auto drop-shadow-md" style="color: var(--mint-500);">
+                    <!-- Octagon Border -->
+                    <!-- Changed stroke color from accent (#99eff0) to primary/body background (#d3e4df) -->
+                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
+                        stroke-width="3" fill="none" style="color :var(--mint-500);" />
+
+                    <!-- Interlocking DDC Letters -->
+                    <!-- Using Playfair Display (Serif) to match reference -->
+                    <g font-family="'Nanum Myeongjo" font-weight="50" text-anchor="middle">
+
+                        <!-- Left "D" -->
+                        <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
+
+                        <!-- Right "C" -->
+                        <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
+
+                        <!-- Center "D" (Larger, Overlapping with Cutout) -->
+                        <!-- Stroke color matches navbar background (#474d4d) to create the "gap" -->
+                        <!-- Changed fill color from accent (#99eff0) to primary (#d3e4df) -->
+                        <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#22c55e"
+                            paint-order="stroke">D</text>
+
+
+                    </g>
+                </svg>
             </div>
 
-            <div class="nav-links-right">
-                <a href="technology.html">TECHNOLOGY</a>
-            </div>
         </div>
 
-        <div class="nav-right" style="color: azure; display: flex; align-items: center; gap: 1rem;">
-            <a href="contact.html" class="btn-nav">Contact</a>
+        <!-- Right Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
+            <a href="menu/about.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
+                Are
+            </a>
+            <a href="menu/tutor.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
+                go</a>
+            <a href="menu/contact.html"
+                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
+                Us</a>
         </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu">
-        <div class="mobile-menu-content">
-            <a href="menu/about.html" class="mobile-link">About Us</a>
-            <a href="menu/Tutorials.html" class="mobile-link">Use Tutorials</a>
-            <a href="menu/booking.html" class="mobile-link">EV Booking Platform</a>
-            <a href="menu/blog.html" class="mobile-link">Blog / News</a>
-            <div class="icon-links" style="display: flex; justify-content: center; gap: 60px; margin-top: 2rem;">
-                <a href="#" class="nav-icon linkedin-glow" title="LinkedIn"><ion-icon
-                        name="logo-linkedin"></ion-icon></a>
-                <a href="#" class="nav-icon instagram-glow" title="Instagram"><ion-icon
-                        name="logo-instagram"></ion-icon></a>
-                <a href="#" class="nav-icon youtube-glow" title="YouTube"><ion-icon name="logo-youtube"></ion-icon></a>
+    <!-- 1. HERO SECTION -->
+   <section class="hero-section">
+    <div>
+        <h1 class="hero-title">
+            Motion <span class="hero-highlight">Reimagined</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Sustainable luxury crafted for a new era of intelligent mobility.
+        </p>
+
+        <p class="hero-description">
+            Seamlessly blending autonomous innovation, refined engineering,
+            and responsible energy solutions — designed to move you beyond
+            transportation into an experience of effortless motion.
+        </p>
+    </div>
+</section>
+
+
+    <!-- 2. SCROLL ANIMATION SECTION -->
+    <div class="section-height">
+        <div class="sticky-wrapper">
+            <div class="main-container">
+                
+                <!-- SVG Definition for Clip Path -->
+                <svg width="0" height="0">
+                    <defs>
+                        <clipPath id="clipPath" clipPathUnits="objectBoundingBox">
+                            <path id="clipShape" d="M0,0 H1 V1 H0 Z"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+
+                <!-- Image Layer -->
+                <div class="dark-layer">
+                    <img src="images/pod.png"style="clip-path:url(#clipPath)" alt="Technology Chassis">
+                </div>
+
+                <!-- Floating Feature Panel -->
+                <div id="featurePanel" class="feature-panel">
+                    <span class="panel-label">Engineering Harmony</span>
+
+                    <div class="feature-item">
+                        <span>Omni-Directional Agility</span>
+                        <div class="plus-btn">+</div>
+                    </div>
+
+                    <div class="feature-item">
+                        <span>Seamless Entry Systems</span>
+                        <div class="plus-btn">+</div>
+                    </div>
+
+                    <div class="feature-item">
+                        <span>Adaptive Cloud Suspension</span>
+                        <div class="plus-btn">+</div>
+                    </div>
+
+                    <div class="feature-item">
+                        <span>Symmetrical Architecture</span>
+                        <div class="plus-btn">+</div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-
-    <section class="pt-40 pb-20 px-6 text-center section-tech">
-        <h2 class="text-sm font-bold tracking-[0.3em] uppercase mb-4 text-gray-400">Our Tech & Features</h2>
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-8 tracking-tight max-w-5xl mx-auto">
-            Pioneering the <span class="gradient-text">Architecture of Autonomy.</span>
-        </h1>
-        <p class="text-xl text-aqua-600 max-w-3xl mx-auto leading-relaxed">
-            Deep-dive into the proprietary sensor fusion, solid-state energy systems, and neural networks that make
-            Dark Dragon Calaestis the safest autonomous platform on Earth.
-        </p>
-    </section>
-
-
-    <!-- Showcase 1: Battery Swapping -->
-    <section class="showcase-section" id="swap">
-        <div class="showcase-container">
-            <div class="visual-box">
-                <div class="visual-mask"></div>
-                <video autoplay loop muted playsinline
-                    poster="https://via.placeholder.com/800x500/FFFFFF/0066FF?text=Stalaris+Tech">
-                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
-                        type="video/mp4">
-                </video>
-            </div>
-            <div class="content-box">
-                <span>01 — ENERGY</span>
-                <h2 class="gradient-text-1">120-Second Swapping</h2>
-                <p>Eliminate downtime. Our hot-swap battery technology allows commercial pods to maintain 99%
-                    uptime,
-                    replacing energy modules faster than a traditional fuel stop.</p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h4>&lt;2 Min</h4>
-                        <p>Swap Time</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>800V</h4>
-                        <p>Architecture</p>
+    <!-- 3. MINT EV COLLECTION SECTION -->
+    <section class="collection-section">
+        <h2>Curated Mobility<br /><span>The Mint Series</span></h2>
+        <div class="container">
+            
+            <!-- CARD 1: STELLARIS -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="images/stalaris1.png" alt="Stellaris Pod" style="object-fit: fill;">
+                        </div>
+                        <div class="icon">
+                            <a href="#" class="iconBox">
+                                <span class="material-symbols-outlined">electric_bolt</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="content">
+                    <h3>Stellaris</h3>
+                    <p>The zenith of autonomous grandeur. A sanctuary of silence where speed meets absolute serenity.</p>
+                    <ul>
+                        <li style="--clr-tag:#ccfbf1;">Range 800mi</li>
+                        <li style="--clr-tag:#99f6e4;">First Class</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Showcase 2: Crab Walk -->
-    <section class="showcase-section" id="crab">
-        <div class="showcase-container reverse">
-            <div class="visual-box">
-                <div class="visual-mask"></div>
-                <video autoplay loop muted playsinline>
-                    <!-- Using a high-quality tech placeholder/stock if original isn't available, but keeping the logic -->
-                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
-                        type="video/mp4">
-                </video>
-            </div>
-            <div class="content-box">
-                <span>02 — DYNAMICS</span>
-                <h2 class="gradient-text-1">Crab Walk</h2>
-                <p>Equipped with independent 4-wheel steering, the Stalaris platform features "Crab Walk"
-                    capabilities
-                    for 90-degree lateral movement in tight urban corridors.</p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h4>90°</h4>
-                        <p>Steer Angle</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>±2mm</h4>
-                        <p>Precision</p>
+            <!-- CARD 2: ORION -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="images/orion.png" alt="Orion Pod" style="object-fit: fill;">
+                        </div>
+                        <div class="icon">
+                            <a href="#" class="iconBox">
+                                <span class="material-symbols-outlined">speed</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="content">
+                    <h3>Orion</h3>
+                    <p>Engineered for the metropolitan rhythm. Agile, intuitive, and perfectly attuned to the city's heartbeat.</p>
+                    <ul>
+                        <li style="--clr-tag:#dcfce7;">Micro-Footprint</li>
+                        <li style="--clr-tag:#bbf7d0;">Adaptive</li>
+                        <li style="--clr-tag:#86efac;">Neural Pilot</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Showcase 3: Interior/Efficiency -->
-    <section class="showcase-section" id="stats">
-        <div class="showcase-container">
-            <div class="visual-box">
-                <div class="visual-mask"></div>
-                <video autoplay loop muted playsinline>
-                    <source src="https://res.cloudinary.com/ddu94p2p1/video/upload/v1706056522/NewSwap_rpmsxh.mp4"
-                        type="video/mp4">
-                </video>
-            </div>
-            <div class="content-box">
-                <span>03 — BEV Platform</span>
-                <h2 class="gradient-text-1">THE INTELLIGENT BACKBONE Content</h2>
-                <p></p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <h4>Level 2</h4>
-                        <p>System Architecture</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>MODULAR</h4>
-                        <p>Chassis Design</p>
+            <!-- CARD 3: LUNARITE -->
+            <div class="card">
+                <div class="card-inner">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="images/pod.png" alt="Lunarite Pod" style="object-fit: fill;">
+                        </div>
+                        <div class="icon">
+                            <a href="#" class="iconBox">
+                                <span class="material-symbols-outlined">eco</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Gallery Section -->
-    <section id="tech-gallery" style="padding: 100px 5%;">
-        <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem; text-underline-offset: 10px;">Future
-            Ready
-            Infrastructure</h2>
-        <div class="industries-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-
-            <!-- Card 1: AI Compute -->
-            <div class="industry-card"
-                style="background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000') center/cover;">
-                <div class="industry-overlay">
-                    <h3>AI Compute</h3>
-                    <p>Real-time edge processing for split-second decision making.</p>
-                </div>
-            </div>
-
-            <!-- Card 2: Smart Grid -->
-            <div class="industry-card"
-                style="background: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1000') center/cover;">
-                <div class="industry-overlay">
-                    <h3>Smart Grid</h3>
-                    <p>V2G bi-directional charging integration.</p>
-                </div>
-            </div>
-
-            <!-- Card 3: Traffic Flow -->
-            <div class="industry-card"
-                style="background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000') center/cover;">
-                <div class="industry-overlay">
-                    <h3>Urban Flow</h3>
-                    <p>Optimized fleet routing to reduce congestion.</p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <section id="tech-gallery" style="padding: 100px 5%;">
-        <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem;">EV pods</h2>
-        <div class="industries-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-
-            <!-- 12 Seater EV pod -->
-            <div class="industry-card" style="background: url('images_ddc/stalaris.png') center/cover;">
-                <div class="industry-overlay">
-                    <h3>Stalaris</h3>
-                    <p>12 Seater EV pod.</p>
-                </div>
-            </div>
-
-            <!-- 8 Seater EV pod -->
-            <div class="industry-card" style="background: url('images_ddc/model.webp') center/cover;">
-                <div class="industry-overlay">
-                    <h3>orian</h3>
-                    <p>6 Seater EV pod.</p>
-                </div>
-            </div>
-
-            <!-- 4 Seater EV pod -->
-            <div class="industry-card" style="background: url('images_ddc/pod.png') center/cover;">
-                <div class="industry-overlay">
+                <div class="content">
                     <h3>Lunarite</h3>
-                    <p>8 Seater EV pod.</p>
+                    <p>Purity in motion. Crafted entirely from reclaimed elements for a future without compromise.</p>
+                    <ul>
+                        <li style="--clr-tag:#e0f2fe;">Circular Economy</li>
+                        <li style="--clr-tag:#bae6fd;">Solar Harvest</li>
+                    </ul>
                 </div>
             </div>
 
         </div>
     </section>
 
+    <!-- 4. FOOTER -->
     <footer>
-        <div class="logo-text" style="font-size: 2rem; margin-bottom: 1rem;">STAL<span>ARIS</span></div>
-        <p>© 2024 Stalaris Technologies. All Rights Reserved.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h4>Mint Motors</h4>
+                <p>Redefining urban mobility with sustainable, autonomous pods designed for the future of living.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h5>Explore</h5>
+                <ul>
+                    <li><a href="journey.html">Our Journey</a></li>
+                    <li><a href="technology.html">Technology</a></li>
+                    <li><a href="about.html">Sustainability</a></li>
+                    <li><a href="contact.html">Investors</a></li>
+                </ul>
+                <div class="flex justify-center gap-6 mb-16">  
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-linkedin-in group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
+                </a>
+            </div>
+            </div>
+
+            <div class="footer-newsletter">
+                <h5>Stay Updated</h5>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; opacity: 0.8;">Join the movement towards a greener future.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Enter your email">
+                    <button type="submit">Join</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <span>&copy; 2024 Mint Motors. All rights reserved.</span>
+            <div style="display: flex; gap: 1rem;">
+                <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
+                <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
+            </div>
+        </div>
     </footer>
 
+    <!-- JS for Scroll Animation -->
+     <script src="js/main.js"></script>
     <script>
-        function initTechAnimations() {
-            gsap.registerPlugin(ScrollTrigger);
+        const clipShape = document.getElementById("clipShape");
+        const featurePanel = document.getElementById("featurePanel");
 
-            const sections = document.querySelectorAll('.showcase-section');
+        window.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const vh = window.innerHeight;
 
-            sections.forEach((section) => {
-                const mask = section.querySelector('.visual-mask');
-                const content = section.querySelector('.content-box');
-                const visual = section.querySelector('.visual-box');
+            // Start animation after scrolling past the 100vh Hero section
+            // The scrollable area is effectively 300vh tall (section-height)
+            // We want the progress to go from 0 to 1 as we scroll through that area
+            const progress = Math.min(Math.max((scrollY - vh) / (vh * 1.5), 0), 1);
 
-                if (mask) {
-                    gsap.to(mask, {
-                        scaleX: 0,
-                        duration: 1.5,
-                        ease: "power4.inOut",
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top 60%",
-                            toggleActions: "play none none reverse"
-                        }
-                    });
-                }
+            const verticalCut = progress * 0.6;
+            const horizontalCut = progress * 0.35;
+            const radius = 0.05 * progress;
 
-                if (visual) {
-                    gsap.from(visual, {
-                        scale: 0.9,
-                        duration: 1.5,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top 70%",
-                        }
-                    });
-                }
+            // Dynamic path for the clipping mask
+            const path = `
+                M0,0
+                H1
+                V1
+                H${horizontalCut + radius}
+                Q${horizontalCut},1 ${horizontalCut},${1 - radius}
+                V${1 - verticalCut + radius}
+                Q${horizontalCut},${1 - verticalCut}
+                 ${horizontalCut - radius},${1 - verticalCut}
+                H0
+                Z
+            `;
 
-                if (content) {
-                    gsap.from(content.children, {
-                        y: 40,
-                        opacity: 0,
-                        stagger: 0.2,
-                        duration: 1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top 50%",
-                        }
-                    });
-                }
-            });
-        }
+            clipShape.setAttribute("d", path);
 
-        window.addEventListener('load', () => {
-            initTechAnimations();
+            // Reveal the panel near the end of the scroll animation
+            if (progress > 0.9) {
+                featurePanel.style.opacity = "1";
+            } else {
+                featurePanel.style.opacity = "0";
+            }
         });
     </script>
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
-    <script src="menu/main.js"></script>
 </body>
-
 </html>
