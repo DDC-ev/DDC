@@ -189,17 +189,16 @@
 <body class="bg-white text-emerald-950">
 
     <!-- NEW NAVIGATION (Glass Pill) -->
-   <nav id="mainNav"
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+   <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
 
         <!-- Left Links Wrapper -->
         <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
-            <a href="../technology.html"
+            <a href="technology.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
-            <a href="../product.html"
+            <a href="product.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
                 Build</a>
-            <a href="blog.html"
+            <a href="menu/blog.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
@@ -209,14 +208,11 @@
                 <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="h-12 sm:h-14 w-auto drop-shadow-md" style="color: var(--mint-500);">
                     <!-- Octagon Border -->
-                    <!-- Changed stroke color from accent (#99eff0) to primary/body background (#d3e4df) -->
                     <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
                         stroke-width="3" fill="none" style="color :var(--mint-500);" />
 
                     <!-- Interlocking DDC Letters -->
-                    <!-- Using Playfair Display (Serif) to match reference -->
-                    <g font-family="'Nanum Myeongjo" font-weight="50" text-anchor="middle">
-
+                    <g font-family="'Nanum Myeongjo', serif" font-weight="700" text-anchor="middle">
                         <!-- Left "D" -->
                         <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
 
@@ -224,64 +220,53 @@
                         <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
 
                         <!-- Center "D" (Larger, Overlapping with Cutout) -->
-                        <!-- Stroke color matches navbar background (#474d4d) to create the "gap" -->
-                        <!-- Changed fill color from accent (#99eff0) to primary (#d3e4df) -->
-                        <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#22c55e"
+                        <!-- Stroke color set to white to match the glass navbar for a clean cutout effect -->
+                        <text x="70" y="107" font-size="110" stroke="#ffffff" stroke-width="2" fill="#22c55e"
                             paint-order="stroke">D</text>
-
-
                     </g>
                 </svg>
             </div>
-
         </div>
 
         <!-- Right Links Wrapper -->
         <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
-            <a href="#homeView"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Intelligence
+            <a href="menu/about.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
+                Are
             </a>
-            <a href="#journalGrid"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Markets</a>
-                <a href="#articleView"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Press Room</a>
-            <a href="contact.html"
-                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">contact</a>
+            <a href="menu/tutor.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
+                go</a>
+            <a href="menu/contact.html"
+                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
+                Us</a>
         </div>
-
-
 
         <!-- Mobile Menu Button -->
         <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                
             </svg>
         </button>
     </nav>
 
-    <!-- MOBILE SIDEBAR -->
-    <div id="sidebarOverlay" class="sidebar-overlay fixed inset-0 bg-emerald-950/40 backdrop-blur-sm z-[100] opacity-0 pointer-events-none" onclick="toggleSidebar(false)">
-        <div id="mobileSidebar" class="mobile-sidebar fixed left-0 top-0 bottom-0 w-80 bg-emerald-50 p-10 -translate-x-full" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-16">
-                <h1 class="text-2xl font-serif font-black">VERIDIAN.</h1>
-                <button onclick="toggleSidebar(false)"><i data-lucide="x" size="24"></i></button>
-            </div>
-            <ul class="space-y-8 text-lg font-serif italic text-emerald-900">
-                <li onclick="showView('home'); toggleSidebar(false);" class="hover:text-emerald-500 cursor-pointer">The Intelligence</li>
-                <li class="hover:text-emerald-500 cursor-pointer">Capital Markets</li>
-                <li class="hover:text-emerald-500 cursor-pointer">Geopolitics</li>
-                <li class="hover:text-emerald-500 cursor-pointer">The Journal</li>
-                <li onclick="showView('press'); toggleSidebar(false);" class="hover:text-emerald-500 cursor-pointer">Media Room</li>
-            </ul>
-            <div class="absolute bottom-10 left-10">
-                <p class="text-[9px] tracking-[0.3em] font-bold text-emerald-300 uppercase mb-4">Account</p>
-                <button class="flex items-center gap-2 text-xs font-bold text-emerald-950"><i data-lucide="user" size="16"></i> Sign In</button>
-            </div>
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-mint-50/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 hidden">
+        <button id="closeMobileBtn" class="absolute top-8 right-8 text-emerald-900 p-2 hover:bg-mint-200/50 rounded-full transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
+            <a href="technology.html" class="hover:text-mint-600 transition-colors">Features</a>
+            <a href="product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
+            <a href="menu/blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
+            <a href="menu/about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
+            <a href="menu/tutor.html" class="hover:text-mint-600 transition-colors">hop on go</a>
+            <a href="menu/contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
         </div>
     </div>
-
     <!-- MAIN VIEWS -->
     <main>
         <!-- HOME VIEW -->
@@ -413,7 +398,10 @@
                 </div>
             </div>
         </section>
-
+<!--privacy-->
+<section id="privacy"class="view-section pt-32 px-6">
+    
+</section>
         <!-- PRESS VIEW -->
         <section id="pressView" class="view-section pt-32 px-6">
             <div class="max-w-7xl mx-auto">
@@ -499,8 +487,8 @@
                     <h4 class="text-[10px] tracking-[0.3em] font-bold mb-6 text-emerald-500 uppercase">Company</h4>
                     <ul class="space-y-4 text-sm font-medium text-emerald-100/70">
                         <li onclick="showView('press')" class="hover:text-white cursor-pointer transition-colors">Press Room</li>
-                        <li class="hover:text-white cursor-pointer transition-colors">Privacy</li>
-                        <li class="hover:text-white cursor-pointer transition-colors">Careers</li>
+                        <li onclick="showView('privacy')" class="hover:text-white cursor-pointer transition-colors">Privacy</li>
+                        <li onclick="showView('careers')" class="hover:text-white cursor-pointer transition-colors">Careers</li>
                     </ul>
                 </div>
             </div>

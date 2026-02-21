@@ -289,44 +289,84 @@
     <div class="glow-blob bg-mint-300 w-[600px] h-[600px] top-[40%] right-[-10%] animation-delay-2000"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2 py-2 md:px-8 md:py-3 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald/5 transition-all duration-300">
+    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+
         <!-- Left Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald">
-            <a href="technology.html" class="hover:text-emerald-light transition-colors whitespace-nowrap">Features</a>
-            <a href="product.html" class="hover:text-emerald-light transition-colors whitespace-nowrap">What We Build</a>
-            <a href="./menu/blog.html" class="hover:text-emerald-light transition-colors whitespace-nowrap">NEWS / Media</a>
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
+            <a href="technology.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
+            <a href="product.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
+                Build</a>
+            <a href="menu/blog.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
         <!-- Center Logo -->
         <div class="flex items-center gap-2 shrink-0">
-            <a href="index.html" class="logo-icon w-full h-full flex items-center justify-center">
-                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 sm:h-14 w-auto drop-shadow-md">
-                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df" stroke-width="3" fill="none" />
-                    <g font-family="'Nanum Myeongjo'" font-weight="50" text-anchor="middle">
+            <div class="logo-icon w-full h-full flex items-center justify-center">
+                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="h-12 sm:h-14 w-auto drop-shadow-md" style="color: var(--mint-500);">
+                    <!-- Octagon Border -->
+                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
+                        stroke-width="3" fill="none" style="color :var(--mint-500);" />
+
+                    <!-- Interlocking DDC Letters -->
+                    <g font-family="'Nanum Myeongjo', serif" font-weight="700" text-anchor="middle">
+                        <!-- Left "D" -->
                         <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
+
+                        <!-- Right "C" -->
                         <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
-                        <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#22c55e" paint-order="stroke">D</text>
+
+                        <!-- Center "D" (Larger, Overlapping with Cutout) -->
+                        <!-- Stroke color set to white to match the glass navbar for a clean cutout effect -->
+                        <text x="70" y="107" font-size="110" stroke="#ffffff" stroke-width="2" fill="#22c55e"
+                            paint-order="stroke">D</text>
                     </g>
                 </svg>
-            </a>
+            </div>
         </div>
 
         <!-- Right Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald">
-            <a href="#platform" class="hover:text-emerald-light transition-colors whitespace-nowrap">Platform</a>
-            <a href="#pods" class="hover:text-emerald-light transition-colors whitespace-nowrap">EV Pods</a>
-            <a href="#baas" class="hover:text-emerald-light transition-colors whitespace-nowrap">Network</a>
-            <a href="#why-ddc" class="hover:text-emerald-light transition-colors whitespace-nowrap">Advantage</a>
-            <a href="#contact" class="bg-emerald text-white px-5 py-2 rounded-full hover:bg-emerald-light transition-all text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
+            <a href="menu/about.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
+                Are
+            </a>
+            <a href="menu/tutor.html"
+                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
+                go</a>
+            <a href="menu/contact.html"
+                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
+                Us</a>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button class="md:hidden text-emerald px-4" id="mobileMenuBtn" aria-label="Open menu">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
     </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-mint-50/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 hidden">
+        <button id="closeMobileBtn" class="absolute top-8 right-8 text-emerald-900 p-2 hover:bg-mint-200/50 rounded-full transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
+            <a href="technology.html" class="hover:text-mint-600 transition-colors">Features</a>
+            <a href="product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
+            <a href="menu/blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
+            <a href="menu/about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
+            <a href="menu/tutor.html" class="hover:text-mint-600 transition-colors">hop on go</a>
+            <a href="menu/contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
+        </div>
+    </div>
 
     <!-- SECTION 1: HERO -->
     <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
@@ -737,6 +777,17 @@
                             <li><a href="#" class="hover:text-white transition">Investors</a></li>
                             <li><a href="#" class="hover:text-white transition">Contact</a></li>
                         </ul>
+                        <div class="flex justify-center gap-6 mb-16">  
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-linkedin-in group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
+                    <i class="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
+                </a>
+            </div>
                     </div>
                 </div>
             </div>
@@ -926,5 +977,6 @@
             }
         }
     </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
