@@ -9,10 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="../css/style.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -73,25 +75,79 @@
 <body class="bg-gray-light text-gray-dark antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm transition-all duration-300 border-b border-mint/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <div class="w-10 h-10 bg-mint-dark text-mint rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <span class="font-bold text-2xl tracking-tight text-mint-dark">DDC</span>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#how-it-works" class="text-gray-600 hover:text-mint-dark transition-colors font-medium">How It Works</a>
-                    <a href="#features" class="text-gray-600 hover:text-mint-dark transition-colors font-medium">Features</a>
-                    <a href="#cta" class="bg-mint-dark text-white px-6 py-2.5 rounded-full font-semibold hover:bg-green-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                        Book a Demo
-                    </a>
-                </div>
+    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-6xl md:min-w-fit shadow-lg shadow-emerald-900/10">
+
+        <!-- Left Links Wrapper -->
+        <div class="nav-section hidden lg:flex items-center gap-8 text-sm font-semibold text-emerald-900">
+            <a href="#how-it-works" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
+                How It Works
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#features" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
+                Features
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="../index.html" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
+                Home
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+
+        <!-- Center Logo -->
+        <div class="flex items-center gap-2 shrink-0 group cursor-pointer" onclick="window.location.href='../index.html'">
+            <div class="logo-icon w-full h-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 sm:h-14 w-auto drop-shadow-md">
+                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="currentColor" stroke-width="3" fill="none" class="text-emerald-100" />
+                    <g font-family="'Nanum Myeongjo', serif" font-weight="700" text-anchor="middle">
+                        <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
+                        <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
+                        <text x="70" y="107" font-size="110" stroke="#ffffff" stroke-width="2" fill="#22c55e" paint-order="stroke">D</text>
+                    </g>
+                </svg>
             </div>
         </div>
+
+        <!-- Right Links Wrapper -->
+        <div class="nav-section hidden lg:flex items-center gap-6 text-sm font-semibold">
+            <a href="about.html" class="text-emerald-900 hover:text-emerald-600 transition-all duration-300 relative group py-1">
+                Story
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <div class="flex items-center gap-3 ml-2">
+                <a href="booking.html" class="bg-emerald-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-xs uppercase tracking-wider font-bold">
+                    Book Demo
+                </a>
+                <a href="contact.html" class="bg-emerald-500 text-white px-6 py-2.5 rounded-full hover:bg-emerald-400 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-xs uppercase tracking-wider font-bold">
+                    Contact
+                </a>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="lg:hidden text-emerald-900 p-2 hover:bg-emerald-50 rounded-full transition-colors" id="mobileMenuBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
     </nav>
+
+    <!-- Full Screen Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-mint-50/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 hidden">
+        <button id="closeMobileBtn" class="absolute top-8 right-8 text-emerald-900 p-2 hover:bg-mint-200/50 rounded-full transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
+            <a href="#how-it-works" class="hover:text-mint-600 transition-colors">How It Works</a>
+            <a href="#features" class="hover:text-mint-600 transition-colors">Features</a>
+            <a href="../index.html" class="hover:text-mint-600 transition-colors">Home</a>
+            <a href="about.html" class="hover:text-mint-600 transition-colors">Our Story</a>
+            <a href="booking.html" class="mt-4 bg-emerald-900 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold text-center">Book a Demo</a>
+            <a href="contact.html" class="bg-mint-500 text-emerald-950 px-8 py-4 rounded-full hover:bg-mint-400 transition-all text-sm tracking-wide uppercase font-bold text-center">Contact Us</a>
+        </div>
+    </div>
+
 
     <!-- HERO SECTION -->
     <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-mint-light relative overflow-hidden">
@@ -156,7 +212,7 @@
                 <!-- Problem 1 with Image -->
                 <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="100">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1605281317010-fe5ffe798166?auto=format&fit=crop&w=800&q=80" alt="EV Charging" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="../images/battery.jpeg" alt="EV Charging" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
                             <i class="fa-solid fa-hourglass-half"></i>
                         </div>
@@ -170,7 +226,7 @@
                 <!-- Problem 2 with Image -->
                 <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="200">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938cb?auto=format&fit=crop&w=800&q=80" alt="Expensive Battery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="../images/battery_cost.jpeg" alt="Expensive Battery" class="w-full h-full object-fill group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
                             <i class="fa-solid fa-battery-quarter"></i>
                         </div>
@@ -184,7 +240,7 @@
                 <!-- Problem 3 with Image -->
                 <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="300">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1664551735165-21d42df7a76c?auto=format&fit=crop&w=800&q=80" alt="Infrastructure Gap" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="../images/infra.jpeg" alt="Infrastructure Gap" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
                             <i class="fa-solid fa-plug-circle-xmark"></i>
                         </div>
@@ -258,7 +314,7 @@
                 <!-- Large Feature Image -->
                 <div class="lg:w-5/12 relative" data-aos="fade-right">
                     <div class="absolute inset-0 bg-mint rounded-3xl transform translate-x-4 translate-y-4 opacity-50"></div>
-                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=80" alt="Futuristic EV Concept" class="relative z-10 rounded-3xl shadow-xl w-full object-cover h-[500px]">
+                    <img src="../images/orion.png" alt="Futuristic EV Concept" class="relative z-10 rounded-3xl shadow-xl w-full object-fill h-[500px]">
                     <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg z-20 flex items-center gap-4">
                         <div class="w-12 h-12 bg-mint-dark text-white rounded-full flex items-center justify-center text-xl">
                             <i class="fa-solid fa-shield-halved"></i>
@@ -318,22 +374,7 @@
     </section>
 
     <!-- SOCIAL PROOF / WHY DDC -->
-    <section class="py-16 px-4 bg-mint-light border-y border-mint/20 relative">
-        <div class="max-w-4xl mx-auto text-center relative z-10" data-aos="fade-up">
-            <h3 class="text-xl font-bold text-mint-dark mb-8">Pioneered by Experts, Backed by Excellence</h3>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-10">
-                <div class="flex items-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-mint/20">
-                    <i class="fa-solid fa-dragon text-3xl text-mint-dark"></i>
-                    <span class="font-bold text-lg text-gray-800">Dark Dragons Caelestis</span>
-                </div>
-                <div class="hidden sm:block text-mint-dark/40 text-2xl">+</div>
-                <div class="flex items-center gap-3 bg-white px-6 py-3 rounded-2xl shadow-sm border border-mint/20">
-                    <i class="fa-solid fa-building-columns text-3xl text-mint-dark"></i>
-                    <span class="font-bold text-lg text-gray-800 text-left leading-tight">JNN Institute <br><span class="text-sm text-gray-500">of Engineering</span></span>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- CTA SECTION -->
     <section id="cta" class="py-24 px-4 sm:px-6 lg:px-8 bg-mint relative overflow-hidden">
@@ -351,10 +392,10 @@
                     Experience the future of zero-downtime, autonomous mobility. See the DDC EV Pod in action at your location.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
-                    <a href="#" class="bg-mint-dark text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <a href="booking.html" class="bg-mint-dark text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
                         Book a Campus Demo <i class="fa-solid fa-calendar-check"></i>
                     </a>
-                    <a href="#" class="bg-mint-light text-mint-dark border-2 border-mint-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-mint transition-all flex items-center justify-center gap-2">
+                    <a href="contact.html" class="bg-mint-light text-mint-dark border-2 border-mint-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-mint transition-all flex items-center justify-center gap-2">
                         Contact Our Team
                     </a>
                 </div>
@@ -365,11 +406,9 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-12 text-center text-sm border-t-4 border-mint-dark">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2 text-white">
-                <div class="w-8 h-8 bg-mint text-mint-dark rounded-lg flex items-center justify-center font-bold">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
-                <div class="flex justify-center gap-6 mb-16">  
+            
+            <p>&copy; 2026 Dark Dragons Caelestis. All rights reserved.</p>
+           <div class="flex justify-center gap-6 mb-16">  
                 <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
                     <i class="fa-brands fa-linkedin-in group-hover:scale-110 transition-transform"></i>
                 </a>
@@ -379,13 +418,6 @@
                 <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
                     <i class="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
                 </a>
-            </div>
-                <span class="font-bold text-xl tracking-tight">DDC</span>
-            </div>
-            <p>&copy; 2026 Dark Dragons Caelestis. All rights reserved.</p>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-mint transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
-                <a href="#" class="hover:text-mint transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
             </div>
         </div>
     </footer>
@@ -400,5 +432,6 @@
             easing: 'ease-out-cubic', // default easing for AOS animations
         });
     </script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

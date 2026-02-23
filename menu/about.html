@@ -135,7 +135,6 @@
             position: relative;
             width: 100%;
             max-width: 360px;
-            height: 480px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -195,7 +194,7 @@
         /* Circle */
         .ddc-circle {
             position: absolute;
-            top: 50%; 
+            top: 227.5px; /* Precisely centered in the 15px gap (220 + 7.5) */
             left: 50%;
             transform: translate(-50%, -50%);
             width: var(--circle-size);
@@ -219,32 +218,32 @@
             color: #10B981;
         }
 
-        /* Connectors - using the box-shadow hack to create inverse radius */
+        /* Connectors - perfectly aligned with 130px circle */
         /* Top Box Curves */
         .ddc-card-top::before {
             content: "";
             position: absolute;
             bottom: -1px;
-            left: 53%;
-            transform: translateX(calc(-50% - (var(--circle-size)/2) - 10px)); 
+            left: 51%;
             width: 20px;
             height: 20px;
             background: transparent;
-            border-bottom-right-radius: 15px;
-            box-shadow: 5px 5px var(--curve-bg);
+            transform: translateX(-85px); /* -(65px radius + 20px width) */
+            border-bottom-right-radius: 20px;
+            box-shadow: 6px 6px var(--curve-bg);
             z-index: 15;
         }
         .ddc-card-top::after {
             content: "";
             position: absolute;
-            bottom: -1px;
-            right: 53%;
-            transform: translateX(calc(49% + (var(--circle-size)/2) + 10px));
+            bottom: 0px;
+            left: 49%;
             width: 20px;
             height: 20px;
             background: transparent;
+            transform: translateX(65px); /* Exactly at 65px radius */
             border-bottom-left-radius: 20px;
-            box-shadow: -5px 5px var(--curve-bg);
+            box-shadow: -6px 6px var(--curve-bg);
             z-index: 15;
         }
 
@@ -254,25 +253,25 @@
             position: absolute;
             top: 0px;
             left: 51%;
-            transform: translateX(calc(-49% - (var(--circle-size)/2) - 10px));
             width: 20px;
             height: 20px;
             background: transparent;
+            transform: translateX(-85px);
             border-top-right-radius: 20px;
-            box-shadow: 5px -5px var(--curve-bg);
+            box-shadow: 6px -6px var(--curve-bg);
             z-index: 15;
         }
         .ddc-card-bottom::after {
             content: "";
             position: absolute;
-            top: -1px;
-            right: 51%;
-            transform: translateX(calc(49% + (var(--circle-size)/2) + 10px));
+            top: 0px;
+            left: 49%;
             width: 20px;
             height: 20px;
             background: transparent;
+            transform: translateX(65px);
             border-top-left-radius: 20px;
-            box-shadow: -5px -5px var(--curve-bg);
+            box-shadow: -6px -6px var(--curve-bg);
             z-index: 15;
         }
     </style>
@@ -478,12 +477,12 @@
                     </div>
                 </div>
 
-                <!-- Pillar 3 Card -->
+                <!-- energy -->
                 <div class="fade-in-section" style="transition-delay: 300ms;">
                     <div class="ddc-card group">
                         <div class="ddc-card-top">
                             <div class="img-box">
-                                <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop" alt="Power">
+                                <img src="../images/battery1.jpeg" alt="Power">
                             </div>
                         </div>
                         <div class="ddc-card-bottom">
