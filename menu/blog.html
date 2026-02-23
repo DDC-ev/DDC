@@ -193,12 +193,12 @@
 
         <!-- Left Links Wrapper -->
         <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
-            <a href="technology.html"
+            <a href="../technology.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
-            <a href="product.html"
+            <a href="../product.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
                 Build</a>
-            <a href="menu/blog.html"
+            <a href="../index.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
@@ -230,14 +230,14 @@
 
         <!-- Right Links Wrapper -->
         <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
-            <a href="menu/about.html"
+            <a href="about.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
                 Are
             </a>
-            <a href="menu/tutor.html"
+            <a href="tutorial.html"
                 class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
                 go</a>
-            <a href="menu/contact.html"
+            <a href="contact.html"
                 class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
                 Us</a>
         </div>
@@ -259,12 +259,12 @@
             </svg>
         </button>
         <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
-            <a href="technology.html" class="hover:text-mint-600 transition-colors">Features</a>
-            <a href="product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
-            <a href="menu/blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
-            <a href="menu/about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
-            <a href="menu/tutor.html" class="hover:text-mint-600 transition-colors">hop on go</a>
-            <a href="menu/contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
+            <a href="../technology.html" class="hover:text-mint-600 transition-colors">Features</a>
+            <a href="../product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
+            <a href="../index.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
+            <a href="about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
+            <a href="tutorial.html" class="hover:text-mint-600 transition-colors">hop on go</a>
+            <a href="contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
         </div>
     </div>
     <!-- MAIN VIEWS -->
@@ -403,7 +403,7 @@
     
 </section>
         <!-- PRESS VIEW -->
-        <section id="pressView" class="view-section pt-32 px-6">
+<section id="pressView" class="view-section pt-32 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="mb-20">
                     <h4 class="text-[10px] tracking-[0.4em] font-bold text-emerald-500 mb-4 uppercase">Newsroom</h4>
@@ -459,10 +459,19 @@
                     <p class="text-emerald-200/60 max-w-sm mb-8 text-sm leading-relaxed uppercase tracking-tighter">
                         Global intelligence for the modern visionary. Delivered with precision and uncompromising aesthetic.
                     </p>
-                    <div class="flex gap-4">
-                        <input type="email" placeholder="EMAIL ADDRESS" class="bg-transparent border-b border-emerald-700 py-2 w-64 text-xs tracking-widest focus:border-emerald-400 outline-none">
-                        <button class="text-emerald-400 text-xs tracking-[0.2em] font-bold hover:text-white uppercase transition-colors">Join</button>
-                    </div>
+                    <form class="newsletter-form mt-6" id="newsletter-form">
+                        <input type="hidden" name="type" value="newsletter">
+                        <div class="flex flex-col gap-6">
+                            <input type="email" name="email" placeholder="EMAIL ADDRESS" required class="bg-transparent border-b border-emerald-700 py-2 w-full md:w-64 text-xs tracking-widest focus:border-emerald-400 outline-none text-emerald-50 placeholder-emerald-700/50">
+                            <input type="text" name="message" placeholder="MESSAGE" class="bg-transparent border-b border-emerald-700 py-2 w-full md:w-64 text-xs tracking-widest focus:border-emerald-400 outline-none text-emerald-50 placeholder-emerald-700/50">
+                            <button type="submit" class="text-emerald-400 text-xs tracking-[0.2em] font-bold hover:text-white uppercase transition-colors self-start">Join</button>
+                        </div>
+                        <!-- Anti-spam Honeypot (Hidden) -->
+                        <div class="hidden" style="display:none;">
+                            <input type="text" name="website_url" tabindex="-1" autocomplete="off">
+                        </div>
+                    </form>
+
                 </div>
                 <div>
                     <h4 class="text-[10px] tracking-[0.3em] font-bold mb-6 text-emerald-500 uppercase">Sections</h4>
@@ -946,6 +955,8 @@
         const root = ReactDOM.createRoot(document.getElementById('reviews-mount-point'));
         root.render(<App />);
     </script>
+    <script src="../js/forms.js"></script>
     <script src="../js/main.js"></script>
+
 </body>
 </html> 

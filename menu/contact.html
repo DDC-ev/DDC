@@ -286,6 +286,12 @@
                 </h2>
 
                 <form id="contactForm" novalidate>
+                    <!-- Anti-spam Honeypot (Hidden) -->
+                    <input type="hidden" name="type" value="contact">
+                    <div class="hidden">
+                        <label>Leave this field empty</label>
+                        <input type="text" name="website_url" tabindex="-1" autocomplete="off">
+                    </div>
 
                     <!-- Name -->
                     <div class="mb-5">
@@ -488,12 +494,15 @@
             <h4 class="text-white font-bold mb-6">Connect</h4>
             <p class="text-sm mb-4">Let's drive the future together.</p>
             <div class="flex gap-2">
-                <input type="email" id="footerEmail" placeholder="email@address.com"
-                    class="bg-emerald-900/50 border border-emerald-800 rounded-lg px-4 py-2 text-sm w-full focus:outline-none focus:border-emerald-500 text-white placeholder-emerald-500/50">
-                <button onclick="handleFooterSubscribe()"
-                    class="bg-emerald-500 text-emerald-950 px-4 py-2 rounded-lg text-sm font-bold hover:bg-emerald-400 transition-colors">
-                    Send
-                </button>
+                <form class="newsletter-form flex gap-2 w-full">
+                    <input type="email" name="email" id="footerEmail" placeholder="email@address.com" required
+                        class="bg-emerald-900/50 border border-emerald-800 rounded-lg px-4 py-2 text-sm w-full focus:outline-none focus:border-emerald-500 text-white placeholder-emerald-500/50">
+                    <button type="submit"
+                        class="bg-emerald-500 text-emerald-950 px-4 py-2 rounded-lg text-sm font-bold hover:bg-emerald-400 transition-colors">
+                        Send
+                    </button>
+                    <input type="hidden" name="type" value="newsletter">
+                </form>
             </div>
         </div>
     </div>
@@ -510,140 +519,8 @@
 <!-- ═══════════════════════════════════════════════════
      SCRIPTS
 ═══════════════════════════════════════════════════ -->
-<script>
-// ── Mobile Menu ──
-const mobileMenuBtn   = document.getElementById('mobileMenuBtn');
-const closeMobileMenu = document.getElementById('closeMobileMenu');
-const mobileMenu      = document.getElementById('mobileMenu');
-const mobileMenuBg    = document.getElementById('mobileMenuBg');
-
-function openMobileMenu()  { mobileMenu.classList.remove('hidden'); }
-function closeMobileMenuFn(){ mobileMenu.classList.add('hidden'); }
-
-if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileMenu);
-if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMobileMenuFn);
-if (mobileMenuBg) mobileMenuBg.addEventListener('click', closeMobileMenuFn);
-
-// ── Contact Form Validation & Submit to Google Sheets ──
-const form       = document.getElementById('contactForm');
-const submitBtn  = document.getElementById('submitBtn');
-const successMsg = document.getElementById('successMsg');
-const scriptURL  = 'https://script.google.com/macros/s/AKfycbyV5Ta4Ldw_FhWm6wGaMjjJTRXlNh_kJ5ZTdMXTCh_K6g6okLcvREmijASKVa9NtxypQA/exec';
-
-function showError(inputId, errorId) {
-    document.getElementById(inputId).classList.add('error');
-    document.getElementById(errorId).style.display = 'block';
-}
-
-function clearError(inputId, errorId) {
-    document.getElementById(inputId).classList.remove('error');
-    document.getElementById(errorId).style.display = 'none';
-}
-
-// Live validation
-['contactName', 'contactEmail', 'contactPhone', 'contactSubject', 'contactMessage'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-        el.addEventListener('input', () => {
-            const errMap = {
-                contactName:    'nameError',
-                contactEmail:   'emailError',
-                contactSubject: 'subjectError',
-                contactMessage: 'messageError',
-            };
-            if (errMap[id]) clearError(id, errMap[id]);
-        });
-    }
-});
-
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name    = document.getElementById('contactName');
-    const email   = document.getElementById('contactEmail');
-    const subject = document.getElementById('contactSubject');
-    const message = document.getElementById('contactMessage');
-
-    let valid = true;
-
-    // Validate Name
-    if (!name.value.trim()) {
-        showError('contactName', 'nameError');
-        valid = false;
-    } else {
-        clearError('contactName', 'nameError');
-    }
-
-    // Validate Email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.value.trim() || !emailRegex.test(email.value)) {
-        showError('contactEmail', 'emailError');
-        valid = false;
-    } else {
-        clearError('contactEmail', 'emailError');
-    }
-
-    // Validate Subject
-    if (!subject.value) {
-        showError('contactSubject', 'subjectError');
-        valid = false;
-    } else {
-        clearError('contactSubject', 'subjectError');
-    }
-
-    // Validate Message
-    if (!message.value.trim() || message.value.trim().length < 10) {
-        showError('contactMessage', 'messageError');
-        document.getElementById('messageError').textContent =
-            message.value.trim().length === 0
-                ? 'Please enter your message.'
-                : 'Message must be at least 10 characters.';
-        valid = false;
-    } else {
-        clearError('contactMessage', 'messageError');
-    }
-
-    if (!valid) return;
-
-    // Proceed with submitting to Google Sheets via fetch
-    submitBtn.disabled = true;
-    const originalBtnHTML = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Sending…';
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            // Success!
-            form.reset();
-            submitBtn.style.display = 'none';
-            successMsg.style.display = 'block';
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            // Handle error states visually for the user
-            submitBtn.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-2"></i>Error. Try again';
-            submitBtn.classList.replace('bg-emerald-500', 'bg-red-500'); // Optional Red feedback
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalBtnHTML;
-                submitBtn.disabled = false;
-            }, 3000);
-        });
-});
-
-// ── Footer Subscribe ──
-function handleFooterSubscribe() {
-    const input = document.getElementById('footerEmail');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!input.value || !emailRegex.test(input.value)) {
-        input.focus();
-        input.style.borderColor = '#f87171';
-        setTimeout(() => { input.style.borderColor = ''; }, 2000);
-        return;
-    }
-    alert('Thank you for subscribing!');
-    input.value = '';
-}
-</script>
+<script src="../js/forms.js"></script>
+<script src="../js/main.js"></script>
 
 <script src="../js/main.js"></script>
 
