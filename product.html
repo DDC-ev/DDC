@@ -1,20 +1,31 @@
+f
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDC | Universal Electric Mobility Platform</title>
-    
-    <!-- Google Fonts for Premium Typography -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DDC - What We Build</title>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Nanum+Myeongjo&family=Orbitron:wght@400;700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Oswald:wght@200..700&display=swap"
+        rel="stylesheet">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP for Scroll Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -23,690 +34,1002 @@
                         'primary': '#d3e4df',
                         'dark': '#474d4d',
                         'accent': '#99eff0',
-                        'offwhite': '#f4f9f8',
                     },
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                         orbitron: ['Orbitron', 'sans-serif'],
-                        nanum: ['"Nanum Myeongjo"', 'serif'],
                     }
                 }
             }
         }
     </script>
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
-        /* Base & Resets */
-        body {
-            background-color: #F8FDFB;
-            color: #222222;
-            overflow-x: hidden;
+        /* Custom Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* Glassmorphism Utilities */
-        .glass {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        
-        .glass-dark {
-            background: rgba(15, 61, 62, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Navbar styles unified with index.html */
+        #navbar {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            /* Ensure centering is maintained */
+            background: rgba(71, 77, 77, 0.92);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-color: rgba(211, 228, 223, 0.12);
         }
 
-        /* Scroll Reveal Animations */
-        .reveal {
+        /* Navbar Minimized State */
+        #navbar.minimized {
+            width: 120px;
+            height: 48px;
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            background-color: #474d4d;
+            border-color: #474d4d;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 768px) {
+            #navbar.minimized {
+                width: 140px;
+                height: 56px;
+            }
+        }
+
+        #navbar.minimized .nav-links {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 0;
+            flex: 0 0 0%;
+            padding: 0;
+            margin: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
-        .reveal.active {
+
+
+        /* Logo Transformation Logic */
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        /* --- DEFAULT STATE (Top of Page) --- */
+        .logo-icon {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
         }
 
-        /* Parallax & 3D Clip Masks */
-        .parallax-bg {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        .logo-icon a {
+            pointer-events: auto;
         }
 
-        .clip-colossal {
-            clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
-            transition: clip-path 0.5s ease;
-        }
-        
-        .clip-colossal:hover {
-            clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 98%);
-        }
-
-        .clip-diagonal {
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        }
-
-        /* Ambient Background Glows */
-        .glow-blob {
+        .logo-text {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
             position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.5;
-            animation: float 10s infinite ease-in-out alternate;
         }
 
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -50px) scale(1.1); }
+        /* --- MINIMIZED STATE (Scroll Down) --- */
+        #navbar.minimized .logo-icon {
+            opacity: 0;
+            transform: scale(0.5) rotate(45deg);
+            pointer-events: none;
         }
 
-        /* Custom Button Hover */
-        .btn-primary {
-            transition: all 0.3s ease;
+        #navbar.minimized .logo-text {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition-delay: 0.1s;
+        }
+
+        /* Nav Item Custom Interaction Styles */
+        .nav-item-link {
             position: relative;
-            overflow: hidden;
+            padding-bottom: 4px;
+            transition: color 0.3s ease, transform 0.1s ease;
         }
-        .btn-primary::before {
+
+        .nav-item-link::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.5s ease;
-        }
-        .btn-primary:hover::before {
-            left: 100%;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #99eff0;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
         }
 
-        /* 3D Slit Carousel CSS */
-        .slit-container {
+        .nav-item-link:hover {
+            color: #99eff0;
+        }
+
+        .nav-item-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-link:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #d3e4df;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #474d4d;
+            border-radius: 4px;
+        }
+
+        /* Mobile responsive navbar */
+        #navToggle {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            #navToggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 0.5rem;
+            }
+
+            #navbar {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+
+            #navbar .nav-links {
+                display: none;
+            }
+
+            #navbar.open .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(95% - 2rem);
+                max-width: 520px;
+                background: rgba(71, 77, 77, 0.92);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                padding: 0.75rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+                z-index: 60;
+            }
+
+            #navbar.open .nav-links a {
+                display: block;
+                text-align: center;
+                padding: 0.5rem 0.75rem;
+            }
+
+            /* Hide the toggle when navbar is minimized (avoid overlap) */
+            #navbar.minimized #navToggle {
+                display: none !important;
+            }
+        }
+
+        .logo-text {
+            font-family: "Oswald", sans-serif;
+            font-size: 400px;
+            font-weight: 5;
+            font-variation-settings: 'wdth' 200;
+            letter-spacing: -1px;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            position: absolute;
+        }
+
+
+
+        .nav-item-link {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease, transform 0.1s ease;
+        }
+
+        .nav-item-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #99eff0;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-item-link:hover {
+            color: #99eff0;
+        }
+
+        .nav-item-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-link:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+        /* --- 3D CAROUSEL STYLES --- */
+        .scene {
             perspective: 1200px;
-            display: flex;
             width: 100%;
-            height: 100%;
-        }
-        .slit-slice {
-            position: relative;
-            flex: 1;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .slit-face {
-            position: absolute;
-            inset: 0;
-            backface-visibility: hidden;
-            background-repeat: no-repeat;
-            background-size: calc(100% * var(--slices)) 100%;
-        }
-        .slit-front {
-            transform: rotateY(0deg);
-        }
-        .slit-back {
-            transform: rotateY(180deg);
-        }
-        .content-wrapper {
-            transition: all 0.4s ease-in-out;
-            will-change: transform, opacity;
-        }
-
-        /* --- Retail Product Cards CSS --- */
-        .product-card {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
             height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin: auto;
-            transition: transform 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        .product-card .imgbx {
             position: relative;
-            width: 100%;
-            height: 240px;
-            border-radius: 15px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        /* Cutout curves - #f0fdf4 is Tailwind's mint-50 background */
-        .product-card .imgbx::before {
-            content: '';
-            position: absolute;
-            bottom: 0px; left: 55%;
-            width: 20px; height: 20px;
-            background: transparent;
-            border-radius: 50%;
-            box-shadow: -6px 6px  #f0fdf4; 
-        }
-        .product-card .imgbx::after {
-            content: '';
-            position: absolute;
-            top: 63%; left: -1px;
-            width: 20px; height: 20px;
-            background: transparent;
-            border-radius: 50%;
-             box-shadow: -6px 6px  #f0fdf4; 
-        }
-        .product-card .content {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            background: #0F3D3E; /* emerald */
-            border-radius: 15px;
-            border-top-left-radius: 0;
-            padding: 0 25px;
-        }
-        .product-card .content .price {
-            position: absolute;
-            top: -80px; left: 0;
-            height: 80px;
-            width: 55%;
-            background: #0F3D3E;
-            border-top: 10px solid #f0fdf4;
-            border-right: 10px solid #f0fdf4;
-            border-top-right-radius: 25px;
-        }
-        .product-card .content .price::before {
-            content: '';
-            position: absolute;
-            width: 25px; height: 25px;
-            background: transparent;
-            border-radius: 50%;
-            box-shadow: -10px -10px 0 #f0fdf4;
-        }
-        .product-card .content .price::after {
-            content: '';
-            position: absolute;
-            width: 25px; height: 25px;
-            bottom: 0; right: -25px;
-            background: transparent;
-            border-radius: 50%;
-            box-shadow: -10px 10px 0 #0F3D3E;
-        }
-        .product-card .content .price a {
-            position: relative;
-            background: #f0fdf4;
-            padding: 10px 15px;
-            margin: 15px 15px 0 15px;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-decoration: none;
-            font-weight: 700;
-            color: #0F3D3E;
-            border-radius: 7px;
-            font-size: 1.1rem;
-            transition: background 0.2s;
+            margin-top: 1rem;
+            overflow: visible;
+            touch-action: pan-y;
         }
-        .product-card .content .price a:hover {
-            background: #CFF7E6; /* mint-200 */
+
+        .scene::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(153, 239, 240, 0.3) 0%, rgba(211, 228, 223, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.8;
+            filter: blur(40px);
+            transition: opacity 0.5s ease;
         }
-        .product-card .specs {
-            padding-top: 10px;
+
+        .carousel {
+            width: 440px;
+            height: 330px;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: grab;
+        }
+
+        .carousel:active {
+            cursor: grabbing;
+        }
+
+        .carousel-card {
+            position: absolute;
+            width: 440px;
+            height: 330px;
+            left: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
-            justify-content: space-between;
-            list-style: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            backface-visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent 60%, rgba(255, 255, 255, 0.2));
         }
-        .product-card .specs li {
+
+        .carousel-card {
+            opacity: 0.5;
+            filter: grayscale(80%) blur(2px);
+            transform: scale(0.9);
+        }
+
+        .carousel-card.active-card {
+            opacity: 1;
+            filter: grayscale(0%) blur(0px);
+            border-color: rgba(153, 239, 240, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(153, 239, 240, 0.15), 0 30px 60px -12px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .carousel-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .carousel-card.active-card:hover::after {
+            left: 150%;
+            transition: 1s ease-in-out;
+        }
+
+        .car-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 23px;
+            pointer-events: none;
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 640px) {
+            .scene {
+                height: 260px;
+                perspective: 800px;
+                margin-top: 2rem;
+            }
+
+            .carousel {
+                width: 300px;
+                height: 225px;
+            }
+
+            .carousel-card {
+                width: 300px;
+                height: 225px;
+                border-radius: 16px;
+            }
+
+            .car-image {
+                border-radius: 15px;
+            }
+
+            .nav-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .prev-btn {
+                left: 2%;
+            }
+
+            .next-btn {
+                right: 2%;
+            }
+        }
+
+        /* --- INFO PANEL STYLES --- */
+        .info-panel {
+            min-height: 200px;
+            max-width: 700px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: #f0fdf4;
-            font-weight: 300;
+            justify-content: center;
+            position: relative;
+            z-index: 30;
+            padding-top: 0;
+            margin-top: 10px;
         }
-        .product-card .specs li span {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            width: 45px; height: 45px;
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
+
+        .info-content {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-content.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            position: relative;
+            pointer-events: auto;
+        }
+
+        .spec-grid-external {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .spec-item-ext {
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .spec-item-ext:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: rgba(71, 77, 77, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .spec-grid-external {
+                padding: 0.75rem 1rem;
+                gap: 0.5rem;
+                border-radius: 30px;
+                margin-top: 1.5rem;
+            }
+
+            .spec-item-ext {
+                padding: 0 0.5rem;
+            }
+
+            .spec-item-ext span.text-xl {
+                font-size: 1.1rem;
+            }
+
+            .spec-item-ext span.text-xs {
+                font-size: 0.6rem;
+            }
+
+            .info-panel {
+                min-height: 220px;
+            }
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #474d4d;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 50;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: #474d4d;
+            color: #99eff0;
+            transform: translateY(-50%) scale(1.1);
+            border-color: #474d4d;
+        }
+
+        .prev-btn {
+            left: 5%;
+        }
+
+        .next-btn {
+            right: 5%;
+        }
+
+        @media (min-width: 1024px) {
+            .prev-btn {
+                left: 20%;
+            }
+
+            .next-btn {
+                right: 20%;
+            }
+        }
+
+        .drag-hint {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #474d4d;
+            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .drag-icon {
+            animation: bounce-x 2s infinite;
+        }
+
+        @keyframes bounce-x {
+
+            0%,
+            100% {
+                transform: translateX(-3px);
+            }
+
+            50% {
+                transform: translateX(3px);
+            }
+        }
+
+        /* --- PRODUCT SHOWCASE SPECIFIC STYLES --- */
+        .product-card-glass {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card-glass:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Footer Wheel Custom Adjustments */
+        .footer-wheel svg {
+            filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.4));
         }
     </style>
 </head>
-<body class="antialiased selection:bg-mint-300 selection:text-emerald">
 
-    <!-- Ambient Background Elements -->
-    <div class="glow-blob bg-mint-200 w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
-    <div class="glow-blob bg-mint-300 w-[600px] h-[600px] top-[40%] right-[-10%] animation-delay-2000"></div>
+<body class="antialiased font-sans flex flex-col min-h-screen">
 
     <!-- Floating Navbar -->
-    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+    <nav id="navbar"
+        class="fixed top-4 md:top-6 left-1/2 w-[95%] max-w-6xl h-14 md:h-16 rounded-full text-primary flex items-center px-4 md:px-8 z-50 shadow-xl border border-primary/20">
 
-        <!-- Left Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
-    <!-- FEATURES DROPDOWN -->
-    <div class="relative group">
-        <a href="technology.html"
-           class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap">
-            Signature Series
-        </a>
+        <!-- Mobile toggle -->
+        <button id="navToggle" aria-label="Toggle navigation"
+            class="md:hidden inline-flex items-center justify-center p-2 rounded-full text-primary bg-transparent">
+            &#9776;
+        </button>
 
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
-                    bg-[#474d4d] text-white rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 
-                    group-hover:visible transition-all duration-300 
-                    min-w-[200px] py-3 flex flex-col text-sm">
-
-            <a href="technology.html" class="dropdown-item">Battery Swapping</a>
-            <a href="technology.html" class="dropdown-item">Features</a>
+        <!-- Left Nav Items Container -->
+        <div
+            class="nav-links flex-1 flex items-center justify-center gap-3 sm:gap-6 md:gap-16 transition-all duration-300 overflow-hidden whitespace-nowrap">
+            <a href=""
+                class="nav-item-link uppercase tracking-widest text-[0.6rem] sm:text-xs md:text-sm font-semibold">Who We
+                Are</a>
+            <a href="whatwe.html"
+                class="nav-item-link uppercase tracking-widest text-[0.6rem] sm:text-xs md:text-sm font-semibold">What
+                We Build</a>
         </div>
-    </div>
 
-    <a href="product.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
-        What We Build
-    </a>
-
-    <a href="blog.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap text-accent">
-        NEWS/media
-    </a>
-</div>
-
-        <!-- Center Logo -->
-        <div class="logo-container z-10">
-            <div class="logo-icon flex items-center justify-center">
+        <!-- Center Container -->
+        <div class="logo-container z-10 w-full h-full" style="color: #f1e498;">
+            <div class="logo-icon w-full h-full flex items-center justify-center">
                 <a href="index.html" aria-label="Go to Home" class="flex items-center justify-center">
-                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-md">
-                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="var(--primary)" stroke-width="3" fill="none" />
+                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        class="h-8 md:h-12 w-auto drop-shadow-md">
+                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
+                            stroke-width="3" fill="none" />
                         <g font-family="Nanum Myeongjo, serif" font-weight="400" text-anchor="middle">
                             <text x="48" y="95" font-size="73" fill="#f1e498">D</text>
-                            <text x="94" y="95" font-size="73" fill="#f1e498">C</text>
-                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498" paint-order="stroke">D</text>
+                            <text x="94" y="95" font-size="73" fill=#f1e498>C</text>
+                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498"
+                                paint-order="stroke">D</text>
                         </g>
                     </svg>
                 </a>
             </div>
-            <a href="index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10">
+            <a href="index.html" style="font-size: 30px;"
+                class="logo-text  text-sm md:text-xl  tracking-widest text-primary cursor-pointer whitespace-nowrap z-10">
                 DP_01
             </a>
         </div>
 
-        <!-- Right Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
-            <!-- WHO WE ARE DROPDOWN -->
-    <div class="relative group">
-        <a href="about.html"
-           class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
-            Who We Are
-        </a>
-
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
-                    bg-[#474d4d] text-white rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 
-                    group-hover:visible transition-all duration-300 
-                    min-w-[200px] py-3 flex flex-col text-sm">
-
-            <a href="menu/about.html" class="dropdown-item">About Us</a>
-            <a href="menu/journey.html" class="dropdown-item">Journey</a>
+        <!-- Right Nav Items Container -->
+        <div
+            class="nav-links flex-1 flex items-center justify-center gap-3 sm:gap-6 md:gap-16 transition-all duration-300 overflow-hidden whitespace-nowrap">
+            <a href="#horizon"
+                class="nav-item-link uppercase tracking-widest text-[0.6rem] sm:text-xs md:text-sm font-semibold">Features</a>
+            <a href="contact.html"
+                class="nav-item-link uppercase tracking-widest text-[0.6rem] sm:text-xs md:text-sm font-semibold">Contact</a>
         </div>
-    </div>
-
-    <a href="menu/tutorial.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
-        hop on go
-    </a>
-            <a href="menu/contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-        </button>
     </nav>
 
-    <!-- Full Screen Mobile Menu Overlay -->
-    <div id="mobileMenu" class="fixed inset-0 bg-mint-50/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 hidden">
-        <button id="closeMobileBtn" class="absolute top-8 right-8 text-emerald-900 p-2 hover:bg-mint-200/50 rounded-full transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-        <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
-            <a href="technology.html" class="hover:text-mint-600 transition-colors">Features</a>
-            <a href="product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
-            <a href="menu/blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
-            <a href="menu/about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
-            <a href="menu/tutorial.html" class="hover:text-mint-600 transition-colors">hop on go</a>
-            <a href="menu/contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
-        </div>
-    </div>
+    <!-- Hero Content -->
+    <header class="relative h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0 bg-gradient-to-br from-white via-ddc-main to-green-50"></div>
 
-    <!-- SECTION 1: HERO -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div class="absolute inset-0 z-[-1] parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1674483861298-204128ddb381?auto=format&fit=crop&q=80&w=2000'); opacity: 0.15; filter: grayscale(50%) contrast(120%);"></div>
-        
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full glass border-emerald/10 text-emerald text-xs font-semibold tracking-widest uppercase reveal">
-                A Universal Electric Mobility Platform
-            </div>
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-emerald font-bold leading-tight mb-6 reveal" style="transition-delay: 100ms;">
-                Driving the <span class="italic font-light">Future</span> of <br> Modular Mobility.
+        <!-- Abstract Animated Blobs -->
+        <div
+            class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-green-200/30 rounded-full blur-[100px] animate-float">
+        </div>
+        <div
+            class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-emerald-100/40 rounded-full blur-[80px] animate-float-delayed">
+        </div>
+
+        <div class="relative z-10 max-w-4xl fade-in-section is-visible">
+            <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl leading-tight text-ddc-text mb-8 tracking-tight">
+                <br>The Architecture <br>
+                <span class="italic text-ddc-mint relative">
+                    of Motion
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-ddc-mint opacity-40" viewBox="0 0 200 9"
+                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M2.00025 6.99997C2.00025 6.99997 18.0007 2.00021 49.0002 2.00025C79.9997 2.00029 111.001 7.00017 141.001 7.00017C171.001 7.00017 197.001 3.00013 197.001 3.00013"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                </span>
             </h1>
-            <p class="text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto mb-10 font-sans font-light reveal" style="transition-delay: 200ms;">
-                Powering autonomous EV pods and intelligent battery-swapping infrastructure. India’s next wave of elegant electric architecture.
+            <p class="text-sm md:text-base tracking-widest uppercase text-ddc-subtext font-medium mt-6 mb-12">
+                Beyond the Tether. Beyond the Grid.
             </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal" style="transition-delay: 300ms;">
-                <a href="#platform" class="btn-primary bg-emerald text-white px-8 py-4 rounded-full font-medium w-full sm:w-auto text-center shadow-xl shadow-emerald/20">
-                    Explore Platform
-                </a>
-                <a href="#pods" class="bg-white text-emerald border border-emerald/20 px-8 py-4 rounded-full font-medium w-full sm:w-auto text-center hover:bg-mint-100 transition shadow-sm">
-                    View EV Pods
+            <div class="flex justify-center">
+                <a href="#vision"
+                    class="group flex flex-col items-center gap-2 text-ddc-mint transition-all duration-300 hover:text-ddc-text cursor-pointer">
+                    <span class="text-xs uppercase tracking-widest">Explore</span>
+                    <div
+                        class="h-12 w-[1px] bg-gradient-to-b from-ddc-mint to-transparent group-hover:h-16 transition-all duration-500">
+                    </div>
                 </a>
             </div>
         </div>
-    </section>
-
-    <!-- SECTION 2: THE DDC PLATFORM -->
-    <section id="platform" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
-                <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Our Ecosystem</h2>
-                <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-6">The DDC BEV Platform</h3>
-                <p class="text-charcoal/70 text-lg font-light leading-relaxed">
-                    A universal electric architecture designed to power OEM vehicles, retrofits, and autonomous pods — engineered with integrated battery swapping and intelligent mobility software.
+    </header>
+    <section>
+        <div class="text-center mb-16 px-4">
+            <h1 class="relative inline-block text-4xl md:text-6xl font-serif font-bold text-dark">
+                Reimagining Urban Transportation
+            </h1>
+        </div>
+        <!-- 3D Carousel Showcase -->
+        <div class="scene">
+            <div class="carousel" id="carousel">
+                <div class="carousel-card" onclick="clickToCard(0)">
+                    <img src="images/orion_ev_1772116937700.png" alt="ORION EV" class="car-image object-cover">
+                    <div class="absolute inset-0 bg-dark/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                        <span class="font-orbitron font-bold text-white text-xl tracking-widest">ORION</span>
+                    </div>
+                </div>
+                <div class="carousel-card" onclick="clickToCard(1)">
+                    <img src="images/lunarite_ev_1772116959830.png" alt="LUNARITE EV" class="car-image object-cover">
+                    <div class="absolute inset-0 bg-dark/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                        <span class="font-orbitron font-bold text-white text-xl tracking-widest">LUNARITE</span>
+                    </div>
+                </div>
+                <div class="carousel-card" onclick="clickToCard(2)">
+                    <img src="images/stellaris_ev_1772116987018.png" alt="STELLARIS EV" class="car-image object-cover">
+                    <div class="absolute inset-0 bg-dark/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                        <span class="font-orbitron font-bold text-white text-xl tracking-widest">STELLARIS</span>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-btn prev-btn" onclick="rotateCarousel(-1)">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button class="nav-btn next-btn" onclick="rotateCarousel(1)">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Info Panel -->
+        <div id="info-panel" class="info-panel w-full px-2">
+            <div class="info-content active" data-index="0">
+                <div class="flex items-center justify-center gap-2 mb-2">
+                    <span class="text-[10px] md:text-xs font-bold tracking-widest text-dark/50 uppercase">Autonomous
+                        Series</span>
+                    <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-2">ORION</h2>
+                <p class="text-dark/80 text-sm md:text-lg font-light max-w-md mx-auto">
+                    Designed for maximum efficiency in dense city centers. The Urban Box features a standing-room
+                    interior option and solar-glass roofing.
                 </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1 -->
-                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
-                        <i data-lucide="cpu" class="w-7 h-7"></i>
+                <div class="spec-grid-external">
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">L4</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">Autonomy</span>
                     </div>
-                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">Autonomous Navigation</h4>
-                    <p class="text-sm text-charcoal/70 leading-relaxed">Precision-engineered sensor fusion enabling safe, self-driving capabilities in mapped environments.</p>
-                </div>
-                
-                <!-- Card 2 -->
-                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
-                        <i data-lucide="move-3d" class="w-7 h-7"></i>
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">6</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">seater</span>
                     </div>
-                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">360° Movement</h4>
-                    <p class="text-sm text-charcoal/70 leading-relaxed">Omni-directional steering system allowing crab-walk and zero-radius turns in dense urban centers.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 300ms;">
-                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
-                        <i data-lucide="battery-charging" class="w-7 h-7"></i>
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">6 hours</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">Runtime</span>
                     </div>
-                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">Seamless Swapping</h4>
-                    <p class="text-sm text-charcoal/70 leading-relaxed">Automated docking logic ensuring a completely touchless battery swap in under three minutes.</p>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 400ms;">
-                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
-                        <i data-lucide="smartphone" class="w-7 h-7"></i>
-                    </div>
-                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">App Integration</h4>
-                    <p class="text-sm text-charcoal/70 leading-relaxed">Summon your pod, monitor battery health, and handle subscription payments through one elegant interface.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 3: EV PODS (FLAGSHIP) -->
-    <section id="pods" class="py-24 bg-mint-100/50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
-                <div class="max-w-2xl">
-                    <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Our Flagship</h2>
-                    <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-4">Autonomous EV Pods</h3>
-                    <p class="text-charcoal/70 text-lg font-light">Multi-directional mobility vehicles built flawlessly upon the DDC foundation.</p>
-                </div>
-                <div class="mt-6 md:mt-0 text-right">
-                    <p class="text-sm font-medium text-emerald bg-white px-4 py-2 rounded-full shadow-sm inline-block">
-                        Flexible Leasing & Deployment Models Available
-                    </p>
                 </div>
             </div>
 
-            <!-- Pod Variants (3D Slit Carousel) -->
-            <div class="relative z-10 reveal" style="transition-delay: 200ms;">
-                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                    
-                    <!-- Carousel Left Side -->
-                    <div class="w-full lg:w-[55%] relative">
-                        <div class="relative w-full h-[400px] md:h-[450px] rounded-[2rem] shadow-2xl overflow-hidden glass border-white/50 ring-1 ring-emerald/5">
-                            <div id="slit-slider" class="slit-container">
-                                <!-- JS Injects Slices -->
-                            </div>
-                            <!-- Subtle lighting overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-tr from-emerald/20 to-transparent mix-blend-overlay pointer-events-none"></div>
-                        </div>
-                        
-                        <!-- Navigation Controls -->
-                        <div class="absolute -bottom-7 left-1/2 -translate-x-1/2 flex gap-4 z-20">
-                            <button onclick="prevPod()" class="w-14 h-14 rounded-full bg-emerald text-white flex items-center justify-center hover:bg-emerald-light transition-all shadow-xl shadow-emerald/30 hover:-translate-y-1 active:translate-y-0">
-                                <i data-lucide="chevron-left" class="w-6 h-6"></i>
-                            </button>
-                            <button onclick="nextPod()" class="w-14 h-14 rounded-full bg-emerald text-white flex items-center justify-center hover:bg-emerald-light transition-all shadow-xl shadow-emerald/30 hover:-translate-y-1 active:translate-y-0">
-                                <i data-lucide="chevron-right" class="w-6 h-6"></i>
-                            </button>
-                        </div>
+            <div class="info-content" data-index="1">
+                <div class="flex items-center justify-center gap-2 mb-2">
+                    <span class="text-[10px] md:text-xs font-bold tracking-widest text-dark/50 uppercase">Private
+                        Fleet</span>
+                    <div class="w-2 h-2 rounded-full bg-orange-400"></div>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-2">LUNARITE</h2>
+                <p class="text-dark/80 text-sm md:text-lg font-light max-w-md mx-auto">
+                    A personal sanctuary on wheels. 360-degree glass curvature provides uninterrupted views while AI
+                    handles the navigation.
+                </p>
+                <div class="spec-grid-external">
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">crab</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">features</span>
                     </div>
-
-                    <!-- Content Right Side -->
-                    <div class="w-full lg:w-[45%] min-h-[300px] flex flex-col justify-center pt-8 lg:pt-0">
-                        <div id="pod-content-wrapper" class="content-wrapper opacity-0 translate-y-4">
-                            <!-- JS Injects Content -->
-                        </div>
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">8</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">seater</span>
                     </div>
-
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">Silent</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">Acoustics</span>
+                    </div>
                 </div>
             </div>
-            
-        </div>
-    </section>
 
-    <!-- SECTION 4: RETAIL MODELS -->
-    <section id="retail" class="py-24 bg-mint-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-emerald font-semibold tracking-widest uppercase text-sm mb-3">Direct Purchase</h2>
-                <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-4">Available Models</h3>
-                <p class="text-charcoal/70 text-lg font-light max-w-2xl mx-auto">Explore our lineup of commercial electric vehicles, available for direct purchase by fleet operators, communities, and enterprise clients.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 reveal" style="transition-delay: 200ms;">
-                
-                <!-- Product Card 1 -->
-                <div class="product-card">
-                    <!-- Sleek white EV front - Centered -->
-                    <div class="imgbx shadow-lg" style="background-image: url('./images/bev-2.png');object-fit:fill;"></div>
-                    <div class="content shadow-xl">
-                        <div class="price">
-                            <a href="#">$45,000</a>
-                        </div>
-                        <div class="pt-2 text-white/90">
-                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">BEV Platform<h4>
-                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Passenger Pod</p>
-                            <ul class="specs">
-                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 250km</li>
-                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 6 Seat</li>
-                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 80km/h</li>
-                            </ul>
-                        </div>
+            <div class="info-content" data-index="2">
+                <div class="flex items-center justify-center gap-2 mb-2">
+                    <span
+                        class="text-[10px] md:text-xs font-bold tracking-widest text-dark/50 uppercase">SPACIOUS</span>
+                    <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-dark mb-2">STELLARIS</h2>
+                <p class="text-dark/80 text-sm md:text-lg font-light max-w-md mx-auto">
+                    Open-air capability meets long-range electric drive. Perfect for coastal routes and campus transit
+                    systems.
+                </p>
+                <div class="spec-grid-external">
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">400mi</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">Range</span>
+                    </div>
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">12</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">seater</span>
+                    </div>
+                    <div class="spec-item-ext">
+                        <span class="block font-orbitron font-bold text-xl text-dark">more</span>
+                        <span class="text-xs uppercase tracking-wider text-dark/60">comfort</span>
                     </div>
                 </div>
-
-                <!-- Product Card 2 -->
-                <div class="product-card">
-                    <!-- Autonomous White Shuttle Pod -->
-                    <div class="imgbx shadow-lg" style="background-image: url('./images/battrey.png'); background-position: center;object-fit: fill;"></div>
-                    <div class="content shadow-xl">
-                        <div class="price">
-                            <a href="#">$62,000</a>
-                        </div>
-                        <div class="pt-2 text-white/90">
-                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">battery-swapping</h4>
-                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Luxury Transit</p>
-                            <ul class="specs">
-                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 320km</li>
-                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 8 Seat</li>
-                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 100km/h</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 3 -->
-                <div class="product-card">
-                    <!-- Modern White EV Delivery Van -->
-                    <div class="imgbx shadow-lg" style="background-image: url('./images/pod.png'); background-position: center;object-fit: fill;"></div>
-                    <div class="content shadow-xl">
-                        <div class="price">
-                            <a href="#">$55,000</a>
-                        </div>
-                        <div class="pt-2 text-white/90">
-                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">pod</h4>
-                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Logistics Unit</p>
-                            <ul class="specs">
-                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 400-900km</li>
-                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 6,8,12 Seater</li>
-                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 90km/h</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Card 4 -->
-                <div class="product-card">
-                    <!-- Modern Silver/White EV Utility Truck -->
-                    <div class="imgbx shadow-lg" style="background-image: url('./images/sensor.webp'); object-fit: contain; background-position: center 80%;"></div>
-                    <div class="content shadow-xl">
-                        <div class="price">
-                            <a href="#">$70,000</a>
-                        </div>
-                        <div class="pt-2 text-white/90">
-                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">navigation system</h4>
-                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Industrial Mod</p>
-                            <ul class="specs">
-                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 300km</li>
-                                <li><span><i data-lucide="cog" class="w-5 h-5 text-mint-300"></i></span> AWD</li>
-                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 110km/h</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5: BATTERY SWAPPING (BaaS) -->
-    <section id="baas" class="py-24 relative overflow-hidden bg-emerald text-white">
-        <!-- Abstract dark background shapes -->
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-light rounded-full mix-blend-multiply filter blur-[100px] opacity-50 z-0"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                
-                <div class="w-full lg:w-1/2 space-y-8 reveal">
-                    <div>
-                        <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Battery-as-a-Service</h2>
-                        <h3 class="font-serif text-4xl md:text-5xl font-bold mb-6">Energy Without Ownership.</h3>
-                        <p class="text-white/80 text-lg font-light leading-relaxed">
-                            Battery ownership remains the largest barrier to EV adoption. We solved it. Our autonomous 4-wheeler swapping stations can be deployed in homes, campuses, and city centers.
-                        </p>
-                    </div>
+    <!-- PRODUCT SHOWCASE SECTION -->
+    <section id="showcase" class="flex-1 w-full bg-primary relative z-10 py-16 md:py-20 pb-0">
+        <div class="px-4 mb-16 md:mb-24 text-center">
+            <h2 class="text-4xl md:text-7xl font-serif font-bold text-dark tracking-tight">The Fleet</h2>
+            <p class="text-dark/60 mt-2 md:mt-4 uppercase tracking-widest text-xs md:text-sm">Designed for every journey
+            </p>
+        </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="glass-dark p-6 rounded-2xl border border-white/10">
-                            <i data-lucide="zap" class="text-mint-300 w-8 h-8 mb-4"></i>
-                            <h5 class="font-bold text-lg mb-2">&lt; 3-Min Swap</h5>
-                            <p class="text-sm text-white/60 font-light">Zero downtime. Automated mechanics handle the entire process seamlessly.</p>
-                        </div>
-                        <div class="glass-dark p-6 rounded-2xl border border-white/10">
-                            <i data-lucide="credit-card" class="text-mint-300 w-8 h-8 mb-4"></i>
-                            <h5 class="font-bold text-lg mb-2">Pay Per Swap</h5>
-                            <p class="text-sm text-white/60 font-light">Eliminate upfront battery costs with our flexible subscription models.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="w-full lg:w-1/2 reveal">
-                    <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
-                        <video autoplay loop muted playsinline class="w-full h-[500px] object-cover opacity-90">
-                            <source src="./images/v1760605652/video.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald to-transparent opacity-80"></div>
-                        <div class="absolute bottom-8 left-8 right-8">
-                            <div class="glass-dark p-4 rounded-xl flex items-center justify-between">
-                                <div>
-                                    <p class="text-xs text-mint-300 uppercase tracking-wider font-bold">System Status</p>
-                                    <p class="font-serif text-xl">Station Online</p>
-                                </div>
-                                <div class="w-12 h-12 rounded-full border-2 border-mint-300 flex items-center justify-center">
-                                    <div class="w-3 h-3 bg-mint-300 rounded-full animate-pulse"></div>
-                                </div>
-                            </div>
+        <!-- Product 1: Aether -->
+        <div class="product-item relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col-reverse md:flex-row items-center mb-16 md:mb-16 overflow-hidden"
+            data-align="right">
+            <div
+                class="w-full md:w-1/2 p-6 sm:p-8 md:p-16 flex flex-col justify-center h-full z-10 text-center md:text-left">
+                <span class="text-accent font-bold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2 block">Product
+                    01</span>
+                <h3 class="text-3xl md:text-6xl font-serif text-dark mb-3 md:mb-4">BEV PLATFORM</h3>
+                <p
+                    class="text-dark/80 text-base md:text-lg font-sans max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 md:mb-8">
+                    DDC’s BEV platform provides a strong, efficient, and zero-emission electric foundation designed to
+                    power the future of smart and sustainable mobility.
+                </p>
+                <div class="product-card-glass p-5 md:p-8 text-left">
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">easy</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">suitable</span>
+                        </div>
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">100</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">kWh</span>
+                        </div>
+                        <div class="col-span-2 pt-2 border-t border-dark/10">
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60 block mb-1">Battery
+                                Capacity</span>
+                            <span class="text-xs sm:text-sm font-semibold text-dark"></span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div
+                class="product-image-container relative md:absolute top-0 right-0 h-[40vh] md:h-full w-full md:w-1/2 overflow-hidden shadow-2xl z-20">
+                <img src="images/bev_platform_1772117007372.png" alt="BEV PLATFORM" class="parallax-bg w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-br from-dark/20 to-transparent"></div>
+            </div>
+        </div>
 
+        <!-- Product 2: autonomus -->
+        <div class="product-item relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col md:flex-row items-center mb-16 md:mb-16 overflow-hidden justify-end"
+            data-align="left">
+            <div
+                class="product-image-container relative md:absolute top-0 left-0 h-[40vh] md:h-full w-full md:w-1/2 overflow-hidden shadow-2xl z-20">
+                <img src="images/autonomous_sensor_1772117033443.png" alt="AUTONOMOUS NAVIGATION" class="parallax-bg w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-bl from-dark/20 to-transparent"></div>
+            </div>
+            <div
+                class="w-full md:w-1/2 p-6 sm:p-8 md:p-16 flex flex-col justify-center items-center md:items-end text-center md:text-right h-full z-10">
+                <span class="text-orange-400 font-bold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2 block">Product
+                    02</span>
+                <h3 class="text-3xl md:text-6xl font-serif text-dark mb-3 md:mb-4">AUTONOMOUS</h3>
+                <p
+                    class="text-dark/80 text-base md:text-lg font-sans max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 md:mb-8">
+                    DDC’s autonomous navigation technology uses intelligent sensors and AI to enable safe, precise, and
+                    fully driverless mobility for the future.
+                </p>
+                <div class="product-card-glass p-5 md:p-8 text-left w-full max-w-sm">
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">detection</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">Sensor</span>
+                        </div>
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">detection</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">Lidar</span>
+                        </div>
+                        <div class="col-span-2 pt-2 border-t border-dark/10">
+                            <span
+                                class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60 block mb-1">Accuracy</span>
+                            <span class="text-xs sm:text-sm font-semibold text-dark">precision</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product 3: joystick -->
+        <div class="product-item relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col-reverse md:flex-row items-center mb-16 md:mb-16 overflow-hidden"
+            data-align="right">
+            <div
+                class="w-full md:w-1/2 p-6 sm:p-8 md:p-16 flex flex-col justify-center h-full z-10 text-center md:text-left">
+                <span class="text-red-500 font-bold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2 block">product
+                    03</span>
+                <h3 class="text-3xl md:text-6xl font-serif text-dark mb-3 md:mb-4">JOYSTICK</h3>
+                <p
+                    class="text-dark/80 text-base md:text-lg font-sans max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 md:mb-8">
+                    The joystick provides precise and intuitive manual control for safe and responsive vehicle
+                    navigation.
+                </p>
+                <div class="product-card-glass p-5 md:p-8 text-left">
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">operation</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">control</span>
+                        </div>
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">purpose </span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">command</span>
+                        </div>
+                        <div class="col-span-2 pt-2 border-t border-dark/10">
+                            <span
+                                class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60 block mb-1">device</span>
+                            <span class="text-xs sm:text-sm font-semibold text-dark">controller</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="product-image-container relative md:absolute top-0 right-0 h-[40vh] md:h-full w-full md:w-1/2 overflow-hidden shadow-2xl z-20">
+                <img src="images/joystick_controller_1772117053187.png" alt="JOYSTICK" class="parallax-bg w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-tr from-dark/20 to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Product 4: charging station -->
+        <div class="product-item relative w-full min-h-[60vh] md:min-h-[70vh] flex flex-col md:flex-row items-center overflow-hidden justify-end mb-24 md:mb-24"
+            data-align="left">
+            <div
+                class="product-image-container relative md:absolute top-0 left-0 h-[40vh] md:h-full w-full md:w-1/2 overflow-hidden shadow-2xl z-20">
+                <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1200&q=80" alt="CHARGING STATION" class="parallax-bg w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-tl from-dark/20 to-transparent"></div>
+            </div>
+            <div
+                class="w-full md:w-1/2 p-6 sm:p-8 md:p-16 flex flex-col justify-center items-center md:items-end text-center md:text-right h-full z-10">
+                <span class="text-green-500 font-bold tracking-[0.2em] uppercase text-xs sm:text-sm mb-2 block">product
+                    4</span>
+                <h3 class="text-3xl md:text-6xl font-serif text-dark mb-3 md:mb-4">charging station</h3>
+                <p
+                    class="text-dark/80 text-base md:text-lg font-sans max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 md:mb-8">
+                    The charging station provides fast, reliable, and efficient energy supply to power DDC’s electric
+                    vehicles for continuous operation.
+                </p>
+                <div class="product-card-glass p-5 md:p-8 text-left w-full max-w-sm">
+                    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">function</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">swapping</span>
+                        </div>
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-orbitron font-bold text-dark">energy</span>
+                            <span class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60">power</span>
+                        </div>
+                        <div class="col-span-2 pt-2 border-t border-dark/10">
+                            <span
+                                class="text-[10px] sm:text-xs uppercase tracking-wide text-dark/60 block mb-1">time</span>
+                            <span class="text-xs sm:text-sm font-semibold text-dark">2-3 mins</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- SECTION 5: WHY DDC & USE CASES -->
     <section id="why-ddc" class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-6">
-            
+
             <!-- Trust Anchors & Why Us -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
                 <div class="reveal">
                     <h3 class="font-serif text-4xl text-emerald font-bold mb-8">Why DDC?</h3>
                     <ul class="space-y-6">
                         <li class="flex items-start">
-                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="layers" class="w-5 h-5 text-emerald"></i></div>
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="layers"
+                                    class="w-5 h-5 text-emerald"></i></div>
                             <div>
                                 <h4 class="font-bold text-emerald text-lg">No Battery Ownership</h4>
-                                <p class="text-charcoal/70 text-sm font-light">Our BaaS model fundamentally shifts capital expenditure to operational ease.</p>
+                                <p class="text-charcoal/70 text-sm font-light">Our BaaS model fundamentally shifts
+                                    capital expenditure to operational ease.</p>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="maximize" class="w-5 h-5 text-emerald"></i></div>
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="maximize"
+                                    class="w-5 h-5 text-emerald"></i></div>
                             <div>
                                 <h4 class="font-bold text-emerald text-lg">Retrofit Compatibility</h4>
-                                <p class="text-charcoal/70 text-sm font-light">Engineered to integrate smoothly, even accommodating unibody structures.</p>
+                                <p class="text-charcoal/70 text-sm font-light">Engineered to integrate smoothly, even
+                                    accommodating unibody structures.</p>
                             </div>
                         </li>
                         <li class="flex items-start">
-                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="navigation" class="w-5 h-5 text-emerald"></i></div>
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="navigation"
+                                    class="w-5 h-5 text-emerald"></i></div>
                             <div>
                                 <h4 class="font-bold text-emerald text-lg">App-Based Autonomous Summoning</h4>
-                                <p class="text-charcoal/70 text-sm font-light">Vehicle deployment managed through an intuitive, centralized digital platform.</p>
+                                <p class="text-charcoal/70 text-sm font-light">Vehicle deployment managed through an
+                                    intuitive, centralized digital platform.</p>
                             </div>
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="reveal bg-mint-50 rounded-3xl p-10 border border-mint-200">
                     <h3 class="font-serif text-2xl text-emerald font-bold mb-8 flex items-center">
                         <i data-lucide="shield-check" class="w-6 h-6 mr-3 text-mint-300 fill-emerald"></i>
@@ -714,12 +1037,18 @@
                     </h3>
                     <div class="space-y-8">
                         <div>
-                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Safety Architecture</h4>
-                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Designed specifically for ARAI / ICAT certification pathways utilizing automotive-grade redundant systems.</p>
+                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Safety
+                                Architecture</h4>
+                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Designed
+                                specifically for ARAI / ICAT certification pathways utilizing automotive-grade redundant
+                                systems.</p>
                         </div>
                         <div>
-                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Institutional Backing</h4>
-                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Engineered with JNN Institute support. Developed by a 35-member technical team dedicating 1,000+ R&D hours monthly.</p>
+                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Institutional
+                                Backing</h4>
+                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Engineered
+                                with JNN Institute support. Developed by a 35-member technical team dedicating 1,000+
+                                R&D hours monthly.</p>
                         </div>
                     </div>
                 </div>
@@ -727,280 +1056,479 @@
 
             <!-- Ecosystem Deployments -->
             <div class="text-center mb-12 reveal">
-                <h3 class="font-serif text-4xl text-emerald font-bold mb-4">Ecosystem Deployments</h3>
-                <p class="text-charcoal/70 font-light">Versatile integration across premium commercial and civic landscapes.</p>
+                <h3 class="font-serif text-4xl text-emerald font-bold mb-4">Ecosystem Deployments
+                </h3>
+                <p class="text-charcoal/70 font-light">Versatile integration across premium commercial and civic
+                    landscapes.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 reveal">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 reveal"
+                style="background-color: #ddeee0; border: 40px solid #ddeee0; border-radius: 12px;">
                 <!-- Use Case Items -->
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=600&q=80" alt="Smart Campuses" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart Campuses</h4>
+                    <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=600&q=80"
+                        alt="Smart Campuses"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart
+                            Campuses</h4>
                     </div>
                 </div>
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80" alt="Resorts & Tourism" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Resorts & Tourism</h4>
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80"
+                        alt="Resorts & Tourism"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Resorts &
+                            Tourism</h4>
                     </div>
                 </div>
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Smart Cities" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart Cities</h4>
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
+                        alt="Smart Cities"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart Cities
+                        </h4>
                     </div>
                 </div>
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" alt="Gated Communities" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Gated Communities</h4>
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80"
+                        alt="Gated Communities"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Gated
+                            Communities</h4>
                     </div>
                 </div>
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=600&q=80" alt="Fleet Operators" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Fleet Operators</h4>
+                    <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=600&q=80"
+                        alt="Fleet Operators"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Fleet
+                            Operators</h4>
                     </div>
                 </div>
                 <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Industrial Zones" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
-                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
-                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Industrial Zones</h4>
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
+                        alt="Industrial Zones"
+                        class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div
+                        class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Industrial
+                            Zones</h4>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer id="contact" class="bg-emerald text-white pt-20 pb-10 border-t border-emerald-light relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 border-b border-white/10 pb-16">
-                <div class="mb-10 md:mb-0 text-center md:text-left">
-                    <div class="text-white font-serif font-bold text-4xl tracking-wider mb-4">
-                        DDC<span class="text-mint-300">.</span>
-                    </div>
-                    <p class="text-white/60 font-light max-w-sm">
-                        India’s first universal modular electric mobility platform. Elevating transit, piece by piece.
-                    </p>
-                </div>
-                <div class="flex space-x-12">
-                    <div>
-                        <h5 class="font-bold mb-4 text-mint-300 tracking-wider text-sm uppercase">Platform</h5>
-                        <ul class="space-y-2 text-white/60 text-sm font-light">
-                            <li><a href="#" class="hover:text-white transition">Architecture</a></li>
-                            <li><a href="#" class="hover:text-white transition">EV Pods</a></li>
-                            <li><a href="#" class="hover:text-white transition">Battery Network</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="font-bold mb-4 text-mint-300 tracking-wider text-sm uppercase">Company</h5>
-                        <ul class="space-y-2 text-white/60 text-sm font-light">
-                            <li><a href="#" class="hover:text-white transition">About Us</a></li>
-                            <li><a href="#" class="hover:text-white transition">Investors</a></li>
-                            <li><a href="#" class="hover:text-white transition">Contact</a></li>
-                        </ul>
-                        <div class="flex justify-center gap-6 mb-16">  
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-linkedin-in group-hover:scale-110 transition-transform"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
-                </a>
+
+    <!-- FOOTER WITH STRADDLING WHEELS -->
+    <footer id="main-footer"
+        class="relative bg-dark text-primary w-full mt-auto border-t-2 border-dark/10 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pt-20 sm:pt-28 pb-20 z-20">
+
+        <!-- The Axle Line (Exactly on the border) -->
+        <div class="absolute top-0 left-0 w-full h-[2px] bg-dark/30 -translate-y-[1px]"></div>
+
+        <!-- Left Wheel -->
+        <div
+            class="footer-wheel absolute top-0 left-[5%] sm:left-[15%] md:left-[25%] -translate-y-1/2 w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 z-30">
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+                <!-- Tire Outer -->
+                <circle cx="50" cy="50" r="48" fill="#1f2323" />
+                <!-- Tire Tread illusion -->
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 2" />
+
+                <!-- Alloy Wheel Barrel (Dark Inner) -->
+                <circle cx="50" cy="50" r="36" fill="#2c3131" />
+
+                <!-- Outer Lip of Alloy Rim -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#d3e4df" stroke-width="3" />
+
+                <!-- 5-Spoke Simple Alloy Structure -->
+                <g stroke="#d3e4df" stroke-width="10" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+
+                <!-- Spoke Inner Accents for Depth -->
+                <g stroke="#8a9a98" stroke-width="3" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+
+                <!-- Center Cap & Lug Nuts -->
+                <circle cx="50" cy="50" r="11" fill="#d3e4df" stroke="#474d4d" stroke-width="1.5" />
+                <g fill="#474d4d">
+                    <circle cx="50" cy="45" r="1.5" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(72 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(144 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(216 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(288 50 50)" />
+                </g>
+                <!-- Center Emblem Dot -->
+                <circle cx="50" cy="50" r="2.5" fill="#2c3131" />
+            </svg>
+        </div>
+
+        <!-- Right Wheel -->
+        <div
+            class="footer-wheel absolute top-0 right-[5%] sm:right-[15%] md:right-[25%] -translate-y-1/2 w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 z-30">
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+                <!-- Tire Outer -->
+                <circle cx="50" cy="50" r="48" fill="#1f2323" />
+                <!-- Tire Tread illusion -->
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 2" />
+
+                <!-- Alloy Wheel Barrel (Dark Inner) -->
+                <circle cx="50" cy="50" r="36" fill="#2c3131" />
+
+                <!-- Outer Lip of Alloy Rim -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#d3e4df" stroke-width="3" />
+
+                <!-- 5-Spoke Simple Alloy Structure -->
+                <g stroke="#d3e4df" stroke-width="10" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+
+                <!-- Spoke Inner Accents for Depth -->
+                <g stroke="#8a9a98" stroke-width="3" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+
+                <!-- Center Cap & Lug Nuts -->
+                <circle cx="50" cy="50" r="11" fill="#d3e4df" stroke="#474d4d" stroke-width="1.5" />
+                <g fill="#474d4d">
+                    <circle cx="50" cy="45" r="1.5" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(72 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(144 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(216 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(288 50 50)" />
+                </g>
+                <!-- Center Emblem Dot -->
+                <circle cx="50" cy="50" r="2.5" fill="#2c3131" />
+            </svg>
+        </div>
+
+        <!-- Footer Minimal Content -->
+        <div
+            class="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center text-center relative z-10 space-y-10">
+
+            <!-- Branding Logo -->
+            <div>
+                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="h-16 md:h-20 w-auto mx-auto mb-3">
+                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#99eff0"
+                        stroke-width="2" fill="none" />
+                    <g font-family="'Playfair Display', serif" font-weight="600" text-anchor="middle">
+                        <text x="48" y="95" font-size="73" fill="#d3e4df">D</text>
+                        <text x="94" y="95" font-size="73" fill="#d3e4df">C</text>
+                        <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="1" fill="#d3e4df"
+                            paint-order="stroke">D</text>
+                    </g>
+                </svg>
+                <div class="font-orbitron font-bold tracking-widest text-[#99eff0]">DP_01 Fleet</div>
             </div>
-                    </div>
+
+            <!-- Join With Us & Socials -->
+            <div>
+                <h3 class="font-serif text-3xl md:text-4xl font-bold text-white mb-6">Join with us</h3>
+
+                <div class="flex items-center justify-center gap-6 md:gap-8">
+                    <!-- Instagram -->
+                    <a href="#" aria-label="Instagram"
+                        class="text-primary/70 hover:text-accent hover:scale-110 transition-all duration-300">
+                        <svg class="w-7 h-7 md:w-9 md:h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <!-- YouTube -->
+                    <a href="#" aria-label="YouTube"
+                        class="text-primary/70 hover:text-accent hover:scale-110 transition-all duration-300">
+                        <svg class="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z">
+                            </path>
+                            <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                        </svg>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="#" aria-label="LinkedIn"
+                        class="text-primary/70 hover:text-accent hover:scale-110 transition-all duration-300">
+                        <svg class="w-7 h-7 md:w-9 md:h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-light">
-                <p>&copy; 2026 DDC Mobility. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition">Terms of Service</a>
-                </div>
-            </div>
+
         </div>
     </footer>
 
-    <!-- Script for Interactions -->
+    <!-- Core Script -->
     <script>
-        // Initialize Icons
-        lucide.createIcons();
-
-        // Navbar Blur & Shrink on Scroll
+        // 6. Navbar Scroll Logic (unified with index.html)
         const navbar = document.getElementById('navbar');
+        let lastScrollY = window.scrollY;
+        const SCROLL_THRESHOLD = 10;
+
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('top-2', 'md:py-2');
-                navbar.classList.remove('top-6', 'md:py-3');
-            } else {
-                navbar.classList.add('top-6', 'md:py-3');
-                navbar.classList.remove('top-2', 'md:py-2');
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+
+            if (currentScrollY <= 50) {
+                navbar.classList.remove('minimized');
+            } else if (scrollDelta > SCROLL_THRESHOLD && currentScrollY > 50) {
+                navbar.classList.add('minimized');
+                // ensure mobile menu is closed when navbar minimizes
+                navbar.classList.remove('open');
+            } else if (scrollDelta < -SCROLL_THRESHOLD) {
+                navbar.classList.remove('minimized');
+            }
+
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // --- 3D Carousel Logic ---
+        const carousel = document.getElementById('carousel');
+        const cards = document.querySelectorAll('.carousel-card');
+        const infoContents = document.querySelectorAll('.info-content');
+        const cellCount = cards.length;
+
+        let selectedIndex = 0;
+        let radius, theta;
+        let isDragging = false;
+        let startX = 0;
+        let rotationValue = 0;
+        let startRotation = 0;
+
+        // Dynamic Calculation for responsive layouts
+        function getCarouselRadius() {
+            const isMobile = window.innerWidth < 640;
+            const cardWidth = isMobile ? 300 : 440;
+            const padding = isMobile ? 60 : 120;
+            return Math.round((cardWidth / 2) / Math.tan(Math.PI / cellCount)) + padding;
+        }
+
+        function updateCardStyles(index) {
+            let normalizedIndex = index % cellCount;
+            if (normalizedIndex < 0) normalizedIndex += cellCount;
+            cards.forEach((card, i) => {
+                if (i === normalizedIndex) {
+                    card.classList.add('active-card');
+                } else {
+                    card.classList.remove('active-card');
+                }
+            });
+            infoContents.forEach(content => content.classList.remove('active'));
+            const target = document.querySelector(`.info-content[data-index="${normalizedIndex}"]`);
+            if (target) target.classList.add('active');
+        }
+
+        function rotateCarousel(direction) {
+            if (direction) selectedIndex += direction;
+            theta = 360 / cellCount;
+            const angle = theta * selectedIndex * -1;
+            rotationValue = angle;
+            radius = getCarouselRadius();
+            carousel.style.transform = `translateZ(-${radius}px) rotateY(${angle}deg)`;
+            updateCardStyles(selectedIndex);
+        }
+
+        const scene = document.querySelector('.scene');
+        scene.addEventListener('mousedown', (e) => {
+            isDragging = true; startX = e.pageX; startRotation = rotationValue;
+            carousel.style.transition = 'none';
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX;
+            const walk = (x - startX) * 0.5;
+            rotationValue = startRotation + walk;
+            radius = getCarouselRadius();
+            carousel.style.transform = `translateZ(-${radius}px) rotateY(${rotationValue}deg)`;
+        });
+        window.addEventListener('mouseup', endDrag);
+        scene.addEventListener('mouseleave', () => { if (isDragging) endDrag(); });
+        scene.addEventListener('touchstart', (e) => {
+            isDragging = true; startX = e.touches[0].pageX; startRotation = rotationValue;
+            carousel.style.transition = 'none';
+        });
+        scene.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            // Native scrolling handled by touch-action: pan-y in CSS
+            const x = e.touches[0].pageX;
+            const walk = (x - startX) * 0.8;
+            rotationValue = startRotation + walk;
+            radius = getCarouselRadius();
+            carousel.style.transform = `translateZ(-${radius}px) rotateY(${rotationValue}deg)`;
+        });
+        scene.addEventListener('touchend', endDrag);
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            carousel.style.transition = 'transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)';
+            const theta = 360 / cellCount;
+            const rawIndex = -rotationValue / theta;
+            const snappedIndex = Math.round(rawIndex);
+            selectedIndex = snappedIndex;
+            rotateCarousel(0);
+        }
+
+        function initCarousel() {
+            theta = 360 / cellCount;
+            radius = getCarouselRadius();
+            cards.forEach((card, i) => {
+                const cellAngle = theta * i;
+                card.style.transform = `rotateY(${cellAngle}deg) translateZ(${radius}px)`;
+            });
+            updateCardStyles(selectedIndex);
+            rotateCarousel(0);
+        }
+        function clickToCard(index) {
+            if (isDragging) return;
+            const current = selectedIndex % cellCount;
+            let normalizedCurrent = current < 0 ? (current + cellCount) : current;
+            let diff = index - normalizedCurrent;
+            if (diff === 2) diff = -1;
+            if (diff === -2) diff = 1;
+            selectedIndex += diff;
+            rotateCarousel(0);
+        }
+        window.addEventListener('load', initCarousel);
+        window.addEventListener('resize', () => {
+            // Re-calc layout on window resize to switch between mobile/desktop dimensions smoothly
+            initCarousel();
+        });
+
+
+        // --- GSAP Scroll Logic for Parallax & Animations ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const products = gsap.utils.toArray('.product-item');
+        let mm = gsap.matchMedia();
+
+        products.forEach(product => {
+            const imgContainer = product.querySelector('.product-image-container');
+            const placeholderBg = imgContainer.querySelector('.parallax-bg');
+            const card = product.querySelector('.product-card-glass');
+            const align = product.dataset.align; // 'left' or 'right'
+
+            // 1. Text Details Fade Up
+            gsap.from(card, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: product,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+
+            // 2. Internal Placeholder Background Directional Panning (Runs on all screen sizes)
+            let startX = align === 'left' ? -15 : 15;
+            let endX = align === 'left' ? 15 : -15;
+
+            gsap.fromTo(placeholderBg,
+                { scale: 1.25, xPercent: startX },
+                {
+                    scale: 1.25,
+                    xPercent: endX,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: product,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                }
+            );
+        });
+
+        // 3. Image Container Full-Screen Expansion (Desktop only)
+        mm.add("(min-width: 768px)", () => {
+            products.forEach(product => {
+                const imgContainer = product.querySelector('.product-image-container');
+                gsap.to(imgContainer, {
+                    width: "100%",
+                    ease: "power1.inOut",
+                    scrollTrigger: {
+                        trigger: product,
+                        start: "center center",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            });
+        });
+
+        // 4. Footer Wheels Spinning Animation
+        // Spins the wheels based on scroll progress as you reach the bottom of the page
+        gsap.to('.footer-wheel svg', {
+            rotation: 360,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#main-footer",
+                start: "top bottom", // Starts when the top of footer hits bottom of screen
+                end: "bottom bottom", // Ends when the user hits absolute bottom
+                scrub: 1.5 // Smooth scrubbing
             }
         });
 
-        // Intersection Observer for Scroll Reveal Animations
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Reveal only once
-            });
-        }, revealOptions);
-
-        revealElements.forEach(el => {
-            revealOnScroll.observe(el);
-        });
-
-        // --- 3D Slit Carousel Logic ---
-        const podData = [
-            {
-                title: "ORION",
-                seats: "6 Seater",
-                desc: "The compact standard for smart campuses and gated communities. Designed for quiet, efficient, and continuous loop transport with ultimate spatial economy.",
-                features: ["Unibody structural integrity", "Human-Control Mode with Joystick Precision"],
-                img: "./images/orion.png"
-            },
-            {
-                title: "LUNARITE",
-                seats: "8 Seater",
-                desc: "Optimized for luxury resort and tourism transit. Features panoramic viewing angles and upgraded interior materials for a premium passenger experience.",
-                features: ["Adaptive climate control", "Intelligent luggage spatial arrangement"],
-                img: "./images/pod.png"
-            },
-            {
-                title: "STELLARIS",
-                seats: "12 Seater",
-                desc: "The high-capacity workhorse for smart cities and industrial zones. Engineered for rapid ingress/egress and high-frequency deployment.",
-                features: ["Mass transit synchronization capability", "Extended life-cycle modular components"],
-                img: "./images/stalaris1.png"
-            }
-        ];
-
-        const sliderEl = document.getElementById('slit-slider');
-        const slicesCount = 8; // Number of vertical slices
-        let currentPodIndex = 0;
-        let slitRotation = 0;
-        let isAnimating = false;
-
-        // Initialize Slices
-        sliderEl.style.setProperty('--slices', slicesCount);
-        for (let i = 0; i < slicesCount; i++) {
-            const slice = document.createElement('div');
-            slice.className = 'slit-slice';
-            slice.style.transitionDelay = `${i * 60}ms`; // Staggered delay for wave effect
-
-            const front = document.createElement('div');
-            front.className = 'slit-face slit-front';
-            front.style.backgroundImage = `url(${podData[0].img})`;
-            front.style.backgroundPosition = `${(i / (slicesCount - 1)) * 100}% center`;
-
-            const back = document.createElement('div');
-            back.className = 'slit-face slit-back';
-            back.style.backgroundPosition = `${(i / (slicesCount - 1)) * 100}% center`;
-
-            slice.appendChild(front);
-            slice.appendChild(back);
-            sliderEl.appendChild(slice);
-        }
-
-        // Initialize First Content
-        updateContentDOM(0, true);
-
-        function nextPod() {
-            if (isAnimating) return;
-            changePod(1);
-        }
-
-        function prevPod() {
-            if (isAnimating) return;
-            changePod(-1);
-        }
-
-        function changePod(direction) {
-            isAnimating = true;
-            let nextIndex = currentPodIndex + direction;
-            
-            // Loop array safely
-            if (nextIndex >= podData.length) nextIndex = 0;
-            if (nextIndex < 0) nextIndex = podData.length - 1;
-
-            slitRotation += direction * -180;
-            
-            // Determine which face is becoming visible
-            const flipCount = Math.abs(slitRotation / 180);
-            const willShowFront = flipCount % 2 === 0;
-            const faceToUpdate = willShowFront ? '.slit-front' : '.slit-back';
-
-            const slices = document.querySelectorAll('.slit-slice');
-            slices.forEach(slice => {
-                const face = slice.querySelector(faceToUpdate);
-                // Update the hidden face to the target image right before rotating
-                face.style.backgroundImage = `url(${podData[nextIndex].img})`;
-                // Apply 3D rotation
-                slice.style.transform = `rotateY(${slitRotation}deg)`;
-            });
-
-            updateContentDOM(nextIndex);
-            currentPodIndex = nextIndex;
-
-            // Lock controls until animation wave completes
-            setTimeout(() => { isAnimating = false; }, 1000 + (slicesCount * 60)); 
-        }
-
-        function updateContentDOM(index, isInit = false) {
-            const wrapper = document.getElementById('pod-content-wrapper');
-            const pod = podData[index];
-            
-            const buildHTML = () => `
-                <div class="flex items-center space-x-4 mb-5">
-                    <h4 class="font-serif text-3xl md:text-4xl font-bold text-emerald">${pod.title}</h4>
-                    <span class="px-3 py-1 bg-mint-200 text-emerald text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">${pod.seats}</span>
-                </div>
-                <p class="text-charcoal/70 font-light text-lg mb-8 leading-relaxed">${pod.desc}</p>
-                <div class="h-px w-full bg-emerald/10 mb-8"></div>
-                <ul class="space-y-4 text-sm text-charcoal/80">
-                    ${pod.features.map(f => `
-                        <li class="flex items-center">
-                            <div class="w-6 h-6 rounded-full bg-mint-100 flex items-center justify-center mr-4 flex-shrink-0">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald"></i>
-                            </div>
-                            <span class="font-medium">${f}</span>
-                        </li>
-                    `).join('')}
-                </ul>
-            `;
-
-            if (isInit) {
-                wrapper.innerHTML = buildHTML();
-                lucide.createIcons();
-                setTimeout(() => {
-                    wrapper.style.opacity = '1';
-                    wrapper.style.transform = 'translateY(0)';
-                }, 100);
-            } else {
-                // Fade out, update, fade in
-                wrapper.style.opacity = '0';
-                wrapper.style.transform = 'translateY(15px)';
-                setTimeout(() => {
-                    wrapper.innerHTML = buildHTML();
-                    lucide.createIcons();
-                    wrapper.style.opacity = '1';
-                    wrapper.style.transform = 'translateY(0)';
-                }, 400); 
-            }
-        }
     </script>
-    <script src="js/main.js"></script>
+    <script>
+        // Mobile toggle script for navbar (whatwe page)
+        (function () {
+            const navbarEl = document.getElementById('navbar');
+            const navToggleEl = document.getElementById('navToggle');
+            if (!navToggleEl || !navbarEl) return;
+
+            navToggleEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navbarEl.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!navbarEl.contains(e.target)) navbarEl.classList.remove('open');
+            });
+
+            document.querySelectorAll('#navbar .nav-links a').forEach(a => {
+                a.addEventListener('click', () => navbarEl.classList.remove('open'));
+            });
+        })();
+    </script>
 </body>
+
 </html>

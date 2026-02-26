@@ -13,7 +13,8 @@
     
     <!--=============== GOOGLE FONTS FOR CARDS ===============-->
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="overflow-x-hidden">
@@ -46,7 +47,7 @@
         What We Build
     </a>
 
-    <a href="blog.html"
+    <a href="menu/blog.html"
        class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap text-accent">
         NEWS/media
     </a>
@@ -75,7 +76,7 @@
         <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
             <!-- WHO WE ARE DROPDOWN -->
     <div class="relative group">
-        <a href="about.html"
+        <a href="menu/about.html"
            class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
             Who We Are
         </a>
@@ -458,6 +459,80 @@
 
     <!-- Footer -->
     <footer id="contact" class="bg-emerald-950 text-emerald-100/60 py-16 px-6 border-t border-emerald-900">
+          <!-- Left Wheel -->
+     <div
+            class="footer-wheel left-wheel absolute top-0 left-[15%] md:left-1/4 w-20 h-20 md:w-36 md:h-36 -translate-x-1/2 -translate-y-1/2 rounded-full z-40 bg-[#050505] flex items-center justify-center will-change-transform">
+            <svg viewBox="0 0 200 200" class="w-full h-full text-accent drop-shadow-[0_0_12px_rgba(153,239,240,0.25)]">
+                <circle cx="100" cy="100" r="96" fill="#050505" stroke="#111" stroke-width="8" />
+                <g class="wheel-inner">
+                    <circle cx="100" cy="100" r="86" fill="#151718" stroke="#222" stroke-width="3" />
+                    <circle cx="100" cy="100" r="78" fill="#202324" />
+                    <g fill="#050505">
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(72 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(144 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(216 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(288 100 100)" />
+                    </g>
+                    <g fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6" stroke-linecap="round">
+                        <path d="M105 85 L125 30" />
+                        <path d="M105 85 L125 30" transform="rotate(72 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(144 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(216 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(288 100 100)" />
+                    </g>
+                    <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-dasharray="1 6" opacity="0.4" />
+                    <circle cx="100" cy="100" r="22" fill="#151718" stroke="#111" stroke-width="2" />
+                    <circle cx="100" cy="100" r="14" fill="#0a0a0a" />
+                    <polygon points="100,92 107,104 93,104" fill="currentColor" opacity="0.8" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Right Wheel (Front) -->
+        <div
+            class="footer-wheel right-wheel absolute top-0 right-[15%] md:right-1/4 w-20 h-20 md:w-36 md:h-36 translate-x-1/2 -translate-y-1/2 rounded-full z-40 bg-[#050505] flex items-center justify-center will-change-transform">
+            <svg viewBox="0 0 200 200" class="w-full h-full text-accent drop-shadow-[0_0_12px_rgba(153,239,240,0.25)]">
+                <circle cx="100" cy="100" r="96" fill="#050505" stroke="#111" stroke-width="8" />
+                <g class="wheel-inner">
+                    <circle cx="100" cy="100" r="86" fill="#151718" stroke="#222" stroke-width="3" />
+                    <circle cx="100" cy="100" r="78" fill="#202324" />
+                    <g fill="#050505">
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(72 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(144 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(216 100 100)" />
+                        <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(288 100 100)" />
+                    </g>
+                    <g fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6" stroke-linecap="round">
+                        <path d="M105 85 L125 30" />
+                        <path d="M105 85 L125 30" transform="rotate(72 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(144 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(216 100 100)" />
+                        <path d="M105 85 L125 30" transform="rotate(288 100 100)" />
+                    </g>
+                    <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-dasharray="1 6" opacity="0.4" />
+                    <circle cx="100" cy="100" r="22" fill="#151718" stroke="#111" stroke-width="2" />
+                    <circle cx="100" cy="100" r="14" fill="#0a0a0a" />
+                    <polygon points="100,92 107,104 93,104" fill="currentColor" opacity="0.8" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Next Page Reveal Text -->
+        <div
+            class="next-page-reveal absolute inset-0 z-50 flex flex-col items-center justify-center opacity-0 pointer-events-none">
+            <span class="text-primary tracking-[0.5em] text-sm md:text-xl font-sans uppercase mb-4 opacity-70">Welcome
+                to</span>
+            <h2
+                class="text-6xl md:text-[6rem] lg:text-[8rem] font-serif  font-bold tracking-widest drop-shadow-[0_0_15px_rgba(153,239,240,0.5)]"style="color: linear-gradient(to right, #050505, #99eff0);">
+                DDC</h2>
+                <a href="technology.html" class="text-emerald-400 hover:text-emerald-300 transition-colors" style="border: 20px solid #f1e498; border-radius: 25px;">Explore</a>
+        </div>
+
+
         <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 border-b border-emerald-900 pb-12 mb-12">
             <div class="col-span-1 md:col-span-1">
                 <div class="flex items-center gap-2 mb-6">

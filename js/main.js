@@ -168,4 +168,133 @@
                 document.querySelectorAll('.card__button').forEach(b => b.classList.remove('show-icon'));
             }
         });
-    
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 2. Parallax Grow Animation
+        gsap.to("#grow-image-wrapper", {
+            width: "100%",
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#who-we-are",
+                start: "top 80%",
+                end: "center center",
+                scrub: 2,
+            }
+        });
+
+        // 3. Immersive Image Parallax
+        gsap.to(".parallax-bg", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#horizon",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // 4. Fusion Section Scroll Animation
+        gsap.set(".fusion-result", { xPercent: -50, yPercent: -50, scale: 0.75, opacity: 0 });
+
+        const fusionTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#fusion-section",
+                start: "top top",
+                end: "+=150%",
+                pin: true,
+                scrub: 1
+            }
+        });
+
+        fusionTl.to(".fusion-left", {
+            left: "50%",
+            xPercent: -50,
+            opacity: 0,
+            scale: 0.8,
+            duration: 2,
+            ease: "power2.inOut"
+        }, 0)
+            .to(".fusion-right", {
+                right: "50%",
+                xPercent: 50,
+                opacity: 0,
+                scale: 0.8,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0)
+            .to(".fusion-result", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.5,
+                ease: "power2.out"
+            }, 1);
+
+        // 5. Epic Footer Merger & Next Page Transition
+        gsap.set(".left-wheel", { xPercent: -50, yPercent: -50 });
+        gsap.set(".right-wheel", { xPercent: 50, yPercent: -50 });
+
+        const footerTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top top",
+                end: "+=250%",
+                pin: true,
+                scrub: 1.5
+            }
+        });
+
+        footerTl.to(".left-wheel", {
+            left: "50%",
+            top: "50%",
+            rotation: 720,
+            duration: 2,
+            ease: "power2.inOut",
+            force3D: true
+        }, 0)
+            .to(".right-wheel", {
+                right: "50%",
+                top: "50%",
+                rotation: -720,
+                duration: 2,
+                ease: "power2.inOut",
+                force3D: true
+            }, 0)
+            .to(".footer-content", {
+                opacity: 0,
+                y: 50,
+                scale: 0.9,
+                duration: 1.5,
+                ease: "power2.inOut"
+            }, 0.2)
+            .to(".footer-wheel", {
+                scale: 45,
+                duration: 2.5,
+                ease: "power2.inOut",
+                force3D: true
+            }, 2)
+            .to(".wheel-inner", {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power1.inOut"
+            }, 2)
+            .to(".next-page-reveal", {
+                opacity: 1,
+                pointerEvents: "auto",
+                duration: 1.5,
+                ease: "power2.out",
+                force3D: true
+            }, 3.5);
+
+      
+        // 7. Hero Text Reveal Animation
+        window.addEventListener('load', () => {
+            gsap.from(".hero-line", {
+                y: "110%",
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power4.out",
+                delay: 0.2
+            });
+        });
