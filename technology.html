@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EV Pod Collection</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700&family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Fonts: Playfair (Serif), Plus Jakarta (Brand Sans), DM Sans (Slider Sans), Nanum Myeongjo (Logo) -->
+    <!-- Google Fonts for Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Nanum+Myeongjo&family=Orbitron:wght@400;700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                        'offwhite': '#f4f9f8',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -515,63 +527,45 @@
     </style>
 </head>
 <body>
-<nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+    <!-- Floating Navbar -->
+    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
 
         <!-- Left Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium text-emerald-800">
-            <a href="technology.html"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
-            <a href="product.html"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We
-                Build</a>
-            <a href="menu/blog.html"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href="technology.html" class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap">Features</a>
+            <a href="product.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">What We Build</a>
+            <a href="menu/blog.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">NEWS/media</a>
         </div>
 
         <!-- Center Logo -->
-        <div class="flex items-center gap-2 shrink-0">
-            <div class="logo-icon w-full h-full flex items-center justify-center">
-                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="h-12 sm:h-14 w-auto drop-shadow-md" style="color: var(--mint-500);">
-                    <!-- Octagon Border -->
-                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="#d3e4df"
-                        stroke-width="3" fill="none" style="color :var(--mint-500);" />
-
-                    <!-- Interlocking DDC Letters -->
-                    <g font-family="'Nanum Myeongjo', serif" font-weight="700" text-anchor="middle">
-                        <!-- Left "D" -->
-                        <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
-
-                        <!-- Right "C" -->
-                        <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
-
-                        <!-- Center "D" (Larger, Overlapping with Cutout) -->
-                        <!-- Stroke color set to white to match the glass navbar for a clean cutout effect -->
-                        <text x="70" y="107" font-size="110" stroke="#ffffff" stroke-width="2" fill="#22c55e"
-                            paint-order="stroke">D</text>
-                    </g>
-                </svg>
+        <div class="logo-container z-10">
+            <div class="logo-icon flex items-center justify-center">
+                <a href="index.html" aria-label="Go to Home" class="flex items-center justify-center">
+                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-md">
+                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="var(--primary)" stroke-width="3" fill="none" />
+                        <g font-family="Nanum Myeongjo, serif" font-weight="400" text-anchor="middle">
+                            <text x="48" y="95" font-size="73" fill="#f1e498">D</text>
+                            <text x="94" y="95" font-size="73" fill="#f1e498">C</text>
+                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498" paint-order="stroke">D</text>
+                        </g>
+                    </svg>
+                </a>
             </div>
+            <a href="index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10">
+                DP_01
+            </a>
         </div>
 
         <!-- Right Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium text-emerald-800">
-            <a href="menu/about.html"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We
-                Are
-            </a>
-            <a href="menu/tutor.html"
-                class="hover:text-mint-600 transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on
-                go</a>
-            <a href="menu/contact.html"
-                class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact
-                Us</a>
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
+            <a href="menu/about.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">Who We Are</a>
+            <a href="menu/tutorial.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">hop on go</a>
+            <a href="menu/contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
         </div>
 
         <!-- Mobile Menu Button -->
         <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
@@ -589,7 +583,7 @@
             <a href="product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
             <a href="menu/blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
             <a href="menu/about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
-            <a href="menu/tutor.html" class="hover:text-mint-600 transition-colors">hop on go</a>
+            <a href="menu/tutorial.html" class="hover:text-mint-600 transition-colors">hop on go</a>
             <a href="menu/contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold">Contact Us</a>
         </div>
     </div>

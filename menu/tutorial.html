@@ -5,16 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How DDC EV Pods Work | Dark Dragons Caelestis</title>
     
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts for Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Nanum+Myeongjo&family=Orbitron:wght@400;700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Site CSS -->
     <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                        'offwhite': '#f4f9f8',
+                        mint: {
+                            DEFAULT: '#98FF98', // Primary Mint
+                            dark: '#2E7D32',    // Dark Mint
+                            light: '#F0FFF0',   // Very light, elegant mint for backgrounds
+                            glass: 'rgba(240, 255, 240, 0.7)' // Glassmorphism mint
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -74,59 +100,90 @@
 </head>
 <body class="bg-gray-light text-gray-dark antialiased">
 
-    <!-- Navigation -->
-    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass-card rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-6xl md:min-w-fit shadow-lg shadow-emerald-900/10">
+    <!-- Floating Navbar -->
+      <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
 
         <!-- Left Links Wrapper -->
-        <div class="nav-section hidden lg:flex items-center gap-8 text-sm font-semibold text-emerald-900">
-            <a href="#how-it-works" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
-                How It Works
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <a href="#features" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
-                Features
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <a href="../index.html" class="hover:text-emerald-600 transition-all duration-300 relative group py-1">
-                Home
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
+    <!-- FEATURES DROPDOWN -->
+    <div class="relative group">
+        <a href="../technology.html"
+           class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap">
+            Signature Series
+        </a>
+
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
+                    bg-[#474d4d] text-white rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 
+                    group-hover:visible transition-all duration-300 
+                    min-w-[200px] py-3 flex flex-col text-sm">
+
+            <a href="../technology.html" class="dropdown-item">Battery Swapping</a>
+            <a href="../technology.html" class="dropdown-item">Features</a>
         </div>
+    </div>
+
+    <a href="../product.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+        What We Build
+    </a>
+
+    <a href="blog.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap text-accent">
+        NEWS/media
+    </a>
+</div>
 
         <!-- Center Logo -->
-        <div class="flex items-center gap-2 shrink-0 group cursor-pointer" onclick="window.location.href='../index.html'">
-            <div class="logo-icon w-full h-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 sm:h-14 w-auto drop-shadow-md">
-                    <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="currentColor" stroke-width="3" fill="none" class="text-emerald-100" />
-                    <g font-family="'Nanum Myeongjo', serif" font-weight="700" text-anchor="middle">
-                        <text x="48" y="95" font-size="73" fill="#22c55e">D</text>
-                        <text x="94" y="95" font-size="73" fill="#22c55e">C</text>
-                        <text x="70" y="107" font-size="110" stroke="#ffffff" stroke-width="2" fill="#22c55e" paint-order="stroke">D</text>
-                    </g>
-                </svg>
+        <div class="logo-container z-10">
+            <div class="logo-icon flex items-center justify-center">
+                <a href="../index.html" aria-label="Go to Home" class="flex items-center justify-center">
+                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-md">
+                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="var(--primary)" stroke-width="3" fill="none" />
+                        <g font-family="Nanum Myeongjo, serif" font-weight="400" text-anchor="middle">
+                            <text x="48" y="95" font-size="73" fill="#f1e498">D</text>
+                            <text x="94" y="95" font-size="73" fill="#f1e498">C</text>
+                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498" paint-order="stroke">D</text>
+                        </g>
+                    </svg>
+                </a>
             </div>
+            <a href="../index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10">
+                DP_01
+            </a>
         </div>
 
         <!-- Right Links Wrapper -->
-        <div class="nav-section hidden lg:flex items-center gap-6 text-sm font-semibold">
-            <a href="about.html" class="text-emerald-900 hover:text-emerald-600 transition-all duration-300 relative group py-1">
-                Story
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-500 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <div class="flex items-center gap-3 ml-2">
-                <a href="booking.html" class="bg-emerald-900 text-white px-6 py-2.5 rounded-full hover:bg-emerald-800 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-xs uppercase tracking-wider font-bold">
-                    Book Demo
-                </a>
-                <a href="contact.html" class="bg-emerald-500 text-white px-6 py-2.5 rounded-full hover:bg-emerald-400 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-xs uppercase tracking-wider font-bold">
-                    Contact
-                </a>
-            </div>
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
+            <!-- WHO WE ARE DROPDOWN -->
+    <div class="relative group">
+        <a href="about.html"
+           class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+            Who We Are
+        </a>
+
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
+                    bg-[#474d4d] text-white rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 
+                    group-hover:visible transition-all duration-300 
+                    min-w-[200px] py-3 flex flex-col text-sm">
+
+            <a href="about.html" class="dropdown-item">About Us</a>
+            <a href="journey.html" class="dropdown-item">Journey</a>
+        </div>
+    </div>
+
+    <a href="tutorial.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+        hop on go
+    </a>
+            <a href="contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button class="lg:hidden text-emerald-900 p-2 hover:bg-emerald-50 rounded-full transition-colors" id="mobileMenuBtn">
+        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
         </button>
     </nav>
@@ -139,12 +196,12 @@
             </svg>
         </button>
         <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
-            <a href="#how-it-works" class="hover:text-mint-600 transition-colors">How It Works</a>
-            <a href="#features" class="hover:text-mint-600 transition-colors">Features</a>
-            <a href="../index.html" class="hover:text-mint-600 transition-colors">Home</a>
-            <a href="about.html" class="hover:text-mint-600 transition-colors">Our Story</a>
-            <a href="booking.html" class="mt-4 bg-emerald-900 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold text-center">Book a Demo</a>
-            <a href="contact.html" class="bg-mint-500 text-emerald-950 px-8 py-4 rounded-full hover:bg-mint-400 transition-all text-sm tracking-wide uppercase font-bold text-center">Contact Us</a>
+            <a href="../technology.html" class="hover:text-mint-600 transition-colors">Features</a>
+            <a href="../product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
+            <a href="blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
+            <a href="about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
+            <a href="tutorial.html" class="hover:text-mint-600 transition-colors">hop on go</a>
+            <a href="contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold text-center">Contact Us</a>
         </div>
     </div>
 

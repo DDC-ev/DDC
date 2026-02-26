@@ -1,29 +1,47 @@
-        :root {
-            /* Site Variables - LIGHT THEME RESTORED */
-            --mint-50: #f0fdf4;
-            --mint-100: #dcfce7;
-            --mint-200: #bbf7d0;
-            --mint-500: #22c55e;
-            --mint-600: #16a34a;
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+:root {
+            /* Site Variables - NEW GRAY/MINT PALETTE */
+            --primary: #d3e4df;
+            --dark: #474d4d;
+            --accent: #99eff0;
+            --offwhite: #f4f9f8;
             
-            /* Card Variables - Light Mode */
-            --first-color: hsl(150, 62%, 48%);
-            --white-color: #ffffff; /* White Card Background */
-            --body-color: #f0fdf4; /* Light Body */
-            --title-color: #064e3b; /* Dark Green Text */
-            --body-font: "Unbounded", sans-serif;
-            --h2-font-size: 2.25rem;
-            --h3-font-size: 1.25rem;
-            --small-font-size: .875rem;
+            /* Legacy variables mapped to new palette for compatibility */
+            --mint-50: var(--primary);
+            --mint-500: #22c55e;
+            
+            /* Card Variables */
+            --first-color: var(--accent);
+            --white-color: #ffffff;
+            --body-color: var(--primary);
+            --title-color: var(--dark);
+            --body-font: "Outfit", sans-serif;
         }
         
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--mint-50);
-            color: #1a2e1a; /* Dark Green Text */
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--primary);
+            color: var(--dark);
             scroll-behavior: smooth;
         }
+/* ===== NAVBAR DROPDOWN ===== */
 
+.dropdown-menu {
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(211, 228, 223, 0.15);
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(153, 239, 240, 0.15);
+    color: var(--accent);
+}
         .glass-card {
             background: rgba(255, 255, 255, 0.7); /* Light Glass */
             backdrop-filter: blur(12px);
@@ -69,36 +87,145 @@
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
 
-        /* Dynamic Nav Styles */
+        /* Standardized Navbar styles from contact.html */
         #mainNav {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            background: rgba(71, 77, 77, 0.92);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(211, 228, 223, 0.12);
+        }
+
+        /* Navbar Minimized State */
+        #mainNav.minimized {
+            width: 120px;
+            height: 48px;
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            background-color: var(--dark);
+            border-color: var(--dark);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 768px) {
+            #mainNav.minimized {
+                width: 140px;
+                height: 56px;
+            }
+        }
+
+        #mainNav.minimized .nav-section {
+            opacity: 0;
+            width: 0;
+            flex: 0 0 0%;
+            padding: 0;
+            margin: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Logo Transformation Logic */
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .logo-icon {
+            opacity: 1;
+            transform: scale(1);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Styles applied when scrolled */
-        #mainNav.scrolled {
-            padding: 0.5rem 0.75rem !important;
-            min-width: 0 !important;
-            width: auto !important;
-            max-width: fit-content !important;
-            gap: 0 !important;
+        .logo-icon a {
+            pointer-events: auto;
         }
 
-        .nav-section {
-            transition: all 0.4s ease;
-            opacity: 1;
-            max-width: 500px;
-            overflow: hidden;
-        }
-
-        #mainNav.scrolled .nav-section {
-            max-width: 0;
+        .logo-text {
+            font-family: "Oswald", sans-serif;
+            font-size: 30px;
+            font-weight: 500;
+            letter-spacing: -1px;
             opacity: 0;
-            margin: 0;
-            padding: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            position: absolute;
+            color: var(--primary);
         }
 
-        #mainNav.scrolled #mobileMenuBtn {
-            display: none;
+        #mainNav.minimized .logo-icon {
+            opacity: 0;
+            transform: scale(0.5) rotate(45deg);
+            pointer-events: none;
+        }
+
+        #mainNav.minimized .logo-text {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition-delay: 0.1s;
+        }
+
+        .nav-item-link {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            color: #f0fdf4;
+        }
+
+        .nav-item-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-item-link:hover {
+            color: var(--accent);
+        }
+
+        .nav-item-link:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            #mainNav.minimized #mobileMenuBtn {
+                display: none !important;
+            }
+            
+            #mainNav.open .nav-section {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(95% - 2rem);
+                max-width: 520px;
+                background: rgba(71, 77, 77, 0.92);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                padding: 0.75rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+                z-index: 60;
+            }
         }
 
         /* =============== CARD STYLES =============== */

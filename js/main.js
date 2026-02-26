@@ -33,26 +33,57 @@
         });
 
         // ================= DYNAMIC NAVBAR SCROLL =================
-        const nav = document.getElementById('mainNav');
+        const navbar = document.getElementById('mainNav'); // Unified ID
         let lastScrollY = window.scrollY;
-        
-        window.addEventListener('scroll', () => {
-            const currentScrollY = Math.max(0, window.scrollY);
+        const SCROLL_THRESHOLD = 10;
 
-            // Determine direction and threshold
-            // If scrolling UP OR within the top 50px -> Expand (Original Size)
-            if (currentScrollY < lastScrollY || currentScrollY <= 50) {
-                nav.classList.remove('scrolled');
-                nav.classList.add('w-[95%]', 'max-w-5xl'); // Restore user's sizing classes
-            } 
-            // If scrolling DOWN AND past the top 50px -> Contract (Pill Size)
-            else if (currentScrollY > 50 && currentScrollY > lastScrollY) {
-                nav.classList.add('scrolled');
-                nav.classList.remove('w-[95%]', 'max-w-5xl'); // Remove to allow min-width fallback to wrap logo
+        window.addEventListener('scroll', () => {
+            if (!navbar) return;
+            const currentScrollY = window.scrollY;
+            const scrollDelta = currentScrollY - lastScrollY;
+
+            // Always expand at the very top (Safety Anchor)
+            if (currentScrollY <= 50) {
+                navbar.classList.remove('minimized');
+            }
+            // Scrolling DOWN (significantly)
+            else if (scrollDelta > SCROLL_THRESHOLD && currentScrollY > 50) {
+                navbar.classList.add('minimized');
+                // close mobile menu when minimized to avoid floating orphans
+                navbar.classList.remove('open');
+            }
+            // Scrolling UP (significantly)
+            else if (scrollDelta < -SCROLL_THRESHOLD) {
+                navbar.classList.remove('minimized');
             }
 
-            // Update last scroll position
             lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // ================= MOBILE MENU TOGGLE =================
+        // Variables mobileMenuBtn and mobileMenu are already declared at the top
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // If using the inline dropdown approach from contact.html (toggling 'open' on nav)
+                if (navbar) navbar.classList.toggle('open');
+                
+                // If using the full-screen overlay approach from index.html
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                    setTimeout(() => {
+                        mobileMenu.classList.toggle('translate-x-full');
+                    }, 10);
+                }
+            });
+        }
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navbar && !navbar.contains(e.target)) {
+                navbar.classList.remove('open');
+            }
         });
 
         // ================= VIDEO SCROLL LOGIC =================
