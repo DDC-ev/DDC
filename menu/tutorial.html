@@ -12,6 +12,10 @@
     
     <!-- Site CSS -->
     <link rel="stylesheet" href="../css/style.css">
+
+    <!--=============== GSAP ===============-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -460,24 +464,9 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12 text-center text-sm border-t-4 border-mint-dark">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            
-            <p>&copy; 2026 Dark Dragons Caelestis. All rights reserved.</p>
-           <div class="flex justify-center gap-6 mb-16">  
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-linkedin-in group-hover:scale-110 transition-transform"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-gray-800 flex items-center justify-center text-gray-400 hover:text-ddc-mint hover:border-ddc-mint hover:bg-white/5 transition-all duration-300 group">
-                    <i class="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
+    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
+    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
+    <script src="../js/footer.js" data-next="about.html"></script>
 
     <!-- Initialize AOS Animation -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

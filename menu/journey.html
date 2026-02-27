@@ -10,6 +10,10 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../css/style.css">
 
+    <!--=============== GSAP ===============-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         :root {
             /* Elegant Mint Palette */
@@ -50,7 +54,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 4rem;
+            padding: clamp(0.75rem, 2vw, 1.5rem) clamp(1rem, 4vw, 4rem);
             background: var(--nav-bg);
             backdrop-filter: blur(12px);
             z-index: 1000;
@@ -132,8 +136,8 @@
 
         /* --- Header --- */
         header {
-            padding-top: 12rem;
-            padding-bottom: 6rem;
+            padding-top: clamp(7rem, 15vw, 12rem);
+            padding-bottom: clamp(3rem, 6vw, 6rem);
             position: relative;
         }
         header::after {
@@ -436,14 +440,17 @@
         @media (max-width: 1024px) {
             .social-sidebar { display: none; }
             .nav-links { display: none; }
-            nav { padding: 1rem 2rem; }
         }
         @media (max-width: 768px) {
-            .timeline-item { width: 280px; }
+            .timeline-item { width: min(280px, 80vw); }
             .modal-content { grid-template-columns: 1fr; }
             .modal-image { height: 250px; }
-            .modal-body { padding: 2rem; }
-            header h1 { font-size: 3rem; }
+            .modal-body { padding: 1.5rem; }
+            header h1 { font-size: clamp(2rem, 8vw, 3.5rem); }
+        }
+        @media (max-width: 480px) {
+            .timeline-item { width: min(240px, 72vw); }
+            header h1 { font-size: clamp(1.75rem, 6vw, 2.5rem); }
         }
     </style>
 </head>
@@ -454,91 +461,143 @@
     <div id="cursor-dot"></div>
 
     <!-- Navigation -->
-     <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
-
-        <!-- Left Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
-    <!-- FEATURES DROPDOWN -->
-    <div class="relative group">
-        <a href="../technology.html"
-           class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap">
-            Signature Series
-        </a>
-
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
-                    bg-[#474d4d] text-white rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 
-                    group-hover:visible transition-all duration-300 
-                    min-w-[200px] py-3 flex flex-col text-sm">
-
-            <a href="../technology.html" class="dropdown-item">Battery Swapping</a>
-            <a href="../technology.html" class="dropdown-item">Features</a>
-        </div>
-    </div>
-
-    <a href="../product.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
-        What We Build
-    </a>
-
-    <a href="blog.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap text-accent">
-        NEWS/media
-    </a>
-</div>
-
-        <!-- Center Logo -->
-        <div class="logo-container z-10">
-            <div class="logo-icon flex items-center justify-center">
-                <a href="../index.html" aria-label="Go to Home" class="flex items-center justify-center">
-                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-md">
-                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="var(--primary)" stroke-width="3" fill="none" />
-                        <g font-family="Nanum Myeongjo, serif" font-weight="400" text-anchor="middle">
-                            <text x="48" y="95" font-size="73" fill="#f1e498">D</text>
-                            <text x="94" y="95" font-size="73" fill="#f1e498">C</text>
-                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498" paint-order="stroke">D</text>
-                        </g>
-                    </svg>
-                </a>
-            </div>
-            <a href="../index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10">
-                DP_01
-            </a>
-        </div>
-
-        <!-- Right Links Wrapper -->
-        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
-            <!-- WHO WE ARE DROPDOWN -->
-    <div class="relative group">
-        <a href="about.html"
-           class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-40 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5 bg-[#3a3f3f]/80 backdrop-blur-md text-white">
+        
+    <!-- Left Links Wrapper -->
+    <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
+      <!-- FEATURES DROPDOWN -->
+      <div class="relative group">
+        <a href="menu/about.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
             Who We Are
         </a>
 
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
-                    bg-[#474d4d] text-white rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 
-                    group-hover:visible transition-all duration-300 
-                    min-w-[200px] py-3 flex flex-col text-sm">
-
-            <a href="about.html" class="dropdown-item">About Us</a>
-            <a href="journey.html" class="dropdown-item">Journey</a>
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 bg-[#474d4d] text-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[200px] py-3 flex flex-col text-sm">
+            <a href="menu/about.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">About Us</a>
+            <a href="menu/journey.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Journey</a>
         </div>
+      </div>
+
+      <a href="product.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
+        What We Build
+      </a>
+
+      <!-- SIGNATURE SERIES DROPDOWN -->
+      <div class="relative group">
+        <a href="technology.html" class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap hover:text-emerald-400">
+            Signature Series
+        </a>
+
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 bg-[#474d4d] text-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[200px] py-3 flex flex-col text-sm">
+            <a href="technology.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Battery Swapping</a>
+            <a href="technology.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Features</a>
+        </div>
+      </div>
     </div>
 
-    <a href="tutorial.html"
-       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
-        hop on go
-    </a>
-            <a href="contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
-        </div>
+    <!-- Center Logo -->
+    <div class="logo-container z-10 flex items-center gap-2">
+        <div class="logo-icon flex items-center justify-center">
+            <a href="index.html" aria-label="Go to Home" class="flex items-center justify-center">
+                <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-lg">
 
-        <!-- Mobile Menu Button -->
-        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-        </button>
+  <!-- DEFINITIONS -->
+  <defs>
+    <!-- Gold Gradient -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#fff6b7"/>
+      <stop offset="20%" stop-color="#f7e27a"/>
+      <stop offset="40%" stop-color="#d4af37"/>
+      <stop offset="60%" stop-color="#b8962e"/>
+      <stop offset="80%" stop-color="#f7e27a"/>
+      <stop offset="100%" stop-color="#fff6b7"/>
+    </linearGradient>
+
+    <!-- Shine Gradient -->
+    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.1)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <!-- Glow Effect -->
+    <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Shape -->
+  <path 
+    d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z"
+    stroke="url(#goldGradient)"
+    stroke-width="6"
+    fill="none"
+    filter="url(#goldGlow)"
+  />
+
+  <!-- Letters -->
+  <g font-family="Nanum Myeongjo, serif" text-anchor="middle">
+
+    <!-- Left D -->
+    <text x="48" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">
+      D
+    </text>
+
+    <!-- C -->
+    <text x="94" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">
+      C
+    </text>
+
+    <!-- Center D -->
+    <text 
+      x="70" y="107"
+      font-size="110"
+      fill="url(#goldGradient)"
+      stroke="#3a3a3a"
+      stroke-width="2"
+      paint-order="stroke"
+      filter="url(#goldGlow)">
+      D
+    </text>
+
+  </g>
+
+  <!-- Shine Overlay -->
+  <path 
+    d="M40.9 4H99.1L136 40.9V60H4V40.9L40.9 4Z"
+    fill="url(#shine)"
+    opacity="0.4"
+  />
+
+</svg>
+            </a>
+        </div>
+        <a href="index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10" style="font-size: clamp(12px, 1.3vw, 24px);color: #f1e498;">
+            DP_01
+        </a>
+    </div>
+
+    <!-- Right Links Wrapper -->
+    <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
+        <a href="menu/blog.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
+            NEWS/media
+        </a>
+
+        <a href="menu/tutorial.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
+            hop on go
+        </a>
+        <a href="menu/contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
+    </div>
+
+    <!-- Mobile Menu Button (Triggers the overlay menu) -->
+    <button class="md:hidden text-emerald-500 px-4 hover:text-emerald-400 transition-colors" id="mobileMenuBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+    </button>
     </nav>
 
     <!-- Floating Social Sidebar -->
@@ -657,16 +716,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <h2 class="text-4xl md:text-5xl font-bold mb-8 serif-font">The Future is Here.</h2>
-            <p class="text-mint-light opacity-80 mb-10 text-lg">Experience the culmination of sustainable luxury and high-performance engineering.</p>
-            <button class="px-10 py-4 rounded-full text-lg font-bold transition-all" style="background-color: var(--mint-main); color: white; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);">
-                Configure Your Model
-            </button>
-        </div>
-    </footer>
+    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
+    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
+    <script src="../js/footer.js" data-next="blog.html"></script>
 
     <!-- Detail Modal -->
     <div class="modal-overlay" id="detail-modal">
