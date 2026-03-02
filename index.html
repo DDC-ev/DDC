@@ -70,9 +70,9 @@
 
             <!-- Video Section -->
             <div class="mb-24 w-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-emerald-50 relative aspect-video group bg-black">
-                <video id="solutionVideo" class="w-full h-full object-cover opacity-90" muted loop playsinline poster="https://images.unsplash.com/photo-1626847037657-fd3622613ce3?auto=format&fit=crop&w=1200&q=80">
+                <video id="solutionVideo" class="w-full h-full object-cover opacity-90" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1626847037657-fd3622613ce3?auto=format&fit=crop&w=1200&q=80">
                     <!-- Stock video of futuristic technology/traffic -->
-                    <source src="images/v1760605652/video.mp4" type="video/mp4">
+                    <source src="images/v1760605652/video.mp4" type="video/mp4" muted loop >
                     Your browser does not support the video tag.
                 </video>
                 <!-- Overlay Gradient -->
@@ -99,7 +99,7 @@
                     </div>
                     
                     <!-- Image Side (Right - Expands) -->
-                    <div id="expanding-image" class="absolute right-0 top-0 h-full w-1/2 bg-emerald-900 z-10 shadow-2xl" style="will-change: width; width: 50%;">
+                    <div id="expanding-image" class="absolute right-0 top-0 h-full w-1/2 bg-emerald-900 z-10 shadow-2xl" style="will-change: width; width: 0%;">
                          <img src="images/bev-2.png" class="w-full h-full object-cover" alt="Industrial Design High Fidelity">
                          <!-- Gradient Overlay -->
                          <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/20 to-transparent"></div>
@@ -390,8 +390,34 @@
    
     <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
     <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-    <script src="js/footer.js" data-next="menu\swapping.html"></script>
+   
+<script>
+const trigger = document.getElementById("expand-trigger");
+const expandingImage = document.getElementById("expanding-image");
+const caption = document.getElementById("image-caption");
 
+window.addEventListener("scroll", () => {
+    const rect = trigger.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Calculate how far we've scrolled inside the section
+    const totalScroll = trigger.offsetHeight - windowHeight;
+    const scrollProgress = Math.min(
+        Math.max((windowHeight - rect.top) / totalScroll, 0),
+        1
+    );
+
+    // Animate width from 0% to 100%
+    expandingImage.style.width = `${scrollProgress * 100}%`;
+
+    // Fade caption near end
+    if (scrollProgress > 0.75) {
+        caption.style.opacity = 1;
+    } else {
+        caption.style.opacity = 0;
+    }
+});
+</script>
 
     <script>
         tailwind.config = {
@@ -461,6 +487,7 @@
         });
         
 </script>
+  <script src="js/footer.js" data-next="technology.html"></script>
   <script src="js/main.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/forms.js"></script>

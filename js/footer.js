@@ -106,7 +106,7 @@
        style="padding-top: clamp(80px, 12vw, 140px);">
 
     <!-- Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem;
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr)); gap: clamp(1.5rem, 4vw, 3rem);
                 border-bottom: 1px solid rgba(153,239,240,0.15); padding-bottom: 2.5rem;">
 
       <!-- Brand -->
@@ -120,7 +120,7 @@
       <div>
         <h4 style="font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.05em;">Innovation</h4>
         <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; opacity: 0.8;">
-          <li><a href="${_rel('product.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Battery Swapping</a></li>
+          <li><a href="${_rel('menu/swapping.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Battery Swapping</a></li>
           <li><a href="${_rel('technology.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Crab-Walk Steering</a></li>
           <li><a href="${_rel('product.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Retrofitting</a></li>
         </ul>
@@ -223,6 +223,12 @@
       #ddc-footer input::placeholder { color: rgba(211,228,223,0.35); }
       /* Page-exit fade */
       body.ddc-exiting { opacity: 0 !important; transition: opacity 0.35s ease !important; }
+      
+      @media (max-width: 640px) {
+        .footer-wheel { width: 64px !important; height: 64px !important; }
+        .left-wheel { left: 15% !important; }
+        .right-wheel { right: 15% !important; }
+      }
     `;
     document.head.appendChild(style);
   }

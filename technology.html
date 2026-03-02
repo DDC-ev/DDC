@@ -48,17 +48,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
-        body {
-            background: #f0fdf4; /* Light Mint Background */
-            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
-            color: #1a4d2e;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
+        
         a {
             display: inline-block;
             text-decoration: none;
@@ -91,14 +81,14 @@
 
 /* Elegant Serif Headline */
 .hero-title {
-    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-size: var(--text-7xl);
     font-family: 'Orbitron', sans-serif;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     line-height: 1.05;
     color: #052e26;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md);
     text-shadow: 0 8px 25px rgba(16, 185, 129, 0.08);
 }
 
@@ -114,7 +104,7 @@
 .hero-subtitle {
     max-width: 700px;
     margin: 0 auto;
-    font-size: 1.35rem;
+    font-size: var(--text-xl);
     font-family: 'Exo 2', sans-serif;
     font-weight: 300;
     line-height: 1.8;
@@ -190,10 +180,10 @@
             bottom: 0;
             left: 0;
             width: min(430px, 90%);
-            height: min(410px, 59%);
+            height: auto;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
-            padding: 48px;
+            padding: var(--space-xl);
             border-top-right-radius: 32px;
             opacity: 0;
             transition: opacity 0.5s ease;
@@ -253,9 +243,9 @@
         .collection-section h2 {
             text-transform: capitalize;
             letter-spacing: 0.025em;
-            font-size: clamp(2rem, 1.8125rem + 0.75vw, 2.6rem);
+            font-size: var(--text-4xl);
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: var(--space-sm);
             color: #166534;
         }
         
@@ -529,147 +519,11 @@
             .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
+
 </head>
-<body>
+<body class="bg-primary/30 antialiased font-sans">
     <!-- Floating Navbar -->
- <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-40 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5 bg-[#3a3f3f]/80 backdrop-blur-md text-white">
-        
-    <!-- Left Links Wrapper -->
-    <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
-      <!-- FEATURES DROPDOWN -->
-      <div class="relative group">
-        <a href="menu/about.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
-            Who We Are
-        </a>
-
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 bg-[#474d4d] text-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[200px] py-3 flex flex-col text-sm">
-            <a href="menu/about.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">About Us</a>
-            <a href="menu/journey.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Journey</a>
-        </div>
-      </div>
-
-      <a href="product.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
-        What We Build
-      </a>
-
-      <!-- SIGNATURE SERIES DROPDOWN -->
-      <div class="relative group">
-        <a href="technology.html" class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap hover:text-emerald-400">
-            Signature Series
-        </a>
-
-        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 bg-[#474d4d] text-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[200px] py-3 flex flex-col text-sm">
-            <a href="menu/swapping.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Battery Swapping</a>
-            <a href="technology.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Features</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Center Logo -->
-    <div class="logo-container z-10 flex items-center gap-2">
-        <div class="logo-icon flex items-center justify-center">
-            <a href="index.html" aria-label="Go to Home" class="flex items-center justify-center">
-                <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-lg">
-
-  <!-- DEFINITIONS -->
-  <defs>
-    <!-- Gold Gradient -->
-    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"  stop-color="#fff6b7"/>
-      <stop offset="20%" stop-color="#f7e27a"/>
-      <stop offset="40%" stop-color="#d4af37"/>
-      <stop offset="60%" stop-color="#b8962e"/>
-      <stop offset="80%" stop-color="#f7e27a"/>
-      <stop offset="100%" stop-color="#fff6b7"/>
-    </linearGradient>
-
-    <!-- Shine Gradient -->
-    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
-      <stop offset="50%" stop-color="rgba(255,255,255,0.1)"/>
-      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-    </linearGradient>
-
-    <!-- Glow Effect -->
-    <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Outer Shape -->
-  <path 
-    d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z"
-    stroke="url(#goldGradient)"
-    stroke-width="6"
-    fill="none"
-    filter="url(#goldGlow)"
-  />
-
-  <!-- Letters -->
-  <g font-family="Nanum Myeongjo, serif" text-anchor="middle">
-
-    <!-- Left D -->
-    <text x="48" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">
-      D
-    </text>
-
-    <!-- C -->
-    <text x="94" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">
-      C
-    </text>
-
-    <!-- Center D -->
-    <text 
-      x="70" y="107"
-      font-size="110"
-      fill="url(#goldGradient)"
-      stroke="#3a3a3a"
-      stroke-width="2"
-      paint-order="stroke"
-      filter="url(#goldGlow)">
-      D
-    </text>
-
-  </g>
-
-  <!-- Shine Overlay -->
-  <path 
-    d="M40.9 4H99.1L136 40.9V60H4V40.9L40.9 4Z"
-    fill="url(#shine)"
-    opacity="0.4"
-  />
-
-</svg>
-            </a>
-        </div>
-        <a href="index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10" style="font-size: clamp(12px, 1.3vw, 24px);color: #f1e498;">
-            DP_01
-        </a>
-    </div>
-
-    <!-- Right Links Wrapper -->
-    <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
-        <a href="menu/blog.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
-            NEWS/media
-        </a>
-
-        <a href="menu/tutorial.html" class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap hover:text-emerald-400">
-            hop on go
-        </a>
-        <a href="menu/contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
-    </div>
-
-    <!-- Mobile Menu Button (Triggers the overlay menu) -->
-    <button class="md:hidden text-emerald-500 px-4 hover:text-emerald-400 transition-colors" id="mobileMenuBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-    </button>
-    </nav>
+     <div id="nav-container"></div>
 
    
     <!-- 1. HERO SECTION -->
@@ -863,11 +717,11 @@
     </script>
     <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
     <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-    <script src="js/footer.js" data-next="product.html"></script>
+    <script src="js/footer.js" data-next="menu/swapping.html"></script>
 
     <!-- JS for Scroll Animation -->
      <script src="js/forms.js"></script>
      <script src="js/main.js"></script>
-     <script src="js/menu.js"></script>
+     <script src="js/navbar.js"></script>
 </body>
 </html>

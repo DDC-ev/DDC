@@ -360,19 +360,7 @@
         .pos-left .checkpoint-dot { right: -52px; top: 50%; transform: translateY(-50%); }
         .pos-left .checkpoint-line { right: -40px; width: 40px; }
 
-        /* --- Footer --- */
-        footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 8rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
+      
         /* --- Detail Modal --- */
         .modal-overlay {
             position: fixed;
@@ -470,10 +458,10 @@
 
     <!-- Header -->
     <header class="text-center">
-        <h1 class="text-6xl md:text-7xl font-bold mb-6 tracking-tight" style="color: var(--text-dark);">
+        <h1 class="text-[clamp(2.5rem,8vw+1rem,4.5rem)] font-bold mb-[var(--space-md)] tracking-tight" style="color: var(--text-dark);">
             The Mint <span style="color: var(--mint-main); font-style: italic;">Evolution</span>
         </h1>
-        <p class="text-xl font-medium" style="color: var(--text-muted);">Scroll to drive through our history.</p>
+        <p class="text-[var(--text-xl)] font-medium" style="color: var(--text-muted);">Scroll to drive through our history.</p>
         <p class="text-sm mt-4 opacity-70" style="color: var(--mint-dark);">(Milestones reveal automatically as you reach them)</p>
     </header>
 
@@ -577,10 +565,7 @@
         </div>
     </div>
 
-    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
-    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-    <script src="../js/footer.js" data-next="blog.html"></script>
-
+  
     <!-- Detail Modal -->
     <div class="modal-overlay" id="detail-modal">
         <div class="modal-content">
@@ -594,7 +579,26 @@
             </div>
         </div>
     </div>
-
+ <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Scripts -->
     <script>
         // Initialize Icons
@@ -736,6 +740,7 @@
             }
         });
     </script>
+    <script src="../js/footer.js" data-next="blog.html"></script>
     <script src="../js/navbar.js"></script>
     <script src="../js/forms.js"></script>
     <script src="../js/main.js"></script>

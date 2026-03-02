@@ -21,65 +21,10 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#d3e4df',
-                        'dark': '#474d4d',
-                        'accent': '#99eff0',
-                        'offwhite': '#f4f9f8',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        nanum: ['"Nanum Myeongjo"', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
     
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ddc: {
-                            main: '#F7FDF9',     // Very light mint cream background
-                            panel: '#E6F4EA',    // Subtle mint panel used for card cutouts
-                            text: '#052E16',     // Deep Forest Green for primary text
-                            subtext: '#374151',  // Charcoal for body text
-                            mint: '#10B981',     // Vivid Emerald/Mint for accents
-                            accent: '#34D399',   // Lighter mint for hover/highlights
-                            dark: '#022c22',     // Footer background
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['Playfair Display', 'Georgia', 'serif'],
-                    },
-                    letterSpacing: {
-                        widest: '.25em',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 7s ease-in-out infinite 2s',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-15px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+   
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
@@ -305,18 +250,18 @@
         <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-emerald-100/40 rounded-full blur-[80px] animate-float-delayed"></div>
         
         <div class="relative z-10 max-w-4xl fade-in-section is-visible">
-            <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl leading-tight text-ddc-text mb-8 tracking-tight">
+            <h1 class="font-serif text-[clamp(2.5rem,8vw+1rem,6.5rem)] leading-tight text-ddc-text mb-[var(--space-md)] tracking-tight">
                 <br>The Architecture <br> 
                 <span class="italic text-ddc-mint relative">
                     of Motion
                     <svg class="absolute w-full h-3 -bottom-1 left-0 text-ddc-mint opacity-40" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C2.00025 6.99997 18.0007 2.00021 49.0002 2.00025C79.9997 2.00029 111.001 7.00017 141.001 7.00017C171.001 7.00017 197.001 3.00013 197.001 3.00013" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
                 </span>
             </h1>
-            <p class="text-sm md:text-base tracking-widest uppercase text-ddc-subtext font-medium mt-6 mb-12">
+            <p class="text-[clamp(0.7rem,1vw,0.9rem)] tracking-widest uppercase text-ddc-subtext font-medium mt-[var(--space-md)] mb-[var(--space-lg)]">
                 Beyond the Tether. Beyond the Grid.
             </p>
             <div class="flex justify-center">
-                <a href="#vision" class="group flex flex-col items-center gap-2 text-ddc-mint transition-all duration-300 hover:text-ddc-text cursor-pointer">
+                <a href="#vision" class="group flex flex-col items-center gap-[var(--space-xs)] text-ddc-mint transition-all duration-300 hover:text-ddc-text cursor-pointer">
                     <span class="text-xs uppercase tracking-widest">Explore</span>
                     <div class="h-12 w-[1px] bg-gradient-to-b from-ddc-mint to-transparent group-hover:h-16 transition-all duration-500"></div>
                 </a>
@@ -325,11 +270,11 @@
     </header>
 
     <!-- Vision / About Us Section -->
-    <section id="vision" class="py-32 px-6 md:px-20 lg:px-40 bg-white relative">
+    <section id="vision" class="py-[var(--space-2xl)] px-[var(--space-md)] md:px-[var(--space-xl)] lg:px-[var(--space-3xl)] bg-white relative">
         <div class="max-w-4xl mx-auto fade-in-section">
             <span class="block text-ddc-mint text-xs tracking-widest uppercase mb-8 font-bold">About Us</span>
             
-            <h2 class="font-serif text-3xl md:text-5xl leading-tight text-ddc-text mb-12">
+            <h2 class="font-serif text-[var(--text-3xl)] md:text-[var(--text-5xl)] leading-tight text-ddc-text mb-[var(--space-md)]">
                 True luxury is the absence of friction. <br>
                 <span class="text-gray-400">In a world demanding clarity, the way we move has remained tethered.</span>
             </h2>
@@ -354,11 +299,11 @@
     </section>
 
     <!-- The Platform (Three Pillars - Modified Card Design) -->
-    <section id="platform" class="py-32 bg-ddc-panel ddc-card-curve-bg">
+    <section id="platform" class="py-[var(--space-2xl)] bg-ddc-panel ddc-card-curve-bg">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-24 fade-in-section">
+            <div class="text-center mb-[var(--space-xl)] fade-in-section">
                 <span class="text-ddc-mint text-xs tracking-widest uppercase font-bold">The Triad</span>
-                <h2 class="font-serif text-4xl text-ddc-text mt-4">The Platform</h2>
+                <h2 class="font-serif text-[var(--text-4xl)] text-ddc-text mt-4">The Platform</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
@@ -444,7 +389,7 @@
     </section>
 
     <!-- Immersive Feature Section -->
-    <section id="energy" class="min-h-screen relative flex items-center bg-white overflow-hidden py-20">
+    <section id="energy" class="min-h-screen relative flex items-center bg-white overflow-hidden py-[var(--space-xl)]">
         
         <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
             <div class="grid md:grid-cols-2 gap-16 items-center">
@@ -463,8 +408,8 @@
                 </div>
 
                 <div class="fade-in-section order-1 md:order-2">
-                    <span class="text-ddc-mint text-sm font-bold tracking-widest uppercase mb-4 block">The Ecosystem</span>
-                    <h2 class="font-serif text-5xl md:text-6xl text-ddc-text mb-8">Invisible Infrastructure.</h2>
+                    <span class="text-ddc-mint text-sm font-bold tracking-widest uppercase mb-[var(--space-xs)] block">The Ecosystem</span>
+                    <h2 class="font-serif text-[var(--text-4xl)] md:text-[var(--text-6xl)] text-ddc-text mb-[var(--space-md)]">Invisible Infrastructure.</h2>
                     <p class="text-ddc-subtext font-light text-lg leading-relaxed mb-8">
                         We do not just build vehicles; we engineer time. By reclaiming moments previously lost to the grid, we are crafting a world where infrastructure is elegant, energy is shared, and the journey is as elevated as the destination.
                     </p>
@@ -510,6 +455,27 @@
                 observer.observe(section);
             });
         });
+    </script>
+
+ <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
     </script>
     <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
     <!-- data-next tells footer.js which page to navigate to after the wheel animation -->

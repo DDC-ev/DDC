@@ -224,7 +224,7 @@
                         <span class="w-12 h-[1px] bg-emerald-400"></span>
                         <span class="text-emerald-400 text-xs tracking-[0.3em] font-bold uppercase">Intelligence Exclusive</span>
                     </div>
-                    <h1 class="text-6xl md:text-8xl font-serif text-white max-w-4xl leading-[0.95] mb-8 tracking-tighter">
+                    <h1 class="text-[var(--text-6xl)] md:text-[var(--text-8xl)] font-serif text-white max-w-4xl leading-[0.95] mb-[var(--space-md)] tracking-tighter">
                         The Architecture of <br />
                         <span class="italic">Digital Sovereignty.</span>
                     </h1>
@@ -235,10 +235,10 @@
             </div>
 
             <!-- Breaking News -->
-            <div class="bg-white py-20 px-6 border-b border-emerald-50">
-                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div class="bg-white py-[var(--space-xl)] px-[var(--space-md)] border-b border-emerald-50">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-[var(--space-xl)]">
                     <div class="md:col-span-2">
-                        <h3 class="text-[10px] tracking-[0.4em] font-bold text-emerald-500 mb-10 uppercase italic">Breaking Intelligence</h3>
+                        <h3 class="text-[10px] tracking-[0.4em] font-bold text-emerald-500 mb-[var(--space-md)] uppercase italic">Breaking Intelligence</h3>
                         <div onclick="showView('article')" class="group cursor-pointer">
                             <div class="overflow-hidden aspect-[16/9] mb-8 img-zoom">
                                 <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="News">
@@ -280,10 +280,10 @@
             </div>
 
             <!-- Journal Grid -->
-            <div class="py-24 px-6 bg-emerald-50/30">
+            <div class="py-[var(--space-xl)] px-[var(--space-md)] bg-emerald-50/30">
                 <div class="max-w-7xl mx-auto">
-                    <div class="flex justify-between items-end mb-16">
-                        <h2 class="text-5xl font-serif text-emerald-950 italic">The Journal</h2>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-[var(--space-xl)] gap-[var(--space-md)]">
+                        <h2 class="text-[var(--text-5xl)] font-serif text-emerald-950 italic">The Journal</h2>
                         <button class="text-[10px] tracking-[0.3em] font-bold text-emerald-950 flex items-center gap-2">VIEW ARCHIVE <i data-lucide="chevron-right" size="14"></i></button>
                     </div>
                     <div id="journalGrid" class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -397,7 +397,7 @@
     <!-- FOOTER -->
     <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
     <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-    <script src="../js/footer.js" data-next="../index.html"></script>
+    
 
     <!-- STICKY SUBSCRIPTION -->
     <div class="fixed bottom-8 right-8 z-40">
@@ -842,10 +842,30 @@
         const root = ReactDOM.createRoot(document.getElementById('reviews-mount-point'));
         root.render(<App />);
     </script>
-<script src="../js/forms.js"></script>
-<script src="../js/main.js"></script>    
+     <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+<script src="../js/footer.js" data-next="../index.html"></script>
 <script src="../js/navbar.js"></script>
 <script src="../js/forms.js"></script>
+<script src="../js/main.js"></script>
 
 </body>
 </html> 
