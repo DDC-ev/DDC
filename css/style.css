@@ -43,7 +43,11 @@ svg {
     --dark:       #474d4d;
     --accent:     #99eff0;
     --offwhite:   #f4f9f8;
-
+ --gold-main: #c6a75e;
+    --gold-light: #e8d8b0;
+    --gold-soft: #d9c27a;
+    
+    --peacock: #064e3b;
     /* --- Alias for backward-compat --- */
     --body-bg:    var(--primary);
     --text-main:  var(--dark);

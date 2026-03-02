@@ -43,58 +43,10 @@
 
     <style>
         /* html scroll-behavior is in global */
-
-        /* Logo Transformation Logic */
-        .logo-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            pointer-events: none;
-        }
-
-        /* --- DEFAULT STATE (Top of Page) --- */
-        .logo-icon {
-            opacity: 1;
-            transform: scale(1);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .logo-icon a {
-            pointer-events: auto;
-        }
-
-        .logo-text {
-            font-family: "Oswald", sans-serif;
-            font-size: 400px;
-            font-weight: 5;
-            font-variation-settings: 'wdth' 200;
-            letter-spacing: -1px;
-            opacity: 0;
-            transform: scale(0.8) translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            position: absolute;
-        }
-
-        /* --- MINIMIZED STATE (Scroll Down) --- */
-        #navbar.minimized .logo-icon {
-            opacity: 0;
-            transform: scale(0.5) rotate(45deg);
-            pointer-events: none;
-        }
-
-        #navbar.minimized .logo-text {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-            transition-delay: 0.1s;
-        }
-
+       html {
+    font-size: 16px; /* Base REM reference */
+    scroll-behavior: smooth;
+}
         /* Nav Item Custom Interaction Styles */
         .nav-item-link {
             position: relative;
@@ -135,59 +87,6 @@
         ::-webkit-scrollbar-thumb {
             background: #474d4d;
             border-radius: 4px;
-        }
-
-        /* Mobile responsive navbar */
-        #navToggle {
-            display: none;
-        }
-
-        @media (max-width: 640px) {
-            #navToggle {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 0.5rem;
-            }
-
-            #navbar {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
-            }
-
-            #navbar .nav-links {
-                display: none;
-            }
-
-            #navbar.open .nav-links {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                position: absolute;
-                top: calc(100% + 8px);
-                left: 50%;
-                transform: translateX(-50%);
-                width: calc(95% - 2rem);
-                max-width: 520px;
-                background: rgba(71, 77, 77, 0.92);
-                backdrop-filter: blur(6px);
-                -webkit-backdrop-filter: blur(6px);
-                padding: 0.75rem;
-                border-radius: 12px;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-                z-index: 60;
-            }
-
-            #navbar.open .nav-links a {
-                display: block;
-                text-align: center;
-                padding: 0.5rem 0.75rem;
-            }
-
-            /* Hide the toggle when navbar is minimized (avoid overlap) */
-            #navbar.minimized #navToggle {
-                display: none !important;
-            }
         }
 
         /* Interactive Glassy Input Styles - text-[16px] prevents iOS zoom */
@@ -361,23 +260,6 @@
     <i class="fa-solid fa-arrow-left" style="color:#f0fdf4;"></i>
 </button>
 
-    <!-- Full Screen Mobile Menu Overlay -->
-    <div id="mobileMenu" class="fixed inset-0 bg-mint-50/95 backdrop-blur-xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 hidden">
-        <button id="closeMobileBtn" class="absolute top-8 right-8 text-emerald-900 p-2 hover:bg-mint-200/50 rounded-full transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-        <div class="flex flex-col items-center gap-6 text-xl font-bold text-emerald-950">
-            <a href="../technology.html" class="hover:text-mint-600 transition-colors">Features</a>
-            <a href="../product.html" class="hover:text-mint-600 transition-colors">What We Build</a>
-            <a href="blog.html" class="hover:text-mint-600 transition-colors">NEWS/media</a>
-            <a href="about.html" class="hover:text-mint-600 transition-colors">Who We Are</a>
-            <a href="tutorial.html" class="hover:text-mint-600 transition-colors">hop on go</a>
-            <a href="contact.html" class="mt-4 bg-emerald-500 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-all text-sm tracking-wide uppercase font-bold text-center">Contact Us</a>
-        </div>
-    </div>
-
     <!-- ============================================ -->
     <!-- CAR SURFACE CONTACT PAGE CONTENT             -->
     <!-- ============================================ -->
@@ -476,14 +358,22 @@
                                     <p
                                         class="text-[9px] sm:text-[10px] uppercase tracking-widest text-dark/50 mb-1 font-semibold">
                                         Email</p>
-                                    <a href="#"
+                                    <a href="mailto:ddc@gmail.com"
                                         class="text-sm sm:text-base md:text-lg font-medium text-dark hover:text-accent transition-colors inline-block relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-accent after:transition-all hover:after:w-full break-all">
                                         ddc@gmail.com
                                     </a>
                                 </div>
+                                <div class="contact-info-group border border-dark/20 bg-primary/10 p-4 sm:p-5 md:p-6 rounded-2xl hover:border-accent/60 transition-colors">
+                                    <p
+                                        class="text-[9px] sm:text-[10px] uppercase tracking-widest text-dark/50 mb-1 font-semibold">
+                                        contact</p>
+                                    <a href="tel:+919800000000"
+                                        class="text-sm sm:text-base md:text-lg font-medium text-dark hover:text-accent transition-colors inline-block relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-accent after:transition-all hover:after:w-full break-all">
+                                       +91 xxxxxxxxxx
+                                    </a>
+                                </div>
 
-                                <div
-                                    class="contact-info-group border border-dark/20 bg-primary/10 p-4 sm:p-5 md:p-6 rounded-2xl hover:border-accent/60 transition-colors">
+                                <div class="contact-info-group border border-dark/20 bg-primary/10 p-4 sm:p-5 md:p-6 rounded-2xl hover:border-accent/60 transition-colors">
                                     <p
                                         class="text-[9px] sm:text-[10px] uppercase tracking-widest text-dark/50 mb-1 font-semibold">
                                         Headquarters</p>
@@ -530,29 +420,33 @@
                     <!-- Right Side: Form -->
                     <div
                         class="flex-1 border border-dark/20 bg-primary/10 p-5 sm:p-6 md:p-8 rounded-2xl hover:border-accent/40 transition-colors">
-                        <form id="contactForm" class="flex flex-col gap-4 sm:gap-5 h-full justify-center">
+                        <form id="contactForm" class="flex flex-col gap-4 sm:gap-5 h-full justify-center" novalidate>
 
-                            <!-- Hidden config for formsubmit -->
-                            <input type="hidden" name="_subject" value="New Contact Inquiry from DDC Website">
-                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="website_url" style="display:none !important" tabindex="-1" autocomplete="off">
+                            <!-- Schema Mapping -->
+                            <input type="hidden" name="type" value="Contact">
+                            <input type="hidden" name="vechicle_model" value="N/A">
+                            <input type="hidden" name="date" value="">
+                            <input type="hidden" name="time" value="">
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                                <input type="text" name="First_Name" placeholder="First Name" required
-                                    class="simple-input">
-                                <input type="text" name="Last_Name" placeholder="Last Name" required
+                            <div class="grid grid-cols-1 gap-4 sm:gap-5">
+                                <input type="text" name="name" placeholder="Full Name" required
                                     class="simple-input">
                             </div>
 
-                            <input type="email" name="Email" placeholder="Email Address" required class="simple-input">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                                <input type="email" name="email" placeholder="Email Address" required class="simple-input">
+                                <input type="tel" name="phone" placeholder="+91 98XXX XXXXX" class="simple-input" style="font-size: 13.5px;">
+                            </div>
 
-                            <select name="Topic" required class="simple-input appearance-none cursor-pointer">
+                            <select name="subject" required class="simple-input appearance-none cursor-pointer">
                                 <option value="" disabled selected>Topic of Inquiry</option>
-                                <option value="fleet">Partnerships</option>
-                                <option value="press">Press & Media</option>
-                                <option value="other">General Question</option>
+                                <option value="Partnerships">Partnerships</option>
+                                <option value="Press">Press & Media</option>
+                                <option value="General Question">General Question</option>
                             </select>
 
-                            <textarea name="Message" rows="4" placeholder="Your Message" required
+                            <textarea name="message" rows="4" placeholder="Your Message" required
                                 class="simple-input resize-none"></textarea>
 
                             <button type="submit" id="submitBtn"
@@ -560,10 +454,13 @@
                                 <span id="btnText">Send Message</span>
                             </button>
 
-                            <!-- Status Message Container -->
-                            <div id="formStatus"
-                                class="hidden text-center text-[11px] sm:text-xs font-bold mt-2 uppercase tracking-wider">
-                            </div>
+
+                    <!-- Success Message -->
+                    <div class="success-msg mt-6" id="successMsg" style="display: none;">
+                        <i class="fa-solid fa-circle-check text-3xl text-emerald-400 mb-3 block"></i>
+                        <p class="text-dark font-semibold text-lg">Message Sent Successfully!</p>
+                        <p class="text-dark/70 text-sm mt-1">We'll get back to you within 24–48 hours.</p>
+                    </div>
                         </form>
                     </div>
 
@@ -632,76 +529,11 @@
             });
         });
 
-        // 3. AJAX Form Submission Logic (No Redirects)
-        const form = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const formStatus = document.getElementById('formStatus');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault(); // Stop standard redirect to another website
-
-            // 1. Set loading state
-            submitBtn.disabled = true;
-            btnText.textContent = 'SENDING...';
-            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
-            formStatus.classList.add('hidden');
-
-            const formData = new FormData(form);
-
-            // 2. Send data behind the scenes using the AJAX endpoint
-            fetch('https://formsubmit.co/ajax/aakash121767@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json' // Forces FormSubmit to return JSON instead of redirecting
-                },
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success || data.success === "true") {
-                        formStatus.textContent = "Message sent successfully!";
-                        formStatus.classList.remove('hidden', 'text-[#ff3333]');
-                        formStatus.classList.add('text-[#4a9f8f]'); // Greenish success color matching your theme
-                        form.reset(); // Clear form fields
-                    } else {
-                        throw new Error('Submission failed');
-                    }
-                })
-                .catch(error => {
-                    formStatus.textContent = "Oops! Something went wrong. Please try again.";
-                    formStatus.classList.remove('hidden', 'text-[#4a9f8f]');
-                    formStatus.classList.add('text-[#ff3333]'); // Red error color
-                })
-                .finally(() => {
-                    // 3. Reset button state
-                    submitBtn.disabled = false;
-                    btnText.textContent = 'SEND MESSAGE';
-                    submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
-                });
-        });
     </script>
-    <script>
-        // Mobile toggle script for navbar (contact page)
-        (function () {
-            const navbarEl = document.getElementById('navbar');
-            const navToggleEl = document.getElementById('navToggle');
-            if (!navToggleEl || !navbarEl) return;
+    <script src="../js/menu.js"></script>
+    <script src="../js/forms.js"></script>
+    <script src="../js/main.js"></script>
 
-            navToggleEl.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navbarEl.classList.toggle('open');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!navbarEl.contains(e.target)) navbarEl.classList.remove('open');
-            });
-
-            document.querySelectorAll('#navbar .nav-links a').forEach(a => {
-                a.addEventListener('click', () => navbarEl.classList.remove('open'));
-            });
-        })();
-    </script>
 </body>
 
 </html>

@@ -532,7 +532,7 @@
 </head>
 <body>
     <!-- Floating Navbar -->
-    <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-40 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5 bg-[#3a3f3f]/80 backdrop-blur-md text-white">
+ <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-40 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5 bg-[#3a3f3f]/80 backdrop-blur-md text-white">
         
     <!-- Left Links Wrapper -->
     <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
@@ -559,7 +559,7 @@
         </a>
 
         <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 bg-[#474d4d] text-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 min-w-[200px] py-3 flex flex-col text-sm">
-            <a href="technology.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Battery Swapping</a>
+            <a href="menu/swapping.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Battery Swapping</a>
             <a href="technology.html" class="dropdown-item px-4 py-2 hover:bg-white/10 transition-colors">Features</a>
         </div>
       </div>
@@ -820,15 +820,7 @@
 
         </div>
     </section>
-
-    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
-    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-    <script src="js/footer.js" data-next="product.html"></script>
-
-    <!-- JS for Scroll Animation -->
-     <script src="js/forms.js"></script>
-     <script src="js/main.js"></script>
-    <script>
+ <script>
         const clipShape = document.getElementById("clipShape");
         const featurePanel = document.getElementById("featurePanel");
 
@@ -869,5 +861,13 @@
             }
         });
     </script>
+    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
+    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
+    <script src="js/footer.js" data-next="product.html"></script>
+
+    <!-- JS for Scroll Animation -->
+     <script src="js/forms.js"></script>
+     <script src="js/main.js"></script>
+     <script src="js/menu.js"></script>
 </body>
 </html>

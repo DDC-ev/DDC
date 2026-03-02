@@ -23,31 +23,48 @@
 
   /* ── 2. Wheel SVG helper ─────────────────────────────────────────────── */
   function wheelSVG() {
-    return `<svg viewBox="0 0 200 200" class="w-full h-full text-accent drop-shadow-[0_0_12px_rgba(153,239,240,0.25)]">
-      <circle cx="100" cy="100" r="96" fill="#050505" stroke="#111" stroke-width="8"/>
-      <g class="wheel-inner">
-        <circle cx="100" cy="100" r="86" fill="#151718" stroke="#222" stroke-width="3"/>
-        <circle cx="100" cy="100" r="78" fill="#202324"/>
-        <g fill="#050505">
-          <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z"/>
-          <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(72 100 100)"/>
-          <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(144 100 100)"/>
-          <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(216 100 100)"/>
-          <path d="M105 85 L125 30 A 75 75 0 0 1 155 50 L112 95 Z" transform="rotate(288 100 100)"/>
-        </g>
-        <g fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6" stroke-linecap="round">
-          <path d="M105 85 L125 30"/>
-          <path d="M105 85 L125 30" transform="rotate(72 100 100)"/>
-          <path d="M105 85 L125 30" transform="rotate(144 100 100)"/>
-          <path d="M105 85 L125 30" transform="rotate(216 100 100)"/>
-          <path d="M105 85 L125 30" transform="rotate(288 100 100)"/>
-        </g>
-        <circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1 6" opacity="0.4"/>
-        <circle cx="100" cy="100" r="22" fill="#151718" stroke="#111" stroke-width="2"/>
-        <circle cx="100" cy="100" r="14" fill="#0a0a0a"/>
-        <polygon points="100,92 107,104 93,104" fill="currentColor" opacity="0.8"/>
-      </g>
-    </svg>`;
+    return `<svg viewBox="0 0 100 100" class="w-full h-full">
+                <!-- Tire Outer -->
+                <circle cx="50" cy="50" r="48" fill="#1f2323"/>
+                <!-- Tire Tread illusion -->
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 2"/>
+                
+                <!-- Alloy Wheel Barrel (Dark Inner) -->
+                <circle cx="50" cy="50" r="36" fill="#2c3131" />
+                
+                <!-- Outer Lip of Alloy Rim -->
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#d3e4df" stroke-width="3"/>
+                
+                <!-- 5-Spoke Simple Alloy Structure -->
+                <g stroke="var(--gold-main)" stroke-width="10" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+                
+                <!-- Spoke Inner Accents for Depth -->
+                <g stroke="#8a9a98" stroke-width="3" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="18" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(72 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(144 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(216 50 50)" />
+                    <line x1="50" y1="50" x2="50" y2="18" transform="rotate(288 50 50)" />
+                </g>
+                
+                <!-- Center Cap & Lug Nuts -->
+                <circle cx="50" cy="50" r="11" fill="var(--gold-main)" stroke="var(--peacock)" stroke-width="1.5"/>
+                <g fill="var(--peacock)">
+                    <circle cx="50" cy="45" r="1.5" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(72 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(144 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(216 50 50)" />
+                    <circle cx="50" cy="45" r="1.5" transform="rotate(288 50 50)" />
+                </g>
+                <!-- Center Emblem Dot -->
+                <circle cx="50" cy="50" r="2.5" fill="var(--peacock)"/>
+            </svg>`;
   }
 
   /* ── 3. Build footer HTML ────────────────────────────────────────────── */
@@ -220,17 +237,17 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const footer    = document.getElementById('ddc-footer');
+    const footer = document.getElementById('ddc-footer');
     const leftWheel = footer.querySelector('.left-wheel');
     const rightWheel = footer.querySelector('.right-wheel');
-    const reveal    = footer.querySelector('.next-page-reveal');
-    const content   = footer.querySelector('.footer-content');
+    const reveal = footer.querySelector('.next-page-reveal');
+    const content = footer.querySelector('.footer-content');
 
     if (!leftWheel || !rightWheel) return;
 
     /* Initial positions (GSAP takes over from here) */
-    gsap.set(leftWheel,  { xPercent: -50, yPercent: 0 });
-    gsap.set(rightWheel, { xPercent:  50, yPercent: 0 });
+    gsap.set(leftWheel, { xPercent: -50, yPercent: 0 });
+    gsap.set(rightWheel, { xPercent: 50, yPercent: 0 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
