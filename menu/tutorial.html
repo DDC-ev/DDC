@@ -36,10 +36,10 @@
                         },
                     },
                     fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        sans: ['var(--font-jakarta)', 'sans-serif'],
+                        serif: ['var(--font-playfair)', 'serif'],
+                        orbitron: ['var(--font-orbitron)', 'sans-serif'],
+                        nanum: ['var(--font-nanum)', 'serif'],
                     }
                 }
             }
@@ -67,7 +67,7 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
+                        sans: ['var(--font-poppins)', 'sans-serif'],
                     }
                 }
             }
@@ -75,7 +75,7 @@
     </script>
 
     <style>
-        body { font-family: 'Poppins', sans-serif; }
+        body { font-family: var(--font-poppins); }
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);

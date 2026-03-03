@@ -95,8 +95,8 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none; background: #050505;">
     <span style="color: #d3e4df; letter-spacing: 0.5em; font-size: clamp(0.75rem, 2vw, 1.25rem);
-                 font-family: 'Outfit', sans-serif; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7;">Welcome to</span>
-    <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 12vw, 8rem);
+                 font-family: var(--font-outfit); text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7;">Welcome to</span>
+    <h2 style="font-family: var(--font-playfair); font-size: clamp(3.5rem, 12vw, 8rem);
                color: #99eff0; font-weight: 700; letter-spacing: 0.15em;
                text-shadow: 0 0 15px rgba(153,239,240,0.5);">DDC</h2>
   </div>
@@ -111,7 +111,7 @@
 
       <!-- Brand -->
       <div>
-        <div style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;">DDC</div>
+        <div style="font-family: var(--font-playfair); font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;">DDC</div>
         <p style="font-size: 0.875rem; opacity: 0.75; line-height: 1.6;">The New Celestial Beginning</p>
         <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.5rem;">Founder: Aditya Purushotham</p>
       </div>
@@ -150,18 +150,18 @@
             <input type="email" name="email" placeholder="EMAIL ADDRESS" required
               style="background: transparent; border: none; border-bottom: 1px solid rgba(153,239,240,0.4);
                      padding: 0.4rem 0; font-size: 0.75rem; letter-spacing: 0.12em; outline: none;
-                     color: #d3e4df; font-family: 'Outfit', sans-serif; width: 100%;"
+                     color: #d3e4df; font-family: var(--font-outfit); width: 100%;"
               onfocus="this.style.borderBottomColor='#99eff0'" onblur="this.style.borderBottomColor='rgba(153,239,240,0.4)'"
               placeholder="EMAIL ADDRESS">
             <input type="text" name="message" placeholder="MESSAGE"
               style="background: transparent; border: none; border-bottom: 1px solid rgba(153,239,240,0.4);
                      padding: 0.4rem 0; font-size: 0.75rem; letter-spacing: 0.12em; outline: none;
-                     color: #d3e4df; font-family: 'Outfit', sans-serif; width: 100%;"
+                     color: #d3e4df; font-family: var(--font-outfit); width: 100%;"
               onfocus="this.style.borderBottomColor='#99eff0'" onblur="this.style.borderBottomColor='rgba(153,239,240,0.4)'"
               placeholder="MESSAGE">
             <button type="submit" style="background: none; border: none; color: #99eff0; font-size: 0.7rem;
                      letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase; cursor: pointer;
-                     align-self: flex-start; padding: 0; font-family: 'Outfit', sans-serif;
+                     align-self: flex-start; padding: 0; font-family: var(--font-outfit);
                      transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#99eff0'">
               Join →
             </button>

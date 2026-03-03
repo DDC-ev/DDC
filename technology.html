@@ -29,10 +29,10 @@
                         'offwhite': '#f4f9f8',
                     },
                     fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        sans: ['var(--font-jakarta)', 'sans-serif'],
+                        serif: ['var(--font-playfair)', 'serif'],
+                        orbitron: ['var(--font-orbitron)', 'sans-serif'],
+                        nanum: ['var(--font-nanum)', 'serif'],
                     }
                 }
             }
@@ -82,7 +82,7 @@
 /* Elegant Serif Headline */
 .hero-title {
     font-size: var(--text-7xl);
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-orbitron);
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -105,7 +105,7 @@
     max-width: 700px;
     margin: 0 auto;
     font-size: var(--text-xl);
-    font-family: 'Exo 2', sans-serif;
+    font-family: var(--font-exo);
     font-weight: 300;
     line-height: 1.8;
     letter-spacing: 0.04em;
@@ -117,7 +117,7 @@
 .hero-description {
     margin-top: 1.2rem;
     font-size: 1.05rem;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter);
     font-weight: 300;
     line-height: 1.7;
     color: #374151;
@@ -129,11 +129,11 @@
 .collection-section h2,
 .feature-item,
 .panel-label {
-    font-family: 'Exo 2', sans-serif;
+    font-family: var(--font-exo);
 }
 
 .content h3 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-orbitron);
     letter-spacing: 0.05em;
 }
 
@@ -377,7 +377,7 @@
         .content p {
             margin: 0.625rem 0 1.25rem;
             color: #4b5563;
-            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
+            font-family: var(--font-inter); 
             font-size: 0.95rem;
             line-height: 1.5;
         }
@@ -431,7 +431,7 @@
 
         .footer-brand p {
             line-height: 1.6;
-            font-family:"Inter", system-ui, "helvetica", "arial", sans-serif; 
+            font-family: var(--font-inter); 
             opacity: 0.8;
             max-width: 300px;
         }

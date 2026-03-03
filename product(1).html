@@ -129,17 +129,18 @@
             left: 100%;
         }
 
-        /* 3D Slit Carousel CSS */
+        /* 3D Slit Carousel CSS - Vertical (Top to Bottom) */
         .slit-container {
             perspective: 1200px;
             display: flex;
+            flex-direction: column; /* Stack slices vertically */
             width: 100%;
             height: 100%;
         }
         .slit-slice {
             position: relative;
             flex: 1;
-            height: 100%;
+            width: 100%; /* Full width for horizontal slices */
             transform-style: preserve-3d;
             transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -148,13 +149,13 @@
             inset: 0;
             backface-visibility: hidden;
             background-repeat: no-repeat;
-            background-size: calc(100% * var(--slices)) 100%;
+            background-size: 100% calc(100% * var(--slices)); /* Stretch background vertically */
         }
         .slit-front {
-            transform: rotateY(0deg);
+            transform: rotateX(0deg); /* Rotate around X axis for top-to-bottom */
         }
         .slit-back {
-            transform: rotateY(180deg);
+            transform: rotateX(180deg);
         }
         .content-wrapper {
             transition: all 0.4s ease-in-out;
@@ -635,14 +636,14 @@
                 </div>
 
                 <div class="w-full lg:w-1/2 reveal">
-                    <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
-                        <video autoplay loop muted playsinline class="w-full h-[500px] object-cover opacity-90">
+                    <div class="video-section shadow-2xl shadow-black/50 border border-white/10">
+                        <video autoplay loop muted playsinline>
                             <source src="./images/v1760605652/video.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald to-transparent opacity-80"></div>
+                        <div class="video-overlay bg-gradient-to-t from-emerald to-transparent opacity-80"></div>
                         <div class="absolute bottom-8 left-8 right-8">
-                            <div class="glass-dark p-4 rounded-xl flex items-center justify-between">
+                            <div class="glass-dark p-4 rounded-xl flex items-center justify-between font-jakarta">
                                 <div>
                                     <p class="text-xs text-mint-300 uppercase tracking-wider font-bold">System Status</p>
                                     <p class="font-serif text-xl">Station Online</p>
@@ -877,11 +878,11 @@
             const front = document.createElement('div');
             front.className = 'slit-face slit-front';
             front.style.backgroundImage = `url(${podData[0].img})`;
-            front.style.backgroundPosition = `${(i / (slicesCount - 1)) * 100}% center`;
+            front.style.backgroundPosition = `center ${(i / (slicesCount - 1)) * 100}%`;
 
             const back = document.createElement('div');
             back.className = 'slit-face slit-back';
-            back.style.backgroundPosition = `${(i / (slicesCount - 1)) * 100}% center`;
+            back.style.backgroundPosition = `center ${(i / (slicesCount - 1)) * 100}%`;
 
             slice.appendChild(front);
             slice.appendChild(back);
@@ -921,8 +922,8 @@
                 const face = slice.querySelector(faceToUpdate);
                 // Update the hidden face to the target image right before rotating
                 face.style.backgroundImage = `url(${podData[nextIndex].img})`;
-                // Apply 3D rotation
-                slice.style.transform = `rotateY(${slitRotation}deg)`;
+                // Apply 3D rotation (rotateX for top-to-bottom)
+                slice.style.transform = `rotateX(${slitRotation}deg)`;
             });
 
             updateContentDOM(nextIndex);
