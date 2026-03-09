@@ -284,6 +284,30 @@
                 }
             });
         });
+        
+    </script>
+    <script>
+        // Function to read URL parameters and auto-select model
+function checkUrlParameters() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelFromUrl = urlParams.get('model');
+
+    if (modelFromUrl) {
+        // Find the matching model option in the form
+        const targetOption = document.querySelector(`.model-option[data-model="${modelFromUrl}"]`);
+        
+        if (targetOption) {
+            // Trigger the click event to update UI and background
+            targetOption.click();
+            
+            // Optional: Scroll to the form if the page is long
+            targetOption.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+}
+
+// Execute when the page finishes loading
+window.addEventListener('load', checkUrlParameters);
     </script>
 </body>
 </html>
