@@ -132,9 +132,6 @@
                                 </svg>
                             </a>
                         </div>
-                        <a href="${this.resolvePath('index.html')}" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10" style="font-size: clamp(12px, 1.3vw, 24px);color: #f1e498;">
-                            DP_01
-                        </a>
                     </div>
 
                     <!-- Right Links Wrapper -->
