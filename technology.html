@@ -8,7 +8,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Nanum+Myeongjo&family=Orbitron:wght@400;700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-rounded/css/uicons-thin-rounded.css">
+
+    <!-- ═══════════════════════════════════════════
+         FLATICON UICONS — ALL STYLES
+    ═══════════════════════════════════════════ -->
+    <!-- Rounded corners -->
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/4.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">   <!-- fi-rr- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css">         <!-- fi-br- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css">       <!-- fi-sr- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-rounded/css/uicons-thin-rounded.css">         <!-- fi-tr- -->
+    <!-- Straight corners -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css"> <!-- fi-rs- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css">       <!-- fi-bs- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">     <!-- fi-ss- -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css">       <!-- fi-ts- -->
+    <!-- Special -->
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css">                     <!-- fi-brands- -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,14 +55,12 @@
            CSS CUSTOM PROPERTIES — fluid scale
         ============================================ */
         :root {
-            /* Fluid spacing using clamp(min, preferred, max) */
             --space-xs:  clamp(0.375rem, 0.5vw + 0.25rem, 0.75rem);
             --space-sm:  clamp(0.75rem,  1vw  + 0.5rem,  1.25rem);
             --space-md:  clamp(1rem,     2vw  + 0.5rem,  2rem);
             --space-lg:  clamp(1.5rem,   3vw  + 0.5rem,  3rem);
             --space-xl:  clamp(2rem,     4vw  + 0.5rem,  4rem);
 
-            /* Fluid type scale */
             --text-sm:   clamp(0.75rem,  0.6rem  + 0.3vw,  0.875rem);
             --text-base: clamp(0.875rem, 0.75rem + 0.4vw,  1rem);
             --text-lg:   clamp(1rem,     0.8rem  + 0.6vw,  1.25rem);
@@ -55,37 +71,18 @@
             --text-5xl:  clamp(2.25rem,  1rem    + 4vw,    4rem);
             --text-7xl:  clamp(2.5rem,   1rem    + 6vw,    6rem);
 
-            /* Panel dimensions */
             --panel-w-desktop: min(430px, 38vw);
             --panel-w-mobile:  min(92vw, 420px);
             --panel-radius:    clamp(16px, 2.5vw, 32px);
 
-            /* Fonts */
             --font-orbitron: 'Orbitron', sans-serif;
             --font-outfit:   'Outfit', sans-serif;
         }
 
-        /* ============================================
-           RESET & BASE
-        ============================================ */
-        *, *::before, *::after {
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--font-outfit);
-            background: #f0fdf4;
-            overflow-x: hidden;
-        }
-
-        a {
-            display: inline-block;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+        body { font-family: var(--font-outfit); background: #f0fdf4; overflow-x: hidden; }
+        a { display: inline-block; text-decoration: none; transition: color 0.3s ease; }
 
         /* ============================================
            HERO SECTION
@@ -151,10 +148,7 @@
         /* ============================================
            SCROLL TECHNOLOGY SECTION
         ============================================ */
-        .section-height {
-            height: 300vh;
-            position: relative;
-        }
+        .section-height { height: 300vh; position: relative; }
 
         .sticky-wrapper {
             position: sticky;
@@ -175,22 +169,11 @@
             z-index: 10;
         }
 
-        .dark-layer {
-            position: absolute;
-            inset: 0;
-            background: #fff;
-        }
-
-        .dark-layer img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.85);
-        }
-
+        .dark-layer { position: absolute; inset: 0; background: #fff; }
+        .dark-layer img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
 
         /* ============================================
-           FEATURE PANEL — slides up from bottom
+           FEATURE PANEL
         ============================================ */
         .feature-panel {
             position: absolute;
@@ -205,18 +188,13 @@
             box-shadow: 0 -10px 40px rgba(0,0,0,.08);
             transform: translateY(110%);
             opacity: 0;
-            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.5s ease;
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
             z-index: 20;
             overflow: hidden;
         }
 
-        .feature-panel.panel-visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .feature-panel.panel-visible { transform: translateY(0); opacity: 1; }
 
-        /* Panel label fades in after panel opens */
         .panel-label {
             font-size: var(--text-sm);
             font-weight: 700;
@@ -224,27 +202,41 @@
             text-transform: uppercase;
             color: #059669;
             margin-bottom: var(--space-md);
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             opacity: 0;
             transform: translateY(6px);
             transition: opacity 0.1s ease 0.55s, transform 0.4s ease 0.55s;
         }
 
-        .feature-panel.panel-visible .panel-label {
-            opacity: 1;
-            transform: translateY(0);
+        /* Panel label icon */
+        .panel-label-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        /* ============================================
-           FEATURE ITEMS — collapse others, expand active
-        ============================================ */
+        .panel-label-icon i {
+            color: #fff;
+            font-size: 13px;
+        }
 
+        .feature-panel.panel-visible .panel-label { opacity: 1; transform: translateY(0); }
+
+        /* ============================================
+           FEATURE ITEMS
+        ============================================ */
         .feature-item {
             position: relative;
             cursor: pointer;
             border-radius: 10px;
             overflow: hidden;
-            /* initial slide-in state */
             opacity: 0;
             transform: translateX(-18px);
             transition:
@@ -255,12 +247,8 @@
             margin-bottom: clamp(0.35rem, 0.8vw, 0.6rem);
         }
 
-        .feature-panel.panel-visible .feature-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .feature-panel.panel-visible .feature-item { opacity: 1; transform: translateX(0); }
 
-        /* inactive: fully hidden — vanish smoothly */
         .feature-item.item-inactive {
             opacity: 0 !important;
             pointer-events: none;
@@ -269,7 +257,6 @@
             overflow: hidden;
         }
 
-        /* header row */
         .item-header {
             display: flex;
             align-items: center;
@@ -279,50 +266,71 @@
             transition: background 0.25s, padding 0.38s cubic-bezier(0.22,1,0.36,1);
         }
 
-        /* inactive header shrinks vertically */
         .feature-item.item-inactive .item-header {
-            padding-top:    clamp(4px, 0.5vw, 6px);
+            padding-top: clamp(4px, 0.5vw, 6px);
             padding-bottom: clamp(4px, 0.5vw, 6px);
             background: rgba(0,0,0,0.02);
         }
 
-        .feature-item:not(.item-inactive):hover .item-header {
-            background: rgba(16,185,129,.07);
-        }
-
-        .feature-item.item-active .item-header {
-            background: rgba(16,185,129,.12);
-        }
+        .feature-item:not(.item-inactive):hover .item-header { background: rgba(16,185,129,.07); }
+        .feature-item.item-active .item-header { background: rgba(16,185,129,.12); }
 
         .item-title-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex: 1;
             min-width: 0;
         }
 
-        /* Inline dot */
-        .item-dot-indicator {
-            width: clamp(6px, 0.9vw, 9px);
-            height: clamp(6px, 0.9vw, 9px);
-            border-radius: 50%;
-            background: #d1d5db;
+        /* ── ENHANCED: feature icon badge ── */
+        .item-icon-badge {
+            width: clamp(28px, 3.2vw, 36px);
+            height: clamp(28px, 3.2vw, 36px);
+            border-radius: clamp(7px, 1vw, 10px);
+            background: rgba(16,185,129,.10);
+            border: 1px solid rgba(16,185,129,.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
-            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
         }
 
-        .feature-item.item-active .item-dot-indicator {
-            background: #10b981;
-            box-shadow: 0 0 0 3px rgba(16,185,129,.28);
-            transform: scale(1.3);
+        .item-icon-badge i {
+            font-size: clamp(13px, 1.6vw, 17px);
+            color: #059669;
+            transition: color 0.3s, transform 0.3s;
+            display: block;
+            line-height: 1;
         }
 
-        /* inactive dot — faint */
-        .feature-item.item-inactive .item-dot-indicator {
-            background: #e5e7eb;
+        .feature-item.item-active .item-icon-badge {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: #059669;
+            transform: scale(1.08);
+        }
+
+        .feature-item.item-active .item-icon-badge i {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .feature-item.item-inactive .item-icon-badge {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(0,0,0,0.06);
             transform: scale(0.85);
         }
+
+        .feature-item.item-inactive .item-icon-badge i { color: #d1d5db; }
+
+        .feature-item:not(.item-inactive):hover .item-icon-badge {
+            background: rgba(16,185,129,.18);
+            border-color: rgba(16,185,129,.35);
+        }
+
+        /* Dot indicator (kept for compatibility, hidden visually — icon badge replaces it) */
+        .item-dot-indicator { display: none; }
 
         .item-title {
             font-size: clamp(0.78rem, 0.85vw + 0.28rem, 1rem);
@@ -331,74 +339,71 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            transition: color 0.25s, font-size 0.38s cubic-bezier(0.22,1,0.36,1),
-                        opacity 0.3s ease;
+            transition: color 0.25s, font-size 0.38s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
         }
 
-        .feature-item.item-active .item-title {
-            color: #059669;
-        }
+        .feature-item.item-active .item-title { color: #059669; }
 
-        /* inactive title smaller + dimmed */
         .feature-item.item-inactive .item-title {
             font-size: clamp(0.62rem, 0.65vw + 0.2rem, 0.76rem);
             color: #9ca3af;
             font-weight: 500;
         }
 
-        /* toggle button */
+        /* ── ENHANCED: toggle button ── */
         .item-toggle {
-            width: clamp(26px, 3.2vw, 36px);
-            height: clamp(26px, 3.2vw, 36px);
-            background: #10b981;
+            width: clamp(28px, 3.2vw, 36px);
+            height: clamp(28px, 3.2vw, 36px);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: #fff;
             border-radius: clamp(6px, 0.9vw, 10px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(13px, 1.6vw, 19px);
-            font-weight: 900;
             flex-shrink: 0;
             transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
                         background 0.25s,
                         width  0.38s cubic-bezier(0.22,1,0.36,1),
                         height 0.38s cubic-bezier(0.22,1,0.36,1),
-                        opacity 0.3s ease;
+                        opacity 0.3s ease,
+                        box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(16,185,129,.3);
+        }
+
+        .item-toggle i {
+            font-size: clamp(12px, 1.5vw, 16px);
+            display: block;
+            line-height: 1;
+            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
         }
 
         .feature-item.item-active .item-toggle {
-            transform: rotate(45deg);
-            background: #059669;
+            background: linear-gradient(135deg, #059669, #047857);
+            box-shadow: 0 4px 14px rgba(5,150,105,.4);
         }
 
-        /* inactive toggle shrinks to a tiny dot */
+        /* rotate the plus icon on active */
+        .feature-item.item-active .item-toggle i { transform: rotate(45deg); }
+
         .feature-item.item-inactive .item-toggle {
             width: clamp(6px, 0.8vw, 9px);
             height: clamp(6px, 0.8vw, 9px);
             border-radius: 50%;
-            font-size: 0;
             background: #d1d5db;
             opacity: 0.6;
+            box-shadow: none;
         }
+
+        .feature-item.item-inactive .item-toggle i { font-size: 0; }
 
         /* description body */
-        .item-body {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.42s cubic-bezier(0.22,1,0.36,1);
-        }
-
-        .item-body-inner {
-            overflow: hidden;
-        }
-
-        .feature-item.item-active .item-body {
-            grid-template-rows: 1fr;
-        }
+        .item-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.42s cubic-bezier(0.22,1,0.36,1); }
+        .item-body-inner { overflow: hidden; }
+        .feature-item.item-active .item-body { grid-template-rows: 1fr; }
 
         .item-desc {
             padding: 2px clamp(8px,1.2vw,13px) clamp(8px,1.2vw,12px)
-                     calc(clamp(6px,0.9vw,9px) + 8px + clamp(8px,1.2vw,13px));
+                     calc(clamp(28px,3.2vw,36px) + 10px + clamp(8px,1.2vw,13px));
             font-size: clamp(0.7rem, 0.72vw + 0.22rem, 0.83rem);
             line-height: 1.55;
             color: #4b5563;
@@ -407,20 +412,12 @@
             transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
         }
 
-        .feature-item.item-active .item-desc {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .feature-item.item-active .item-desc { opacity: 1; transform: translateY(0); }
 
         /* ============================================
-           INTERACTIVE DOTS (no wires to panel)
+           INTERACTIVE DOTS
         ============================================ */
-        .dot-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 15;
-        }
+        .dot-container { position: absolute; inset: 0; pointer-events: none; z-index: 15; }
 
         .feature-dot {
             position: absolute;
@@ -432,42 +429,17 @@
             box-shadow: 0 0 0 3px rgba(16,185,129,.28);
             opacity: 0;
             transform: scale(0);
-            transition: opacity 0.4s ease,
-                        transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
-                        background 0.25s,
-                        box-shadow 0.25s;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.25s, box-shadow 0.25s;
             pointer-events: auto;
             cursor: pointer;
             z-index: 16;
         }
 
-        .feature-dot.dot-visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .feature-dot.dot-visible { opacity: 1; transform: scale(1); }
+        .feature-dot.dot-active { background: #059669; box-shadow: 0 0 0 6px rgba(5,150,105,.28); transform: scale(1.45) !important; }
+        .feature-dot.dot-invisible { opacity: 0 !important; pointer-events: none; transform: scale(0) !important; }
+        .feature-dot.dot-hover { background: #34d399; box-shadow: 0 0 0 5px rgba(52,211,153,.28); transform: scale(1.3) !important; }
 
-        /* Active dot — larger, deeper green */
-        .feature-dot.dot-active {
-            background: #059669;
-            box-shadow: 0 0 0 6px rgba(5,150,105,.28);
-            transform: scale(1.45) !important;
-        }
-
-        /* Inactive dot — fully invisible */
-        .feature-dot.dot-invisible {
-            opacity: 0 !important;
-            pointer-events: none;
-            transform: scale(0) !important;
-        }
-
-        /* Hover dot */
-        .feature-dot.dot-hover {
-            background: #34d399;
-            box-shadow: 0 0 0 5px rgba(52,211,153,.28);
-            transform: scale(1.3) !important;
-        }
-
-        /* Idle pulse ring */
         .feature-dot::after {
             content: '';
             position: absolute;
@@ -478,17 +450,13 @@
         }
 
         .feature-dot.dot-active::after,
-        .feature-dot.dot-hover::after {
-            animation: none;
-            opacity: 0;
-        }
+        .feature-dot.dot-hover::after { animation: none; opacity: 0; }
 
         @keyframes dotPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
             60%       { transform: scale(1.7); opacity: 0; }
         }
 
-        /* Tooltip label above dot */
         .dot-label {
             position: absolute;
             left: 50%;
@@ -508,13 +476,10 @@
         }
 
         .feature-dot:hover .dot-label,
-        .feature-dot.dot-active .dot-label {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+        .feature-dot.dot-active .dot-label { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         /* ============================================
-           MOBILE — bottom-right, scroll-expand
+           MOBILE
         ============================================ */
         @media (max-width: 768px) {
             .feature-panel {
@@ -526,39 +491,16 @@
                 padding: var(--space-sm);
                 transform: translateY(110%);
                 opacity: 0;
-                transition: transform 0.65s cubic-bezier(0.22,1,0.36,1),
-                            width 0.55s cubic-bezier(0.22,1,0.36,1),
-                            opacity 0.4s ease;
+                transition: transform 0.65s cubic-bezier(0.22,1,0.36,1), width 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease;
             }
 
-            .feature-panel.panel-visible {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            .feature-panel.panel-visible { transform: translateY(0); opacity: 1; }
+            .feature-panel.panel-expanded { width: min(90vw, 340px); }
 
-            .feature-panel.panel-expanded {
-                width: min(90vw, 340px);
-            }
-
-            .panel-label {
-                font-size: clamp(0.58rem, 1.8vw, 0.7rem);
-                margin-bottom: var(--space-xs);
-            }
-
-            .item-title {
-                font-size: clamp(0.72rem, 2.2vw, 0.85rem);
-            }
-
-            .item-toggle {
-                width: clamp(22px, 5.5vw, 30px);
-                height: clamp(22px, 5.5vw, 30px);
-                font-size: clamp(12px, 3vw, 16px);
-            }
-
-            .feature-dot {
-                width: clamp(7px, 2vw, 10px);
-                height: clamp(7px, 2vw, 10px);
-            }
+            .panel-label { font-size: clamp(0.58rem, 1.8vw, 0.7rem); margin-bottom: var(--space-xs); }
+            .item-title { font-size: clamp(0.72rem, 2.2vw, 0.85rem); }
+            .item-toggle { width: clamp(22px, 5.5vw, 30px); height: clamp(22px, 5.5vw, 30px); }
+            .feature-dot { width: clamp(7px, 2vw, 10px); height: clamp(7px, 2vw, 10px); }
         }
 
         /* ============================================
@@ -591,7 +533,6 @@
             gap: clamp(1.5rem, 3vw, 2.5rem);
         }
 
-        /* Card */
         .card { background: transparent; }
 
         .card:nth-child(1) .card-inner { --clr: #99f6e4; }
@@ -612,21 +553,9 @@
             box-shadow: 0 10px 15px -3px rgba(0,0,0,.1);
         }
 
-        .box {
-            width: 100%; height: 100%;
-            background: #fff;
-            border-radius: 1.25rem;
-            overflow: hidden;
-        }
-
+        .box { width: 100%; height: 100%; background: #fff; border-radius: 1.25rem; overflow: hidden; }
         .imgBox { position: absolute; inset: 0; }
-
-        .imgBox img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
+        .imgBox img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .card:hover .imgBox img { transform: scale(1.1); }
 
         .icon {
@@ -661,14 +590,29 @@
         .iconBox {
             position: absolute;
             inset: 0.625rem;
-            background: #282828;
             border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,.1);
         }
 
-        .iconBox span { color: #fff; font-size: clamp(1.1rem, 2vw, 1.5rem); }
+        /* ── ENHANCED: card icon badge — bigger, animated ── */
+        .iconBox i {
+            color: #fff;
+            font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+            display: block;
+            line-height: 1;
+            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        .icon:hover .iconBox i { transform: scale(1.18) rotate(-8deg); }
+
+        /* glow ring on hover */
+        .icon:hover .iconBox {
+            box-shadow: 0 0 0 4px rgba(255,255,255,.25), 0 6px 20px rgba(0,0,0,.2);
+        }
 
         .content { padding: clamp(0.8rem, 2vw, 1.2rem) 0.625rem; }
 
@@ -726,45 +670,15 @@
             margin-bottom: clamp(1.5rem, 4vw, 3rem);
         }
 
-        .footer-brand h4 {
-            font-size: clamp(1.3rem, 2vw, 1.8rem);
-            color: #fff;
-            margin-bottom: 1rem;
-            font-weight: 900;
-        }
-
-        .footer-brand p {
-            line-height: 1.6; opacity: .8;
-            max-width: 300px;
-            font-size: var(--text-base);
-        }
-
-        .footer-links h5, .footer-newsletter h5 {
-            color: #fff;
-            font-size: clamp(0.9rem, 1vw + 0.2rem, 1.1rem);
-            margin-bottom: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
+        .footer-brand h4 { font-size: clamp(1.3rem, 2vw, 1.8rem); color: #fff; margin-bottom: 1rem; font-weight: 900; }
+        .footer-brand p { line-height: 1.6; opacity: .8; max-width: 300px; font-size: var(--text-base); }
+        .footer-links h5, .footer-newsletter h5 { color: #fff; font-size: clamp(0.9rem, 1vw + 0.2rem, 1.1rem); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .footer-links ul { list-style: none; }
         .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { color: #d1fae5; opacity: .7; font-size: var(--text-base); }
+        .footer-links a:hover { color: #34d399; opacity: 1; transform: translateX(5px); }
 
-        .footer-links a {
-            color: #d1fae5; opacity: .7;
-            font-size: var(--text-base);
-        }
-
-        .footer-links a:hover {
-            color: #34d399; opacity: 1;
-            transform: translateX(5px);
-        }
-
-        .newsletter-form {
-            display: flex; gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
+        .newsletter-form { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
 
         .newsletter-form input {
             padding: clamp(0.5rem, 1vw, 0.8rem);
@@ -837,7 +751,6 @@
         <div class="sticky-wrapper">
             <div class="main-container" id="mainContainer">
 
-                <!-- SVG Clip Path Definition -->
                 <svg width="0" height="0">
                     <defs>
                         <clipPath id="clipPath" clipPathUnits="objectBoundingBox">
@@ -846,74 +759,103 @@
                     </defs>
                 </svg>
 
-                <!-- Image Layer -->
                 <div class="dark-layer">
                     <img src="images/pod.png" style="clip-path:url(#clipPath)" alt="Technology Chassis">
                 </div>
 
-                <!-- Interactive Dot Anchors on vehicle image -->
                 <div class="dot-container" id="dotContainer"></div>
 
                 <!-- Floating Feature Panel -->
                 <div id="featurePanel" class="feature-panel">
-                    <span class="panel-label">Engineering Harmony</span>
 
+                    <!-- Panel label with icon -->
+                    <span class="panel-label">
+                        <span class="panel-label-icon">
+                            <i class="fi fi-rr-settings-sliders"></i>
+                        </span>
+                        Engineering Harmony
+                    </span>
+
+                    <!-- Item 0: Omni-Directional Agility — wheels icon -->
                     <div class="feature-item" data-index="0">
                         <div class="item-header">
                             <div class="item-title-row">
                                 <span class="item-dot-indicator"></span>
+                                <span class="item-icon-badge">
+                                    <i class="fi fi-tr-steering-wheel"></i>
+                                </span>
                                 <span class="item-title">Omni-Directional Agility</span>
                             </div>
-                            <div class="item-toggle">+</div>
+                            <div class="item-toggle">
+                                +
+                            </div>
                         </div>
                         <div class="item-body"><div class="item-body-inner">
                             <p class="item-desc">Wheels that pivot a full 360° for pinpoint urban manoeuvring and zero-radius turns.</p>
                         </div></div>
                     </div>
 
+                    <!-- Item 1: Seamless Entry — door icon -->
                     <div class="feature-item" data-index="1">
                         <div class="item-header">
                             <div class="item-title-row">
                                 <span class="item-dot-indicator"></span>
+                                <span class="item-icon-badge">
+                                    <i class="fi fi-tr-sensor-on"></i>
+                                </span>
                                 <span class="item-title">Seamless Entry Systems</span>
                             </div>
-                            <div class="item-toggle">+</div>
+                            <div class="item-toggle">
+                                +
+                            </div>
                         </div>
                         <div class="item-body"><div class="item-body-inner">
                             <p class="item-desc">Flush gesture-activated doors that disappear on approach — no handles, no friction.</p>
                         </div></div>
                     </div>
 
+                    <!-- Item 2: Adaptive Suspension — cloud / suspension icon -->
                     <div class="feature-item" data-index="2">
                         <div class="item-header">
                             <div class="item-title-row">
                                 <span class="item-dot-indicator"></span>
+                                <span class="item-icon-badge">
+                                    <i class="fi fi-tr-cloud-showers"></i>
+                                </span>
                                 <span class="item-title">Adaptive Cloud Suspension</span>
                             </div>
-                            <div class="item-toggle">+</div>
+                            <div class="item-toggle">
+                                +
+                            </div>
                         </div>
                         <div class="item-body"><div class="item-body-inner">
                             <p class="item-desc">AI-mapped road-reading absorbs micro-vibrations before they reach the cabin floor.</p>
                         </div></div>
                     </div>
 
+                    <!-- Item 3: Symmetrical Architecture — balance icon -->
                     <div class="feature-item" data-index="3">
                         <div class="item-header">
                             <div class="item-title-row">
                                 <span class="item-dot-indicator"></span>
+                                <span class="item-icon-badge">
+                                    <i class="fi fi-rr-layout-fluid"></i>
+                                </span>
                                 <span class="item-title">Symmetrical Architecture</span>
                             </div>
-                            <div class="item-toggle">+</div>
+                            <div class="item-toggle">
+                                +
+                            </div>
                         </div>
                         <div class="item-body"><div class="item-body-inner">
                             <p class="item-desc">A perfectly mirrored chassis distributes mass equally for neutral, effortless balance.</p>
                         </div></div>
                     </div>
-                </div>
 
-            </div><!-- .main-container -->
-        </div><!-- .sticky-wrapper -->
-    </div><!-- .section-height -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 3. MINT EV COLLECTION SECTION -->
     <section class="collection-section">
@@ -929,7 +871,8 @@
                         </div>
                         <div class="icon">
                             <a href="menu/booking.html?model=stalaris" class="iconBox">
-                                <span class="material-symbols-outlined"><i class="fi fi-rr-car-charger-bolt"></i></span>
+                                <!-- Thin Rounded: bolt / electric charge -->
+                                <i class="fi fi-tr-bolt"></i>
                             </a>
                         </div>
                     </div>
@@ -953,7 +896,8 @@
                         </div>
                         <div class="icon">
                             <a href="menu/booking.html?model=orion" class="iconBox">
-                                <span class="material-symbols-outlined"><i class="fi fi-rr-hyperloop"></i></span>
+                                <!-- Thin Rounded: city / urban mobility -->
+                                <i class="fi fi-tr-city"></i>
                             </a>
                         </div>
                     </div>
@@ -978,7 +922,8 @@
                         </div>
                         <div class="icon">
                             <a href="menu/booking.html?model=lunarite" class="iconBox">
-                                <span class="material-symbols-outlined"><i class="fi fi-tr-bio-leaves"></i></span>
+                                <!-- Thin Rounded: leaf / eco -->
+                                <i class="fi fi-tr-bio-leaves"></i>
                             </a>
                         </div>
                     </div>
@@ -1001,12 +946,11 @@
     ============================================ -->
     <script>
     (() => {
-        /* ── CONFIG ─────────────────────────────────── */
         const DOT_POSITIONS = [
-            { left: 78, top: 72 },   // wheels / agility
-            { left: 58, top: 52 },   // door / entry
-            { left: 42, top: 78 },   // undercarriage / suspension
-            { left: 65, top: 35 },   // roof / architecture
+            { left: 78, top: 72 },
+            { left: 58, top: 52 },
+            { left: 42, top: 78 },
+            { left: 65, top: 35 },
         ];
 
         const FEATURE_LABELS = [
@@ -1016,7 +960,6 @@
             'Symmetrical Architecture',
         ];
 
-        /* ── ELEMENTS ───────────────────────────────── */
         const clipShape    = document.getElementById('clipShape');
         const featurePanel = document.getElementById('featurePanel');
         const dotContainer = document.getElementById('dotContainer');
@@ -1025,17 +968,13 @@
 
         const isMobile = () => window.innerWidth <= 768;
 
-        /* ── STATE ──────────────────────────────────── */
         let activeIndex = -1;
         let hoverIndex  = -1;
 
-        /* ── STAGGER DELAYS on items ────────────────── */
         featureItems.forEach((item, i) => {
-            // base delay = panel open delay + stagger per item
             item.style.setProperty('--delay', `${0.6 + i * 0.08}s`);
         });
 
-        /* ── BUILD DOTS ─────────────────────────────── */
         const dots = DOT_POSITIONS.map((pos, i) => {
             const dot = document.createElement('div');
             dot.className = 'feature-dot';
@@ -1056,7 +995,6 @@
             return dot;
         });
 
-        /* ── WIRE ITEMS → DOTS ──────────────────────── */
         featureItems.forEach((item, i) => {
             item.addEventListener('mouseenter', () => { hoverIndex = i; applyStates(); });
             item.addEventListener('mouseleave', () => { hoverIndex = -1; applyStates(); });
@@ -1066,9 +1004,7 @@
             if (toggle) toggle.addEventListener('click', e => { e.stopPropagation(); toggleActive(i); });
         });
 
-        /* ── STATE MANAGERS ─────────────────────────── */
         function toggleActive(index) {
-            // clicking active again collapses it
             activeIndex = activeIndex === index ? -1 : index;
             applyStates();
         }
@@ -1076,7 +1012,6 @@
         function applyStates() {
             const hasActive = activeIndex !== -1;
 
-            /* — DOTS: active stays, all others vanish — */
             dots.forEach((dot, i) => {
                 const isActive   = i === activeIndex;
                 const isInactive = hasActive && !isActive;
@@ -1086,7 +1021,6 @@
                 dot.classList.toggle('dot-invisible', isInactive);
             });
 
-            /* — ITEMS: active expands, all others vanish — */
             featureItems.forEach((item, i) => {
                 const isActive   = i === activeIndex;
                 const isInactive = hasActive && !isActive;
@@ -1095,16 +1029,14 @@
             });
         }
 
-        /* ── SCROLL ─────────────────────────────────── */
         let lastProgress = -1;
 
         function onScroll() {
             const rect = mainContainer.getBoundingClientRect();
             const progress = 1 - (rect.bottom - window.innerHeight) / (rect.height + window.innerHeight);
-            if (progress === lastProgress) return; // skip if no change
+            if (progress === lastProgress) return;
             lastProgress = progress;
 
-            /* Panel: reveal at same scroll threshold as clip animation nears end */
             if (progress > 0.82) {
                 featurePanel.classList.add('panel-visible');
                 if (isMobile() && progress > 0.9) {
@@ -1116,7 +1048,6 @@
                 featurePanel.classList.remove('panel-visible', 'panel-expanded');
             }
 
-            /* Dots — staggered appearance */
             dots.forEach((dot, i) => {
                 const threshold = 0.85 + i * 0.025;
                 dot.classList.toggle('dot-visible', progress > threshold);
@@ -1128,7 +1059,6 @@
     })();
     </script>
 
-    <!-- Injected footer / navbar scripts -->
     <script src="js/footer.js" data-next="menu/swapping.html"></script>
     <script src="js/forms.js"></script>
     <script src="js/main.js"></script>

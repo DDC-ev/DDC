@@ -1,4 +1,13 @@
-
+   //-- Tailwind CSS --
+   const tailwindScript=document.createElement("script");
+tailwindScript.src="https://cdn.tailwindcss.com";
+document.head.appendChild(tailwindScript)
+ const icon=document.createElement("script");
+icon.src="https://unpkg.com/lucide@latest";
+document.head.appendChild(icon); 
+icon.onload=()=>{
+   lucide.createIcons();
+}
         // ================= MOBILE MENU LOGIC =================
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMobileBtn = document.getElementById('closeMobileBtn');

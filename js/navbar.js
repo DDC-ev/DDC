@@ -36,9 +36,9 @@
                 ],
                 secondaryLinks: [
                     { title: "Safety", url: "product.html#why-ddc" },
-                    { title: "Journal", url: "menu/journal.html" },
-                    { title: "Booking", url: "menu/booking.html" },
-                    { title: "Press Room", url: "menu/press.html" }
+                    { title: "tutorials", url: "menu/tutorials.html" },
+                    { title: "hop and go", url: "menu/booking.html" },
+                    { title: "Press Room", url: "menu/blog.html#pressView" }
                 ]
             },
 
@@ -63,11 +63,208 @@
             renderStyles() {
                 const style = document.createElement('style');
                 style.textContent = `
-                    .menu-transition { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
+                    .menu-transition { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
                     .nav-link-item:hover .arrow-circle { background-color: rgba(255, 255, 255, 0.5); transform: scale(1.05); }
-                    #menu-display-image { transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+                    #menu-display-image { transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
                     .no-scrollbar::-webkit-scrollbar { display: none; }
                     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+ #mainNav {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            left: 50%;
+            width: 95%;
+            max-width: 900px;
+            /* Ensure centering is maintained */
+            background: rgba(71, 77, 77, 0.92);
+            /* light transparency */
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-color: rgba(211, 228, 223, 0.12);
+        }
+
+        /* Navbar Minimized State */
+        #mainNav.minimized {
+            width: 90px;
+            height: fit-content;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            background-color: #474d4d;
+            border-color: #474d4d;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 768px) {
+            #mainNav.minimized {
+                width: 140px;
+                height: 56px;
+            }
+        }
+
+        /* Hide nav links on all screen sizes when navbar is minimized */
+        #mainNav.minimized .nav-links {
+            opacity: 0;
+            width: 0;
+            flex: 0 0 0%;
+            padding: 0;
+            margin: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* 2. Logo Transformation Logic */
+        .logo-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        /* --- DEFAULT STATE (Top of Page) --- */
+        .logo-icon {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .logo-icon a {
+            pointer-events: auto;
+        }
+
+        .logo-text {
+            font-family: "Oswald", sans-serif;
+            font-size: 400px;
+            font-weight: 5;
+            font-variation-settings: 'wdth' 200;
+            letter-spacing: -1px;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* --- MINIMIZED STATE (Scroll Down) --- */
+        #mainNav.minimized .logo-icon {
+            opacity: 0;
+            transform: scale(0.5) rotate(45deg);
+            pointer-events: none;
+        }
+
+        #mainNav.minimized .logo-text {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition-delay: 0.1s;
+        }
+
+        /* Nav Item Custom Interaction Styles */
+        .nav-item-link {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease, transform 0.1s ease;
+        }
+
+        .nav-item-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #99eff0;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-item-link:hover {
+            color: #99eff0;
+        }
+
+        .nav-item-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-item-link:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #d3e4df;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #474d4d;
+            border-radius: 4px;
+        }
+
+        /* Mobile responsive navbar */
+        #navToggle {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            #navToggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 0.5rem;
+            }
+
+            #mainNav {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+
+            #mainNav .nav-links {
+                display: none;
+            }
+
+            #mainNav.open .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(95% - 2rem);
+                max-width: 520px;
+                background: rgba(71, 77, 77, 0.92);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                padding: 0.75rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+                z-index: 60;
+            }
+
+            #mainNav.open .nav-links a {
+                display: block;
+                text-align: center;
+                padding: 0.5rem 0.75rem;
+            }
+
+            /* Hide the toggle when navbar is minimized (avoid overlap) */
+            #mainNav.minimized #navToggle {
+                display: none !important;
+            }
+        }
                 `;
                 document.head.appendChild(style);
             },
@@ -99,39 +296,15 @@
                     <div class="logo-container z-10 flex items-center gap-2">
                         <div class="logo-icon flex items-center justify-center">
                             <a href="${this.resolvePath('index.html')}" aria-label="Go to Home" class="flex items-center justify-center">
-                                <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-lg">
-                                  <defs>
-                                    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                      <stop offset="0%"  stop-color="#fff6b7"/>
-                                      <stop offset="20%" stop-color="#f7e27a"/>
-                                      <stop offset="40%" stop-color="#d4af37"/>
-                                      <stop offset="60%" stop-color="#b8962e"/>
-                                      <stop offset="80%" stop-color="#f7e27a"/>
-                                      <stop offset="100%" stop-color="#fff6b7"/>
-                                    </linearGradient>
-                                    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
-                                      <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
-                                      <stop offset="50%" stop-color="rgba(255,255,255,0.1)"/>
-                                      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-                                    </linearGradient>
-                                    <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
-                                      <feGaussianBlur stdDeviation="3" result="blur"/>
-                                      <feMerge>
-                                        <feMergeNode in="blur"/>
-                                        <feMergeNode in="SourceGraphic"/>
-                                      </feMerge>
-                                    </filter>
-                                  </defs>
-                                  <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="url(#goldGradient)" stroke-width="6" fill="none" filter="url(#goldGlow)"/>
-                                  <g font-family="Nanum Myeongjo, serif" text-anchor="middle">
-                                    <text x="48" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">D</text>
-                                    <text x="94" y="95" font-size="73" fill="url(#goldGradient)" filter="url(#goldGlow)">C</text>
-                                    <text x="70" y="107" font-size="110" fill="url(#goldGradient)" stroke="#3a3a3a" stroke-width="2" paint-order="stroke" filter="url(#goldGlow)">D</text>
-                                  </g>
-                                  <path d="M40.9 4H99.1L136 40.9V60H4V40.9L40.9 4Z" fill="url(#shine)" opacity="0.4"/>
-                                </svg>
+                              <img src="${this.resolvePath('images/logo.png')}" alt="DP_01 Logo"style="width: clamp(60px, 6vw, 90px);height: auto;object-fit: contain;padding: 4px;
+                              border-radius: 12px;transition: transform 0.4s ease, filter 0.4s ease;"
+                              onmouseover="this.style.transform='scale(1.08)'" 
+                              onmouseout="this.style.transform='scale(1)'">
                             </a>
                         </div>
+                        <a href="${this.resolvePath('index.html')}" style="font-size: 15px;"class="logo-text  text-sm md:text-xl  tracking-widest text-primary cursor-pointer whitespace-nowrap z-10"">
+                        DP_01
+                        </a>
                     </div>
 
                     <!-- Right Links Wrapper -->
@@ -270,6 +443,15 @@
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape' && !openState.classList.contains('hidden')) toggleMenu(false);
                 });
+                const nav = document.getElementById("mainNav");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 80) {
+        nav.classList.add("minimized");
+    } else {
+        nav.classList.remove("minimized");
+    }
+});
             }
         };
 

@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mint Evolution — DDC EV Journey</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Cormorant Garamond: luxurious editorial serif. Instrument Sans: precision grotesque. -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Instrument Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+   :root {
+  --cream:        #F2FFF9;
+  --cream-dark:   #E3F9F1;
+  --parchment:    #D4F3E8;
+  --ink:          #0F3D2E;
+  --ink-mid:      #2F6F5E;
+  --ink-light:    #5FA89A;
+  --ink-faint:    #BFE7DC;
+  --forest:       #34D399;
+  --forest-mid:   #10B981;
+  --forest-light: #6EE7B7;
+  --forest-pale:  #ECFDF5;
+  --accent-gold:  #A7F3D0;
+  --accent-rust:  #2DD4BF;
+}
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      font-family: 'Instrument Sans', sans-serif;
+    }
+
+    /* EV electric grid background */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* ─── Subtle electric glow overlay ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(0,212,255,0.04) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(0,255,159,0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ─── Typography ─── */
+    .font-serif { font-family: 'Cormorant Garamond', serif; }
+    .font-sans  { font-family: 'Instrument Sans', sans-serif; }
+
+    /* ─── Navbar ─── */
+    .navbar {
+      background: rgba(10, 14, 26, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,212,255,0.12);
+    }
+
+    /* ─── Hero ─── */
+    .hero-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--forest), transparent);
+      opacity: 0.3;
+    }
+
+    .hero-badge {
+      border: 1px solid rgba(0,212,255,0.3);
+      background: rgba(0,212,255,0.06);
+      color: var(--forest);
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--forest);
+      position: relative;
+    }
+    .hero-headline em::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--forest-light);
+      opacity: 0.5;
+      border-radius: 2px;
+    }
+
+    /* ─── Background ornamental paper marks ─── */
+    .paper-mark {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .mark-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+      top: -150px; left: -200px;
+    }
+    .mark-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,255,159,0.05) 0%, transparent 70%);
+      top: 30%; right: -150px;
+    }
+    .mark-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%);
+      bottom: 5%; left: 15%;
+    }
+
+    /* ─── Full-bleed Image Card ─── */
+    .paper-card {
+      position: relative;
+      overflow: hidden;
+      margin-top: 40px;
+      background: var(--parchment);
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,255,0.1), 0 2px 8px rgba(0,0,0,0.3);
+      cursor: pointer;
+      height: clamp(260px, 35vh, 520px);
+    }
+
+    /* Full-bleed background image */
+    .card-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: scale(1.06);
+      transform-origin: center center;
+      transition: transform 0.9s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+      clip-path: inset(0 0 100% 0);
+    }
+    .paper-card:hover .card-bg-img {
+      transform: scale(1.0);
+    }
+
+    /* Gradient overlay — dark bottom for text legibility */
+    .card-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10, 8, 6, 0.92) 0%,
+        rgba(10, 8, 6, 0.65) 42%,
+        rgba(10, 8, 6, 0.12) 72%,
+        transparent 100%
+      );
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-year-pill {
+      position: absolute;
+      top: 20px; left: 20px;
+      z-index: 3;
+      display: inline-block;
+      background: rgba(0,212,255,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #000;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.15);
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    .card-year-pill.gold { background: rgba(0,255,159,0.85); }
+
+    /* Text panel — pinned to bottom of card */
+    .card-text-panel {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 26px 26px 26px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 2vw, 1.9rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: #fff;
+      margin: 0 0 10px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .card-title em {
+      font-style: italic;
+      color: var(--forest);
+    }
+    .card-title em.gold { color: var(--accent-gold); }
+
+    .card-desc {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(0.72rem, 1vw, 0.85rem);
+      line-height: 1.65;
+      color: rgba(255,255,255,0.68);
+      margin: 0 0 14px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .card-meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--forest);
+      flex-shrink: 0;
+    }
+
+    /* Expand hint */
+    .card-expand-hint {
+      position: absolute;
+      top: 18px; right: 18px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.8);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s;
+      z-index: 4;
+    }
+    .paper-card:hover .card-expand-hint {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+
+
+    /* ─── Track SVG ─── */
+    #journey-path {
+      filter: drop-shadow(0 0 8px rgba(0,212,255,0.6));
+    }
+
+    /* ─── EV Car ─── */
+    .car-shadow {
+      filter: drop-shadow(0 0 14px rgba(0,212,255,0.8));
+    }
+
+    .timeline-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--ink-faint);
+      background: transparent;
+      transition: none; /* let GSAP handle */
+    }
+
+    .section-rule {
+      display: flex; align-items: center; gap: 16px;
+      color: var(--ink-faint);
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .section-rule::before,
+    .section-rule::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent);
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      background: #060910;
+      color: var(--cream);
+    }
+    .cta-btn {
+      background: var(--forest);
+      color: #000;
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 16px 40px;
+      border-radius: 3px;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 24px rgba(0,212,255,0.35), 0 0 0 1px rgba(0,212,255,0.2);
+    }
+    .cta-btn:hover {
+      background: var(--forest-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(0,212,255,0.5), 0 0 0 1px rgba(0,212,255,0.4);
+    }
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ─── Scroll indicator ─── */
+    @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    .scroll-bob { animation: bob 2s ease-in-out infinite; }
+
+    .item-number {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(80px, 12vw, 140px);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--forest);
+      opacity: 0.08;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ─── Card clickable ─── */
+    .paper-card {
+      cursor: pointer;
+    }
+
+    /* ─── Expand hint on card ─── */
+    .card-expand-hint {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(30,77,53,0.1);
+      border: 1px solid rgba(30,77,53,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--forest);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s;
+      z-index: 5;
+    }
+    .paper-card:hover .card-expand-hint {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .card-expand-hint:hover {
+      background: rgba(30,77,53,0.18);
+    }
+
+    /* ══════════════════════════════════
+       FULL OVERLAY SYSTEM
+    ══════════════════════════════════ */
+
+    /* Dimmer backdrop */
+    #overlay-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 16, 12, 0);
+      z-index: 1000;
+      pointer-events: none;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      transition: background 0.55s cubic-bezier(0.4,0,0.2,1),
+                  backdrop-filter 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    #overlay-backdrop.active {
+      background: rgba(20, 16, 12, 0.72);
+      pointer-events: all;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    /* The travelling card clone */
+    #overlay-card {
+      position: fixed;
+      z-index: 1010;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0D1220;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,212,255,0.15);
+      pointer-events: none;
+      will-change: transform, border-radius;
+    }
+    #overlay-card.animating {
+      pointer-events: none;
+    }
+    #overlay-card.expanded {
+      pointer-events: all;
+    }
+
+    /* Image fills top half of overlay card */
+    #overlay-img-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #overlay-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform-origin: center center;
+    }
+
+    /* Dark gradient over image bottom */
+    #overlay-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 40%,
+        rgba(10,8,6,0.65) 70%,
+        rgba(10,8,6,0.92) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease 0.2s;
+    }
+    #overlay-card.expanded #overlay-img-wrap::after {
+      opacity: 1;
+    }
+
+    /* Content panel that slides up from bottom of overlay */
+    #overlay-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 40px 44px 44px;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.25s,
+                  opacity 0.45s ease 0.25s;
+      z-index: 2;
+      pointer-events: none;
+    }
+    #overlay-card.expanded #overlay-content {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Close button */
+    #overlay-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(248,244,238,0.15);
+      border: 1px solid rgba(248,244,238,0.25);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      opacity: 0;
+      transform: scale(0.7) rotate(-45deg);
+      transition: opacity 0.35s ease 0.3s,
+                  transform 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.3s,
+                  background 0.2s;
+      pointer-events: none;
+    }
+    #overlay-card.expanded #overlay-close {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      pointer-events: all;
+    }
+    #overlay-close:hover {
+      background: rgba(248,244,238,0.28);
+    }
+
+    /* Overlay year pill */
+    .overlay-year {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Stagger reveal lines */
+    .overlay-line {
+      overflow: hidden;
+    }
+    .overlay-line-inner {
+      transform: translateY(110%);
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    #overlay-card.expanded .overlay-line-inner {
+      transform: translateY(0);
+    }
+    #overlay-card.expanded .overlay-line:nth-child(2) .overlay-line-inner { transition-delay: 0.32s; }
+    #overlay-card.expanded .overlay-line:nth-child(3) .overlay-line-inner { transition-delay: 0.38s; }
+    #overlay-card.expanded .overlay-line:nth-child(4) .overlay-line-inner { transition-delay: 0.44s; }
+    #overlay-card.expanded .overlay-line:nth-child(5) .overlay-line-inner { transition-delay: 0.50s; }
+    #overlay-card.expanded .overlay-line:nth-child(6) .overlay-line-inner { transition-delay: 0.56s; }
+
+    /* Overlay meta / footer strip */
+    #overlay-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0 44px 18px;
+      display: flex; align-items: center; gap: 16px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease 0.5s, transform 0.4s ease 0.5s;
+      z-index: 2;
+    }
+    #overlay-card.expanded #overlay-meta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scroll‑lock when overlay open */
+    body.overlay-open {
+      overflow: hidden;
+    }
+    @media (max-width: 768px) {
+
+  .journey-item {
+    margin-top: 200px;
+  }
+
+  .paper-card {
+    height: clamp(240px, 42vh, 420px);
+    margin-top: 80px;
+  }
+
+  .card-text-panel {
+    padding: 18px 18px 20px;
+  }
+.journey-item{
+  margin-top: 80px;
+}
+
+.journey-item:nth-child(odd){
+  margin-top: 120px;
+}
+
+.journey-item:nth-child(even){
+  margin-top: 60px;
+}
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .card-desc {
+    font-size: 0.75rem;
+  }
+
+}
+  </style>
+</head>
+
+<body class="antialiased relative">
+
+  <!-- ═══════════════════════════════════════════
+       OVERLAY SYSTEM
+  ═══════════════════════════════════════════ -->
+  <div id="overlay-backdrop"></div>
+
+  <div id="overlay-card">
+    <button id="overlay-close" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M2 2L16 16M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div id="overlay-img-wrap">
+      <img id="overlay-img" src="" alt="">
+    </div>
+    <div id="overlay-content">
+      <div class="overlay-line mb-4">
+        <div class="overlay-line-inner">
+          <span id="overlay-year" class="overlay-year"></span>
+        </div>
+      </div>
+      <div class="overlay-line mb-3">
+        <div class="overlay-line-inner">
+          <h2 id="overlay-title" class="font-serif text-white leading-tight" style="font-size:clamp(2rem,5vw,3.4rem);font-weight:700;"></h2>
+        </div>
+      </div>
+      <div class="overlay-line mb-5">
+        <div class="overlay-line-inner">
+          <p id="overlay-body" class="font-sans text-white/70 leading-relaxed" style="font-size:0.95rem;max-width:520px;"></p>
+        </div>
+      </div>
+      <div class="overlay-line">
+        <div class="overlay-line-inner">
+          <div id="overlay-footer-meta" class="flex items-center gap-3 text-white/40 font-sans text-xs tracking-widest uppercase"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixed paper background texture marks -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="paper-mark mark-1"></div>
+    <div class="paper-mark mark-2"></div>
+    <div class="paper-mark mark-3"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav class="navbar fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" fill="none" stroke="var(--forest)" stroke-width="1.5"/>
+          <path d="M9 14 L13 10 L13 13 L19 13 L15 18 L15 15 L9 15 Z" fill="var(--forest)"/>
+        </svg>
+        <span class="font-serif text-2xl font-bold tracking-wide text-[var(--ink)]">
+          MINT <span class="font-sans font-light text-lg text-[var(--ink-light)]">EV</span>
+        </span>
+      </div>
+
+      <div class="hidden md:flex gap-10 text-sm font-sans tracking-wide text-[var(--ink-mid)]">
+        <a href="#" class="hover:text-[var(--forest)] transition-colors pb-1 border-b border-transparent hover:border-[var(--forest)]">Models</a>
+        <a href="#" class="hover:text-[var(--forest)] transition-colors pb-1 border-b border-transparent hover:border-[var(--forest)]">Technology</a>
+        <a href="#" class="text-[var(--forest)] pb-1 border-b border-[var(--forest)]">Our Journey</a>
+      </div>
+
+      <button class="hidden md:flex items-center gap-2 cta-btn !py-2 !px-5 text-sm">
+        Reserve Now
+        <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+      </button>
+      <button class="md:hidden text-[var(--ink)]"><i data-lucide="menu"></i></button>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+ <section class="relative min-h-[75vh] flex items-center justify-center pt-[72px] z-10 overflow-hidden
+bg-gradient-to-b from-[#F2FFF9] via-[#ECFDF5] to-[#E6FFF4]">
+
+  <!-- Ambient mint glow -->
+  <div class="absolute inset-0 pointer-events-none opacity-70"
+       style="background:
+       radial-gradient(circle at 20% 20%, rgba(52,211,153,0.25), transparent 60%),
+       radial-gradient(circle at 80% 60%, rgba(16,185,129,0.2), transparent 60%);
+       filter: blur(60px);">
+  </div>
+
+  <!-- Large editorial background text -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+    <span class="font-serif font-bold text-[20vw] leading-none 
+    text-[#A7F3D0] opacity-30 tracking-tight whitespace-nowrap">
+      MINT
+    </span>
+  </div>
+
+  <div class="text-center px-4 max-w-5xl mx-auto relative z-10 mt-16">
+
+    <div class="section-rule mb-10 max-w-xs mx-auto">
+      <span class="tracking-widest text-[#10B981] uppercase text-xs">
+        The Evolution
+      </span>
+    </div>
+
+    <!-- Hero headline -->
+    <h1 class="hero-headline font-serif text-[clamp(3rem,8vw,7rem)] 
+    font-bold leading-[1.05] mb-8 tracking-tight">
+
+      <span class="bg-gradient-to-r from-[#065F46] via-[#10B981] to-[#34D399]
+      bg-clip-text text-transparent">
+      Driving the
+      </span>
+
+      <em class="italic text-[#047857]">Future</em><br>
+
+      <span class="text-[#065F46]">Forward.</span>
+
+    </h1>
+
+    <p class="text-[#4B8F7A] text-lg md:text-xl font-sans max-w-xl mx-auto leading-relaxed mb-4">
+      Trace the seamless journey of DDC EV from concept to global revolution.
+    </p>
+
+    <p class="font-serif italic text-[#10B981] text-base opacity-90">
+      Follow the winding road.
+    </p>
+
+    <div class="hero-rule mt-14 mb-12 max-w-lg mx-auto border-t border-[#D1FAE5]"></div>
+
+    <!-- Stats row -->
+    <div class="flex justify-center gap-12 md:gap-20">
+
+      <div class="text-center">
+        <div class="font-serif text-4xl font-bold text-[#10B981]">
+          600<span class="text-2xl">mi</span>
+        </div>
+        <div class="text-xs font-sans tracking-widest uppercase text-[#6FAF9C] mt-1">
+          Range
+        </div>
+      </div>
+
+      <div class="w-px bg-[#D1FAE5]"></div>
+
+      <div class="text-center">
+        <div class="font-serif text-4xl font-bold text-[#10B981]">
+          12<span class="text-2xl">min</span>
+        </div>
+        <div class="text-xs font-sans tracking-widest uppercase text-[#6FAF9C] mt-1">
+          0→80% Charge
+        </div>
+      </div>
+
+      <div class="w-px bg-[#D1FAE5]"></div>
+
+      <div class="text-center">
+        <div class="font-serif text-4xl font-bold text-[#10B981]">
+          47<span class="text-2xl">sec</span>
+        </div>
+        <div class="text-xs font-sans tracking-widest uppercase text-[#6FAF9C] mt-1">
+          Sold Out
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="scroll-bob mt-16 text-[#6FAF9C] flex flex-col items-center gap-2">
+      <span class="text-[10px] uppercase tracking-[0.25em] font-sans">
+        Scroll to explore
+      </span>
+
+      <svg width="18" height="28" viewBox="0 0 18 28" fill="none">
+        <rect x="1" y="1" width="16" height="22" rx="8" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="7.5" y="5" width="3" height="6" rx="1.5" fill="#10B981"/>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ═══════════════════════════════════════════
+       TIMELINE JOURNEY
+  ═══════════════════════════════════════════ -->
+  <section class="relative w-full py-24 z-10" id="journey-section">
+    <div class="max-w-7xl mx-auto px-6 mb-16 text-center">
+      <div class="section-rule max-w-sm mx-auto">
+        <span>Five chapters · 2020–Present</span>
+      </div>
+    </div>
+
+    <div class="timeline-container relative max-w-6xl mx-auto px-4 md:px-12 pt-40 pb-32">
+
+      <!-- SVG Track -->
+      <svg id="track-svg" class="absolute inset-0 pointer-events-none z-0" style="width:100%;height:100%;">
+        <defs>
+          <filter id="glow-curve" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <linearGradient id="trackGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.2"/>
+            <stop offset="50%" stop-color="#00D4FF" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#00FF9F" stop-opacity="0.08"/>
+          </linearGradient>
+        </defs>
+        <!-- Faint background path -->
+        <path id="bg-path" fill="none" stroke="rgba(0,212,255,0.1)" stroke-width="5" stroke-linecap="round"/>
+        <!-- Animated mint path -->
+        <path id="journey-path" fill="none" stroke="var(--forest)" stroke-width="3.5" stroke-linecap="round" filter="url(#glow-curve)"/>
+      </svg>
+
+      <!-- The EV Car (refined for light background) -->
+      <div id="ev-car" class="absolute z-10 car-shadow">
+        <svg width="32" height="64" viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(90deg);">
+          <!-- Body -->
+          <rect x="12" y="8" width="76" height="184" rx="38" fill="#0D1220" stroke="#00D4FF" stroke-width="3"/>
+          <!-- Windshield -->
+          <path d="M 24 68 Q 50 48 76 68 L 72 100 L 28 100 Z" fill="#0A1828" stroke="#1A3A50" stroke-width="1.5"/>
+          <!-- Rear window -->
+          <path d="M 30 148 L 70 148 L 76 128 Q 50 118 24 128 Z" fill="#0A1828" stroke="#1A3A50" stroke-width="1.5"/>
+          <!-- Headlights - electric cyan glow -->
+          <ellipse cx="28" cy="18" rx="7" ry="3.5" fill="#00D4FF" opacity="0.95"/>
+          <ellipse cx="72" cy="18" rx="7" ry="3.5" fill="#00D4FF" opacity="0.95"/>
+          <!-- Taillights - electric pink -->
+          <rect x="22" y="182" width="14" height="4" rx="2" fill="#FF4A6E"/>
+          <rect x="64" y="182" width="14" height="4" rx="2" fill="#FF4A6E"/>
+          <!-- Roof glass -->
+          <rect x="36" y="104" width="28" height="18" rx="5" fill="#0A1828"/>
+          <!-- Charge port - green indicator -->
+          <circle cx="88" cy="100" r="4" fill="#00FF9F" opacity="0.9"/>
+          <!-- Accent stripe -->
+          <line x1="50" y1="112" x2="50" y2="140" stroke="#00D4FF" stroke-width="1" opacity="0.4"/>
+        </svg>
+      </div>
+
+      <!-- ─── Timeline Items ─── -->
+      <div class="relative z-20">
+
+        <!-- ══ Item 1 (Left) ══ -->
+        <div class="journey-item flex flex-col md:flex-row justify-between items-center w-full mb-50 relative" style="align-items:center;min-height:360px;">
+          <div class="w-full md:w-[45%] flex items-center justify-start md:justify-end relative" style="align-self:center;">
+            <span class="item-number hidden md:block" style="right:-60px;top:-30px;">01</span>
+            <div class="paper-card w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+                 data-img="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop"
+                 data-year="2020" data-title="The Genesis Concept"
+                 data-body="It started as a sketch on a napkin. A vision to blend unapologetic luxury with zero-emission technology. The Mint Concept was born, redefining what aerodynamics could mean."
+                 data-meta="Stuttgart Design Studio">
+              <img class="card-bg-img" src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop" alt="Genesis Concept">
+              <div class="card-overlay-gradient"></div>
+              <span class="card-year-pill">2020</span>
+              <div class="card-expand-hint">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2h4M2 2v4M12 2h-4M12 2v4M2 12h4M2 12v-4M12 12h-4M12 12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="card-text-panel">
+                <h3 class="card-title">The Genesis <em>Concept</em></h3>
+                <p class="card-desc">It started as a sketch on a napkin. A vision to blend unapologetic luxury with zero-emission technology. The Mint Concept was born, redefining what aerodynamics could mean.</p>
+                <div class="card-meta-row"><span class="card-meta-dot"></span>Stuttgart Design Studio</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 flex justify-center items-center w-8 h-8 pointer-events-none">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="hidden md:block w-[45%]"></div>
+        </div>
+
+        <!-- ══ Item 2 (Right) ══ -->
+        <div class="journey-item flex flex-col md:flex-row justify-between items-center w-full mb-50 relative" style="align-items:center;min-height:360px;">
+          <div class="hidden md:block w-[45%]"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 flex justify-center items-center w-8 h-8 pointer-events-none">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="w-full md:w-[45%] flex items-center justify-start relative" style="align-self:center;">
+            <span class="item-number hidden md:block" style="left:-60px;top:-30px;">02</span>
+            <div class="paper-card w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+                 data-img="https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?q=80&w=1974&auto=format&fit=crop"
+                 data-year="2021" data-title="Solid-State Breakthrough"
+                 data-body="Our engineers achieved the impossible. The proprietary MintCore battery pushed range limits beyond 600 miles while charging from 10% to 80% in under 12 minutes."
+                 data-meta="MintCore Battery · 127 Patents">
+              <img class="card-bg-img" src="https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?q=80&w=1974&auto=format&fit=crop" alt="Battery Tech">
+              <div class="card-overlay-gradient"></div>
+              <span class="card-year-pill">2021</span>
+              <div class="card-expand-hint">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2h4M2 2v4M12 2h-4M12 2v4M2 12h4M2 12v-4M12 12h-4M12 12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="card-text-panel">
+                <h3 class="card-title">Solid-State <em>Breakthrough</em></h3>
+                <p class="card-desc">Our engineers achieved the impossible. The proprietary MintCore battery pushed range limits beyond 600 miles while charging from 10% to 80% in under 12 minutes.</p>
+                <div class="card-meta-row"><span class="card-meta-dot"></span>MintCore Battery · 127 Patents</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ Item 3 (Left) ══ -->
+        <div class="journey-item flex flex-col md:flex-row justify-between items-center w-full mb-50 relative" style="align-items:center;min-height:360px;">
+          <div class="w-full md:w-[45%] flex items-center justify-start md:justify-end relative" style="align-self:center;">
+            <span class="item-number hidden md:block" style="right:-60px;top:-30px;">03</span>
+            <div class="paper-card w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+                 data-img="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2070&auto=format&fit=crop"
+                 data-year="2022" data-title="The Smart Gigafactory"
+                 data-body="Opening our first 100% renewable energy facility. AI-driven robotics and human craftsmanship joined hands to establish a new standard in automotive manufacturing."
+                 data-meta="Nevada · 4.2M sq ft · 100% Solar">
+              <img class="card-bg-img" src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=2070&auto=format&fit=crop" alt="Gigafactory">
+              <div class="card-overlay-gradient"></div>
+              <span class="card-year-pill">2022</span>
+              <div class="card-expand-hint">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2h4M2 2v4M12 2h-4M12 2v4M2 12h4M2 12v-4M12 12h-4M12 12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="card-text-panel">
+                <h3 class="card-title">The Smart <em>Gigafactory</em></h3>
+                <p class="card-desc">Opening our first 100% renewable energy facility. AI-driven robotics and human craftsmanship joined hands to establish a new standard in automotive manufacturing.</p>
+                <div class="card-meta-row"><span class="card-meta-dot"></span>Nevada · 4.2M sq ft · 100% Solar</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 flex justify-center items-center w-8 h-8 pointer-events-none">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="hidden md:block w-[45%]"></div>
+        </div>
+
+        <!-- ══ Item 4 (Right) ══ -->
+        <div class="journey-item flex flex-col md:flex-row justify-between items-center w-full mb-50 relative" style="align-items:center;min-height:360px;">
+          <div class="hidden md:block w-[45%]"></div>
+          <div class="absolute left-1/2 -translate-x-1/2 flex justify-center items-center w-8 h-8 pointer-events-none">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="w-full md:w-[45%] flex items-center justify-start relative" style="align-self:center;">
+            <span class="item-number hidden md:block" style="left:-60px;top:-30px;">04</span>
+            <div class="paper-card w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+                 data-img="https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2070&auto=format&fit=crop"
+                 data-year="2023" data-title="Global Unveiling"
+                 data-body="The world stopped to watch. The Mint Model ONE was revealed simultaneously in Tokyo, London, and New York. Pre-orders sold out in 47 seconds flat."
+                 data-meta="Tokyo · London · New York · Simultaneous" style="top: 120px;">
+              <img class="card-bg-img" src="https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=2070&auto=format&fit=crop" alt="Global Unveil">
+              <div class="card-overlay-gradient"></div>
+              <span class="card-year-pill">2023</span>
+              <div class="card-expand-hint">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2h4M2 2v4M12 2h-4M12 2v4M2 12h4M2 12v-4M12 12h-4M12 12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="card-text-panel">
+                <h3 class="card-title">Global <em>Unveiling</em></h3>
+                <p class="card-desc">The world stopped to watch. The Mint Model ONE was revealed simultaneously in Tokyo, London, and New York. Pre-orders sold out in 47 seconds flat.</p>
+                <div class="card-meta-row"><span class="card-meta-dot"></span>Tokyo · London · New York · Simultaneous</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ Item 5 (Left) ══ -->
+        <div class="journey-item flex flex-col md:flex-row justify-between items-center w-full relative" style="align-items:center;min-height:360px;">
+          <div class="w-full md:w-[45%] flex items-center justify-start md:justify-end relative" style="align-self:center;">
+            <span class="item-number hidden md:block" style="right:-60px;top:-30px;">05</span>
+            <div class="paper-card w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+                 data-img="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2064&auto=format&fit=crop"
+                 data-year="Today" data-title="The Road Ahead" data-accent="gold"
+                 data-body="We are not just making cars — we are building a connected ecosystem. Fully autonomous driving updates, grid-integration, and a sustainable future await."
+                 data-meta="What comes next is extraordinary" style="top: 180px;">
+              <img class="card-bg-img" src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2064&auto=format&fit=crop" alt="Road Ahead">
+              <div class="card-overlay-gradient"></div>
+              <span class="card-year-pill gold">Today</span>
+              <div class="card-expand-hint">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2h4M2 2v4M12 2h-4M12 2v4M2 12h4M2 12v-4M12 12h-4M12 12v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="card-text-panel">
+                <h3 class="card-title">The Road <em class="gold">Ahead</em></h3>
+                <p class="card-desc">We are not just making cars — we are building a connected ecosystem. Fully autonomous driving updates, grid-integration, and a sustainable future await.</p>
+                <div class="card-meta-row" style="color:rgba(232,185,106,0.5)"><span class="card-meta-dot" style="background:#E8B96A"></span>What comes next is extraordinary</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute left-1/2 -translate-x-1/2 flex justify-center items-center w-8 h-8 pointer-events-none">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="hidden md:block w-[45%]"></div>
+        </div>
+
+      </div><!-- /relative z-20 -->
+    </div><!-- /timeline-container -->
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       CTA / FOOTER
+  ═══════════════════════════════════════════ -->
+<section class="relative py-36 mt-10 overflow-hidden z-10
+bg-gradient-to-br from-[#F6FFFB] via-[#ECFDF5] to-[#E6FFF4]">
+
+  <!-- Aurora glow background -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] 
+    bg-[radial-gradient(circle,rgba(16,185,129,0.25),transparent_70%)] blur-3xl"></div>
+
+    <div class="absolute top-40 right-10 w-[500px] h-[400px] 
+    bg-[radial-gradient(circle,rgba(52,211,153,0.18),transparent_70%)] blur-2xl"></div>
+  </div>
+
+  <!-- subtle texture -->
+  <div class="absolute inset-0 opacity-[0.04] pointer-events-none"
+  style="background-image:url('https://grainy-gradients.vercel.app/noise.svg');"></div>
+
+
+  <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+
+    <!-- Section label -->
+    <div class="mb-10">
+      <span class="text-[#10B981] tracking-[0.35em] uppercase text-xs font-semibold">
+        Join the movement
+      </span>
+    </div>
+
+    <!-- Heading -->
+    <h2 class="font-serif text-[clamp(2.6rem,6vw,4.8rem)] font-bold 
+    leading-[1.1] mb-6 tracking-tight">
+
+      <span class="bg-gradient-to-r from-[#065F46] via-[#10B981] to-[#34D399]
+      bg-clip-text text-transparent">
+        Ready to Experience
+      </span>
+
+      <br>
+
+      <em class="italic text-[#047857]">the Evolution?</em>
+
+    </h2>
+
+    <p class="text-[#4B8F7A] mb-14 font-sans text-base max-w-md mx-auto leading-relaxed">
+      Join the waiting list for the next generation of DDC EV.
+      A limited cohort of founding members is now open.
+    </p>
+
+
+    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+
+      <!-- Primary CTA -->
+      <a href="booking.html"
+      class="group px-10 py-4 rounded-[20px] font-semibold tracking-wide text-white
+      bg-gradient-to-r from-[#34D399] to-[#10B981]
+      shadow-[0_15px_45px_rgba(16,185,129,0.35)]
+      hover:shadow-[0_18px_60px_rgba(16,185,129,0.45)]
+      hover:-translate-y-1 transition-all duration-300">
+
+      Reserve Yours →
+      </a>
+
+
+      <!-- Secondary CTA -->
+      <a href="tutorial.html#tutorial-video"
+      class="flex items-center gap-2 px-6 py-3 text-sm font-medium
+      text-[#047857] border border-[#10B981]
+      rounded-[25px]
+      hover:bg-[#ECFDF5]
+      hover:border-[#059669]
+      transition-all duration-300">
+
+        <i data-lucide="play-circle" style="width:18px;height:18px;"></i>
+        Watch the film
+      </a>
+
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <div class="max-w-7xl mx-auto px-6 mt-28 pt-10
+  border-t border-[#D1FAE5]
+  flex flex-col md:flex-row justify-between items-center gap-5">
+
+    <div class="font-serif text-[#047857] text-xl font-bold tracking-wider">
+      MINT EV
+    </div>
+
+    <div class="text-[#6FAF9C] text-xs font-sans tracking-widest uppercase">
+      © 2026 DDC Electric Vehicles · All rights reserved
+    </div>
+
+    <div class="flex gap-7 text-xs font-sans text-[#6FAF9C]">
+      <a href="#" class="hover:text-[#10B981] transition-colors">Privacy</a>
+      <a href="#" class="hover:text-[#10B981] transition-colors">Legal</a>
+      <a href="#" class="hover:text-[#10B981] transition-colors">Press</a>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════ -->
+  <script>
+    lucide.createIcons();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+      /* ══════════════════════════════════════════
+         OVERLAY SYSTEM
+      ══════════════════════════════════════════ */
+      const overlayCard     = document.getElementById('overlay-card');
+      const overlayBackdrop = document.getElementById('overlay-backdrop');
+      const overlayImg      = document.getElementById('overlay-img');
+      const overlayYear     = document.getElementById('overlay-year');
+      const overlayTitle    = document.getElementById('overlay-title');
+      const overlayBody     = document.getElementById('overlay-body');
+      const overlayMeta     = document.getElementById('overlay-footer-meta');
+      const overlayClose    = document.getElementById('overlay-close');
+
+      let isOverlayOpen = false;
+      let originCard    = null;
+
+      // Target overlay size — a generous card that fills ~85% of the viewport
+      function getTargetRect() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const maxW = Math.min(900, vw * 0.92);
+        const maxH = Math.min(720, vh * 0.9);
+        return {
+          left:   (vw - maxW) / 2,
+          top:    (vh - maxH) / 2,
+          width:  maxW,
+          height: maxH
+        };
+      }
+
+      function openOverlay(card) {
+        if (isOverlayOpen) return;
+        isOverlayOpen = true;
+        originCard = card;
+
+        // Read data from clicked card
+        const img   = card.dataset.img;
+        const year  = card.dataset.year;
+        const title = card.dataset.title;
+        const body  = card.dataset.body;
+        const meta  = card.dataset.meta;
+        const isGold = card.dataset.accent === 'gold';
+
+        overlayImg.src = img;
+        overlayImg.alt = title;
+        overlayYear.textContent = year;
+        overlayYear.style.background = isGold ? 'rgba(201,146,58,0.3)' : 'rgba(255,255,255,0.15)';
+        overlayYear.style.borderColor = isGold ? 'rgba(201,146,58,0.5)' : 'rgba(255,255,255,0.25)';
+        overlayTitle.textContent = title;
+        overlayBody.textContent  = body;
+        overlayMeta.textContent  = meta;
+
+        // FLIP: get exact position of the source card
+        const srcRect = card.getBoundingClientRect();
+        const tgt     = getTargetRect();
+
+        // Position overlay card exactly over source card first
+        Object.assign(overlayCard.style, {
+          top:         srcRect.top  + 'px',
+          left:        srcRect.left + 'px',
+          width:       srcRect.width  + 'px',
+          height:      srcRect.height + 'px',
+          borderRadius:'16px',
+          display:     'block',
+          transition:  'none',
+        });
+
+        // Image initially shows just the top portion (matching small card)
+        overlayImg.style.objectPosition = 'center top';
+        overlayImg.style.opacity = '0';
+        overlayImg.style.transform = 'scale(1.02)';
+        overlayImg.style.transition = 'none';
+
+        // Force a reflow so the browser registers the start position
+        overlayCard.offsetWidth;
+
+        // Lock scroll
+        document.body.classList.add('overlay-open');
+        document.body.style.paddingRight = (window.innerWidth - document.documentElement.clientWidth) + 'px';
+
+        // Now smoothly animate to target
+        overlayCard.style.transition = [
+          'top 0.6s cubic-bezier(0.22,1,0.36,1)',
+          'left 0.6s cubic-bezier(0.22,1,0.36,1)',
+          'width 0.6s cubic-bezier(0.22,1,0.36,1)',
+          'height 0.6s cubic-bezier(0.22,1,0.36,1)',
+          'border-radius 0.5s cubic-bezier(0.22,1,0.36,1)',
+          'box-shadow 0.5s ease'
+        ].join(',');
+
+        overlayCard.style.top         = tgt.top    + 'px';
+        overlayCard.style.left        = tgt.left   + 'px';
+        overlayCard.style.width       = tgt.width  + 'px';
+        overlayCard.style.height      = tgt.height + 'px';
+        overlayCard.style.borderRadius= '20px';
+        overlayCard.style.boxShadow   = '0 40px 120px rgba(26,22,18,0.35)';
+
+        // Fade in image
+        overlayImg.style.transition   = 'opacity 0.5s ease 0.1s, transform 0.7s cubic-bezier(0.22,1,0.36,1) 0.05s';
+        overlayImg.style.opacity      = '1';
+        overlayImg.style.transform    = 'scale(1)';
+        overlayImg.style.objectPosition = 'center center';
+
+        // Activate backdrop
+        overlayBackdrop.classList.add('active');
+
+        // Trigger text animations after card expands
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            overlayCard.classList.add('expanded');
+          });
+        });
+      }
+
+      function closeOverlay() {
+        if (!isOverlayOpen || !originCard) return;
+
+        overlayCard.classList.remove('expanded');
+
+        const srcRect = originCard.getBoundingClientRect();
+
+        // Animate back to origin
+        overlayCard.style.transition = [
+          'top 0.5s cubic-bezier(0.4,0,0.2,1)',
+          'left 0.5s cubic-bezier(0.4,0,0.2,1)',
+          'width 0.5s cubic-bezier(0.4,0,0.2,1)',
+          'height 0.5s cubic-bezier(0.4,0,0.2,1)',
+          'border-radius 0.4s ease',
+          'box-shadow 0.4s ease'
+        ].join(',');
+
+        overlayCard.style.top         = srcRect.top    + 'px';
+        overlayCard.style.left        = srcRect.left   + 'px';
+        overlayCard.style.width       = srcRect.width  + 'px';
+        overlayCard.style.height      = srcRect.height + 'px';
+        overlayCard.style.borderRadius= '16px';
+        overlayCard.style.boxShadow   = '0 8px 32px rgba(26,22,18,0.07)';
+
+        overlayImg.style.transition = 'opacity 0.3s ease';
+        overlayImg.style.opacity    = '0';
+
+        overlayBackdrop.classList.remove('active');
+
+        setTimeout(() => {
+          overlayCard.style.display = 'none';
+          overlayCard.style.transition = 'none';
+          document.body.classList.remove('overlay-open');
+          document.body.style.paddingRight = '';
+          isOverlayOpen = false;
+          originCard = null;
+        }, 520);
+      }
+
+      // Wire up card clicks
+      document.querySelectorAll('.paper-card').forEach(card => {
+        card.addEventListener('click', () => openOverlay(card));
+      });
+
+      // Close via button
+      overlayClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeOverlay();
+      });
+
+      // Close via backdrop
+      overlayBackdrop.addEventListener('click', closeOverlay);
+
+      // Close via Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeOverlay();
+      });
+
+      // Init overlay card hidden
+      overlayCard.style.display = 'none';
+
+
+      /* ══════════════════════════════════════════
+         SCROLL / PATH ANIMATION + CAR-THRESHOLD REVEALS
+      ══════════════════════════════════════════ */
+      let trackTl;
+      let cardTriggers = [];
+
+      // Per-card revealed state so we only fire once per direction
+      const revealedState = [];
+
+      function updateDynamicPath() {
+        const container = document.querySelector('.timeline-container');
+        const dots = document.querySelectorAll('.timeline-dot');
+        const path = document.getElementById('journey-path');
+        const bgPath = document.getElementById('bg-path');
+        const svg = document.getElementById('track-svg');
+
+        if (!container || !dots.length) return { length: 0, dotFractions: [] };
+
+        const w = container.offsetWidth;
+        const h = container.offsetHeight;
+        const centerX = w / 2;
+
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+        let d = `M ${centerX} 0`;
+        let lastY = 0;
+
+        dots.forEach((dot, index) => {
+          const dotRect = dot.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const dotY = dotRect.top - containerRect.top + (dotRect.height / 2);
+
+          const isDesktop = window.innerWidth >= 768;
+          const isCardLeft = index % 2 === 0;
+          let bulgeX = centerX;
+
+          if (isDesktop) {
+            bulgeX = isCardLeft ? centerX + (w * 0.4) : centerX - (w * 0.4);
+          } else {
+            bulgeX = isCardLeft ? centerX + (w * 0.22) : centerX - (w * 0.22);
+          }
+
+          const cp1Y = lastY + (dotY - lastY) * 0.2;
+          const cp2Y = lastY + (dotY - lastY) * 0.8;
+          d += ` C ${bulgeX} ${cp1Y}, ${bulgeX} ${cp2Y}, ${centerX} ${dotY}`;
+          lastY = dotY;
+        });
+
+        d += ` L ${centerX} ${h}`;
+        path.setAttribute('d', d);
+        bgPath.setAttribute('d', d);
+
+        const totalLength = path.getTotalLength();
+
+        // For each dot, find what fraction of the path it sits at
+        // We do this by scanning the path for the Y coordinate that matches
+        const containerRect = document.querySelector('.timeline-container').getBoundingClientRect();
+        const dotFractions = Array.from(dots).map(dot => {
+          const dotRect = dot.getBoundingClientRect();
+          const dotCY = dotRect.top - containerRect.top + dotRect.height / 2;
+          const dotCX = centerX;
+
+          // Binary-search along the path for the point closest to this dot center
+          let lo = 0, hi = totalLength, best = 0, bestDist = Infinity;
+          for (let iter = 0; iter < 22; iter++) {
+            const mid = (lo + hi) / 2;
+            const pt = path.getPointAtLength(mid);
+            const dist = Math.hypot(pt.x - dotCX, pt.y - dotCY);
+            if (dist < bestDist) { bestDist = dist; best = mid; }
+            const ptLo = path.getPointAtLength(lo);
+            const ptHi = path.getPointAtLength(hi);
+            if (Math.hypot(ptLo.x - dotCX, ptLo.y - dotCY) < Math.hypot(ptHi.x - dotCX, ptHi.y - dotCY)) {
+              hi = mid;
+            } else {
+              lo = mid;
+            }
+          }
+          return best / totalLength;
+        });
+
+        return { length: totalLength, dotFractions };
+      }
+
+      // Two-phase reveal: 1) image wipes in, 2) gradient + text slides up over it
+      function revealCard(card, dot, slideX, forward) {
+        const img      = card.querySelector('.card-bg-img');
+        const gradient = card.querySelector('.card-overlay-gradient');
+        const yearPill = card.querySelector('.card-year-pill');
+        const title    = card.querySelector('.card-title');
+        const desc     = card.querySelector('.card-desc');
+        const meta     = card.querySelector('.card-meta-row');
+
+        if (forward) {
+          // ── Card frame slides in ──
+          gsap.to(card, { opacity: 1, y: 0, x: 0, duration: 0.65, ease: "power3.out" });
+
+          // Dot pulse
+          gsap.to(dot, {
+            backgroundColor: 'var(--forest)',
+            borderColor: 'var(--forest)',
+            boxShadow: '0 0 0 5px rgba(0,212,255,0.18), 0 0 18px rgba(0,212,255,0.6)',
+            scale: 1.6,
+            duration: 0.35,
+            ease: "back.out(2.5)"
+          });
+
+          // ── Phase 1: image wipes in from bottom (0.55s) ──
+          gsap.fromTo(img,
+            { clipPath: 'inset(0 0 100% 0)', transform: 'scale(1.08)' },
+            { clipPath: 'inset(0 0 0% 0)',   transform: 'scale(1.0)',
+              duration: 0.7, ease: "power3.out", delay: 0.1 }
+          );
+
+          // ── Phase 2: gradient fades in, then text lines wipe up (staggered) ──
+          gsap.fromTo(gradient,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.55, ease: "power2.out", delay: 0.55 }
+          );
+
+          // Year pill drops in
+          gsap.fromTo(yearPill,
+            { opacity: 0, y: -10 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "back.out(2)", delay: 0.6 }
+          );
+
+          // Title, desc, meta wipe up sequentially
+          gsap.fromTo(title,
+            { opacity: 0, y: 22, clipPath: 'inset(0 0 100% 0)' },
+            { opacity: 1, y: 0,  clipPath: 'inset(0 0 0% 0)',
+              duration: 0.52, ease: "power3.out", delay: 0.72 }
+          );
+          gsap.fromTo(desc,
+            { opacity: 0, y: 18, clipPath: 'inset(0 0 100% 0)' },
+            { opacity: 1, y: 0,  clipPath: 'inset(0 0 0% 0)',
+              duration: 0.48, ease: "power3.out", delay: 0.86 }
+          );
+          gsap.fromTo(meta,
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0,  duration: 0.38, ease: "power2.out", delay: 1.0 }
+          );
+
+        } else {
+          // ── Reverse: collapse everything ──
+          gsap.to([title, desc, meta], { opacity: 0, y: 10, duration: 0.2, ease: "power2.in", stagger: 0.04 });
+          gsap.to(gradient,  { opacity: 0, duration: 0.3, delay: 0.1, ease: "power2.in" });
+          gsap.to(yearPill,  { opacity: 0, y: -8, duration: 0.25, delay: 0.05 });
+          gsap.to(img,       { clipPath: 'inset(0 0 100% 0)', duration: 0.45, delay: 0.18, ease: "power3.in" });
+          gsap.to(card,      { opacity: 0, y: 24, x: slideX, duration: 0.4, delay: 0.1, ease: "power2.in" });
+          gsap.to(dot, { backgroundColor: 'transparent', borderColor: 'var(--ink-faint)', boxShadow: 'none', scale: 1, duration: 0.25 });
+        }
+      }
+
+      function setupAnimation() {
+        if (trackTl) trackTl.kill();
+        cardTriggers.forEach(t => t.kill());
+        cardTriggers = [];
+
+        // Reset all cards: invisible, text hidden, image clipped
+        const allCards = document.querySelectorAll('.paper-card');
+        const allDots  = document.querySelectorAll('.timeline-dot');
+        const journeyItems = gsap.utils.toArray('.journey-item');
+
+        allCards.forEach(c => {
+          gsap.set(c, { opacity: 0, y: 24, x: 0 });
+          const img      = c.querySelector('.card-bg-img');
+          const gradient = c.querySelector('.card-overlay-gradient');
+          const yearPill = c.querySelector('.card-year-pill');
+          const title    = c.querySelector('.card-title');
+          const desc     = c.querySelector('.card-desc');
+          const meta     = c.querySelector('.card-meta-row');
+          if (img)      gsap.set(img,      { clipPath: 'inset(0 0 100% 0)', transform: 'scale(1.08)' });
+          if (gradient) gsap.set(gradient, { opacity: 0 });
+          if (yearPill) gsap.set(yearPill, { opacity: 0, y: -10 });
+          if (title)    gsap.set(title,    { opacity: 0, y: 22, clipPath: 'inset(0 0 100% 0)' });
+          if (desc)     gsap.set(desc,     { opacity: 0, y: 18, clipPath: 'inset(0 0 100% 0)' });
+          if (meta)     gsap.set(meta,     { opacity: 0, y: 12 });
+        });
+
+        allDots.forEach(d => gsap.set(d, { backgroundColor: 'transparent', borderColor: 'rgba(0,212,255,0.2)', scale: 1, boxShadow: 'none' }));
+
+        // Initialise revealed tracking
+        revealedState.length = 0;
+        journeyItems.forEach(() => revealedState.push(false));
+
+        const { length: pathLength, dotFractions } = updateDynamicPath();
+        const journeyPath = document.getElementById('journey-path');
+        const evCar = document.getElementById('ev-car');
+
+        gsap.set(journeyPath, {
+          strokeDasharray: pathLength,
+          strokeDashoffset: pathLength
+        });
+
+        // Build slide directions per card
+        const slideXPerCard = journeyItems.map((_, i) =>
+          window.innerWidth >= 768 ? (i % 2 === 0 ? -30 : 30) : 0
+        );
+
+        // Apply starting x offset so reveal looks good
+        journeyItems.forEach((item, i) => {
+          gsap.set(item.querySelector('.paper-card'), { x: slideXPerCard[i] });
+        });
+
+        // ── Main scrub timeline ──
+        trackTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.timeline-container',
+            start: "top 50%",
+            end: "bottom 50%",
+            scrub: 0.5,
+            onUpdate(self) {
+              const progress = self.progress; // 0 → 1
+
+              journeyItems.forEach((item, i) => {
+                const threshold = dotFractions[i] ?? (i / journeyItems.length);
+                const card = item.querySelector('.paper-card');
+                const dot  = item.querySelector('.timeline-dot');
+                const wasRevealed = revealedState[i];
+
+                if (progress >= threshold && !wasRevealed) {
+                  // Car just crossed this dot — reveal
+                  revealedState[i] = true;
+                  revealCard(card, dot, slideXPerCard[i], true);
+                } else if (progress < threshold && wasRevealed) {
+                  // Scrolled back past this dot — hide
+                  revealedState[i] = false;
+                  revealCard(card, dot, slideXPerCard[i], false);
+                }
+              });
+            }
+          }
+        });
+
+        trackTl.to(journeyPath, { strokeDashoffset: 0, ease: "none" }, 0);
+        trackTl.to(evCar, {
+          motionPath: {
+            path: journeyPath,
+            align: journeyPath,
+            alignOrigin: [0.5, 0.5],
+            autoRotate: true
+          },
+          ease: "none"
+        }, 0);
+      }
+
+      setTimeout(setupAnimation, 120);
+
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setupAnimation, 260);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -5,14 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Mint Evolution — DDC EV Journey</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-   
 
   <style>
     :root {
@@ -24,11 +19,10 @@
       --text-muted:    #064e3b;
       --font-playfair: 'Playfair Display', serif;
       --font-outfit:   'Plus Jakarta Sans', sans-serif;
-    }
 
-    .bg-dark       { background-color: #050505; }
-    .text-primary  { color: #d3e4df; }
-    .border-accent { border-color: rgba(153,239,240,0.2); }
+      /* Responsive timeline height — overridden per breakpoint */
+      --tl-height: 3200px;
+    }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -40,22 +34,21 @@
     }
     h1, h2, h3, .serif { font-family: var(--font-playfair); }
 
+    /* Grain overlay */
     body::before {
       content: ''; position: fixed; inset: 0;
       pointer-events: none; z-index: 9999; opacity: 0.35;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     }
 
+    /* Scroll progress bar */
     #scroll-progress-bar {
       position: fixed; top: 0; left: 0; width: 0%; height: 3px;
       background: linear-gradient(to right, var(--mint-main), var(--mint-dark));
-      z-index: 10001; pointer-events: none;
+      z-index: 10001; pointer-events: none; transition: width .05s linear;
     }
 
-    
-    #mainNav    { z-index: 1000 !important; }
-    #open-state { z-index: 1060 !important; }
-
+    /* Social sidebar */
     .social-sidebar {
       position: fixed; left: 1.5rem; top: 50%; transform: translateY(-50%);
       display: flex; flex-direction: column; gap: 1.2rem; z-index: 900;
@@ -72,12 +65,13 @@
       background: var(--mint-main); color: white;
       transform: scale(1.1) translateX(4px);
     }
-    @media (max-width:1100px) { .social-sidebar { display: none; } }
+    @media (max-width: 1100px) { .social-sidebar { display: none; } }
 
+    /* ─── HEADER ─── */
     header {
-      padding-top: clamp(9rem,16vw,13rem);
-      padding-bottom: clamp(2rem,5vw,5rem);
-      padding-inline: clamp(1.25rem,5vw,4rem);
+      padding-top: clamp(6rem, 14vw, 13rem);
+      padding-bottom: clamp(2rem, 5vw, 5rem);
+      padding-inline: clamp(1.25rem, 5vw, 4rem);
       position: relative; text-align: center;
     }
     header::after {
@@ -101,36 +95,31 @@
       50%     { opacity:.5; transform:scale(.7); }
     }
     .header-title {
-      font-size: clamp(2.4rem,8vw,5rem); font-weight: 700;
+      font-size: clamp(2rem, 8vw, 5rem); font-weight: 700;
       color: var(--text-dark); letter-spacing: -1px; line-height: 1.08;
       margin-bottom: 1.2rem;
     }
     .header-title em { color: var(--mint-main); font-style: italic; }
-    .header-subtitle { font-size: clamp(.95rem,2vw,1.1rem); color: var(--text-muted); font-weight: 500; opacity: .85; }
+    .header-subtitle { font-size: clamp(.9rem, 2vw, 1.1rem); color: var(--text-muted); font-weight: 500; opacity: .85; }
     .header-hint {
       font-size: .82rem; margin-top: .7rem; opacity: .55; color: var(--mint-dark);
       display: flex; align-items: center; justify-content: center; gap: .4rem;
     }
-    @keyframes fade-up { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    .fade-up         { animation: fade-up .8s ease forwards; }
-    .delay-1         { animation-delay: .15s; opacity: 0; }
-    .delay-2         { animation-delay: .3s;  opacity: 0; }
-    .delay-3         { animation-delay: .45s; opacity: 0; }
 
-    /* ── DESKTOP TIMELINE ── */
+    @keyframes fade-up { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up   { animation: fade-up .8s ease forwards; }
+    .delay-1   { animation-delay: .15s; opacity: 0; }
+    .delay-2   { animation-delay: .3s;  opacity: 0; }
+    .delay-3   { animation-delay: .45s; opacity: 0; }
+
+    /* ─── DESKTOP TIMELINE ─── */
     .timeline-container {
       position: relative; width: 100%;
-      height: 3200px;
-      margin-top: -2rem;
-      overflow: visible;
+      height: var(--tl-height);
+      margin-top: -2rem; overflow: visible;
     }
-    .svg-wrap {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    #timeline-svg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      overflow: visible;
-    }
+    .svg-wrap { position: absolute; inset: 0; pointer-events: none; }
+    #timeline-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     #path-main {
       fill: none; stroke: var(--mint-light); stroke-width: 3;
       stroke-dasharray: 12 12; stroke-linecap: round;
@@ -141,6 +130,7 @@
       filter: drop-shadow(0 0 9px rgba(16,185,129,.55));
     }
 
+    /* EV pod (the moving car) */
     .ev-pod {
       position: absolute; width: 34px; height: 66px;
       background: linear-gradient(145deg,#fff,#e8f5e9);
@@ -170,71 +160,134 @@
     .car-rear { position: absolute; bottom:0; left:10%; right:10%; height:4px; background:#ef4444; border-radius:2px; box-shadow:0 4px 12px rgba(239,68,68,.6); }
     .car-stripe { position: absolute; top:65%; left:15%; right:15%; height:2px; background:linear-gradient(to right,transparent,rgba(16,185,129,.4),transparent); }
 
+    /* Timeline milestone cards */
     .timeline-item {
-      position: absolute; width: clamp(230px,26vw,340px);
+      position: absolute;
+      width: clamp(220px, 22vw, 320px);
       perspective: 1500px; z-index: 40;
       transform: translateY(-50%);
       opacity: .55; filter: blur(.8px);
       transition: opacity .5s ease, filter .5s ease;
     }
     .timeline-item.is-reached { opacity: 1; filter: blur(0); z-index: 45; }
+
+    /*
+      Ghost-sizer technique:
+      .card-inner is a 3-D flip wrapper — height comes from .card-sizer
+      (a hidden in-flow element mirroring the back content). Both faces
+      sit position:absolute and fill that measured height exactly.
+    */
     .card-inner {
-      position: relative; width: 100%; height: 230px;
-      transform-style: preserve-3d; border-radius: 20px; cursor: pointer;
-      background: #fff; box-shadow: 0 8px 24px rgba(16,185,129,.07);
-      border: 1px solid rgba(16,185,129,.12);
-      transition: transform .85s cubic-bezier(.4,0,.2,1), box-shadow .4s;
-    }
+  position: relative;
+  width: 100%;
+  height: max-content;      /* important */
+  transform-style: preserve-3d;
+  border-radius: 20px;
+  cursor: pointer;
+
+  box-shadow: 0 8px 24px rgba(16,185,129,.07);
+  border: 1px solid rgba(16,185,129,.12);
+
+  transition: transform .85s cubic-bezier(.4,0,.2,1),
+              box-shadow .4s;
+}
     .timeline-item.is-reached .card-inner {
       transform: rotateY(180deg); box-shadow: 0 18px 42px rgba(16,185,129,.2);
     }
+
+    /* Hidden sizer — mirrors back-face structure to drive height */
+    .card-sizer {
+      overflow: hidden;
+      height: max-content;
+      visibility: hidden; pointer-events: none; user-select: none;
+      /* image area: 16:10 aspect ratio */
+    }
+    .card-sizer-img {
+      width: 100%; height: auto;
+      display: block; border-radius: 20px 20px 0 0;
+    }
+    .card-sizer-body {
+      height: fit-content;
+      display: flex; flex-direction: column; gap: .45rem;
+    }
+    .card-sizer-icon  { width: 28px; height: 28px; }
+    .card-sizer-tag   { height: .5rem; }
+    .card-sizer-title { font-size: clamp(.9rem, 1.25vw, 1.15rem); font-weight: 700; line-height: 1.25; font-family: var(--font-playfair); }
+    .card-sizer-desc  { font-size: clamp(.72rem, .88vw, .82rem); line-height: 1.6; }
+
+    /* Both faces fill the container */
     .card-front, .card-back {
       position: absolute; inset: 0;
+       height: fit-content; /* key */
       backface-visibility: hidden; border-radius: 20px; overflow: hidden;
     }
-    .card-front { background: #fff; }
-    .card-front img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .card-front { background: #fff;
+     padding: clamp(.85rem, 1.4vw, 1.25rem); }
+    .card-front img{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/10;   /* keeps consistent card shape */
+  object-fit:cover;
+  display:block;
+  border-radius:20px 20px 0 0;
+}
     .timeline-item.is-reached .card-front img { transform: scale(1.04); }
     .front-title {
-      position: absolute; bottom: 12px; left: 12px;
+      position: absolute; bottom: 10px; left: 10px;
       background: rgba(255,255,255,.96); backdrop-filter: blur(6px);
-      padding: 6px 13px; border-radius: 10px;
-      font-size: 1rem; font-family: var(--font-playfair); font-weight: 700;
+      padding: 5px 11px; border-radius: 10px;
+      font-size: clamp(.78rem, 1.05vw, .93rem); font-family: var(--font-playfair); font-weight: 700;
       color: var(--text-dark); box-shadow: 0 4px 14px rgba(0,0,0,.1);
       border: 1px solid rgba(16,185,129,.15); z-index: 2;
     }
     .card-back {
-      transform: rotateY(180deg); padding: 1.6rem;
-      display: flex; flex-direction: column; justify-content: center;
-      text-align: left; border-top: 3px solid var(--mint-main);
-      background: linear-gradient(145deg,#fff,#f9fefb);
-    }
+  transform: rotateY(180deg);
+  padding: clamp(.85rem, 1.4vw, 1.25rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+
+  background: linear-gradient(145deg,#fff,#f9fefb);
+  border-top: 3px solid var(--mint-main);
+
+  height: fit-content; /* key */
+}
     .date-tag {
-      font-size: .7rem; font-weight: 700; color: var(--mint-main);
-      letter-spacing: 2.5px; margin-bottom: .45rem;
+      font-size: .68rem; font-weight: 700; color: var(--mint-main);
+      letter-spacing: 2.5px;
       display: flex; align-items: center; gap: .4rem;
     }
-    .date-tag::before { content:''; display:inline-block; width:14px; height:2px; background:var(--mint-main); border-radius:2px; }
-    .card-title { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: .6rem; line-height: 1.2; }
-    .card-desc  { font-size: .855rem; color: var(--text-muted); line-height: 1.65; }
-    .card-icon  { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:9px; background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2); margin-bottom:.7rem; flex-shrink:0; }
-    .card-icon i { width:16px; height:16px; color:var(--mint-main); }
+    .date-tag::before { content:''; display:inline-block; width:14px; height:2px; background:var(--mint-main); border-radius:2px; flex-shrink:0; }
+    .card-title { font-size: clamp(.9rem, 1.25vw, 1.15rem); font-weight: 700; color: var(--text-dark); line-height: 1.25; }
+    .card-desc  { font-size: clamp(.72rem, .88vw, .82rem); color: var(--text-muted); line-height: 1.6; }
+    .card-icon  { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2); flex-shrink:0; }
+    .card-icon i { width:13px; height:13px; color:var(--mint-main); }
 
     .cp-dot  { position:absolute; width:22px; height:22px; background:white; border:3px solid var(--mint-light); border-radius:50%; z-index:45; transition:all .5s cubic-bezier(.4,0,.2,1); }
     .cp-line { position:absolute; height:2px; background:var(--mint-light); top:50%; z-index:39; transition:background .5s; }
     .timeline-item.is-reached .cp-dot  { border-color:var(--mint-main); background:var(--mint-lightest); box-shadow:0 0 0 4px rgba(16,185,129,.15),0 0 18px rgba(16,185,129,.4); transform:scale(1.2); }
     .timeline-item.is-reached .cp-line { background: var(--mint-main); }
 
-    .pos-right             { padding-left:  52px; }
-    .pos-right .cp-dot     { left:-64px; top:50%; transform:translateY(-50%); }
-    .pos-right .cp-line    { left:-52px; width:52px; }
-    .pos-left              { padding-right: 52px; }
-    .pos-left  .cp-dot     { right:-64px; top:50%; transform:translateY(-50%); }
-    .pos-left  .cp-line    { right:-52px; width:52px; }
+    .pos-right          { padding-left: 52px; }
+    .pos-right .cp-dot  { left:-64px; top:50%; transform:translateY(-50%); }
+    .pos-right .cp-line { left:-52px; width:52px; }
+    .pos-left           { padding-right: 52px; }
+    .pos-left  .cp-dot  { right:-64px; top:50%; transform:translateY(-50%); }
+    .pos-left  .cp-line { right:-52px; width:52px; }
 
-    @media (max-width:768px) { .timeline-container { display: none !important; } }
+    /* Hide desktop TL on very small screens */
+    @media (max-width: 600px) { .timeline-container { display: none !important; } }
 
-    /* ── MOBILE TIMELINE ── */
+    /* Tablet: compress timeline height so it's not absurdly long */
+    @media (min-width: 601px) and (max-width: 900px) {
+      :root { --tl-height: 2200px; }
+    }
+    @media (min-width: 901px) and (max-width: 1200px) {
+      :root { --tl-height: 2700px; }
+    }
+
+    /* ─── MOBILE TIMELINE ─── */
     .mobile-tl {
       display: none; padding: 0 1rem 4rem; position: relative;
     }
@@ -243,7 +296,7 @@
       left: 2.1rem; top: 0; bottom: 0; width: 2px;
       background: linear-gradient(to bottom,var(--mint-main),var(--mint-light),transparent);
     }
-    @media (max-width:768px) { .mobile-tl { display: block; } }
+    @media (max-width: 600px) { .mobile-tl { display: block; } }
 
     .m-item {
       display: flex; gap: 1rem; align-items: flex-start;
@@ -270,7 +323,7 @@
     .m-icon { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px; background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.18); margin-bottom:.5rem; }
     .m-icon i { width:14px; height:14px; color:var(--mint-main); }
 
-    /* ── MODAL ── */
+    /* ─── MODAL ─── */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(2,44,34,.78);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -288,7 +341,8 @@
     }
     .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
     .modal-img  { width:100%; height:100%; object-fit:cover; min-height:280px; }
-    .modal-body { padding:2.5rem; display:flex; flex-direction:column; justify-content:center; overflow-y:auto; }
+    .modal-body { padding:2.5rem;
+      min-height: max-content; display:flex; flex-direction:column; justify-content:center; overflow-y:auto; }
     .modal-close {
       position: absolute; top: 1.2rem; right: 1.2rem;
       background: rgba(255,255,255,.92); backdrop-filter: blur(4px);
@@ -298,18 +352,18 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.1); transition: background .2s, transform .2s;
     }
     .modal-close:hover { background: white; transform: scale(1.1) rotate(90deg); }
-    @media (max-width:768px) {
+    @media (max-width: 600px) {
       .modal-box  { grid-template-columns:1fr; max-height:88vh; border-radius:18px; }
       .modal-img  { height:195px; min-height:unset; }
       .modal-body { padding:1.4rem; }
     }
 
-    /* ── ARRIVAL ── */
+    /* ─── ARRIVAL SECTION ─── */
     #arrival {
       opacity: 0; transform: translateY(56px);
       pointer-events: none;
       transition: opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
-      padding: clamp(4rem,10vw,8rem) clamp(1.5rem,6vw,6rem);
+      padding: clamp(3rem, 8vw, 8rem) clamp(1.5rem, 6vw, 6rem);
       text-align: center; position: relative; overflow: visible;
       background: linear-gradient(180deg,var(--mint-lightest) 0%,#dcfce7 60%,#bbf7d0 100%);
     }
@@ -320,16 +374,17 @@
       background:radial-gradient(circle,rgba(16,185,129,.18) 0%,transparent 70%);
       pointer-events:none;
     }
+
+    /* Parked pod (stationary version in arrival section) */
     #parked-pod {
-      width:50px; height:96px;
-      background:linear-gradient(145deg,#fff,#e8f5e9);
-      border-radius:25px 25px 17px 17px;
-      box-shadow:0 18px 38px rgba(0,0,0,.12),0 0 0 1px rgba(16,185,129,.2),inset 0 1px 3px rgba(255,255,255,.9);
-      position:absolute; top:50%; left:50%;
-      transform:translate(-50%,-50%) rotate(0deg);
-      opacity: 0;                          /* hidden — JS adds .show after ev-pod parks */
-      transition: opacity 0.45s ease;
-      z-index: 15;                         /* above ev-pod which lands at z-index 12 */
+      width: 50px; height: 96px;
+      background: linear-gradient(145deg,#fff,#e8f5e9);
+      border-radius: 25px 25px 17px 17px;
+      box-shadow: 0 18px 38px rgba(0,0,0,.12),0 0 0 1px rgba(16,185,129,.2),inset 0 1px 3px rgba(255,255,255,.9);
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      opacity: 0; transition: opacity 0.45s ease;
+      z-index: 15;
     }
     #parked-pod.show { opacity: 1; }
     #parked-pod .pg  { position:absolute; top:24%; left:10%; right:10%; height:36%; background:linear-gradient(to bottom,#0f172a,#1e293b); border-radius:9px 9px 5px 5px; border:1px solid rgba(255,255,255,.15); }
@@ -341,11 +396,14 @@
     #parked-pod .ps   { position:absolute; top:63%; left:15%; right:15%; height:2px; background:linear-gradient(to right,transparent,rgba(16,185,129,.5),transparent); }
     #parked-pod::after { content:''; position:absolute; bottom:-13px; left:50%; transform:translateX(-50%); width:58px; height:10px; border-radius:50%; background:radial-gradient(ellipse,rgba(4,120,87,.18) 0%,transparent 70%); }
 
+    /* Burst rings */
     .burst-ring { position:absolute; top:50%; left:50%; width:60px; height:60px; border-radius:50%; border:2px solid var(--mint-main); transform:translate(-50%,-50%) scale(0); opacity:0; pointer-events:none; z-index:5; }
     #arrival.arrived .burst-ring:nth-child(1) { animation:burst 1.4s .3s cubic-bezier(.4,0,.2,1) forwards; }
     #arrival.arrived .burst-ring:nth-child(2) { animation:burst 1.4s .5s cubic-bezier(.4,0,.2,1) forwards; border-color:var(--mint-dark); }
     #arrival.arrived .burst-ring:nth-child(3) { animation:burst 1.4s .7s cubic-bezier(.4,0,.2,1) forwards; border-color:rgba(16,185,129,.4); }
     @keyframes burst { 0%{transform:translate(-50%,-50%) scale(.15);opacity:1} 50%{opacity:.8} 100%{transform:translate(-50%,-50%) scale(7);opacity:0} }
+
+    /* Sparkles */
     .sparkle { position:absolute; width:6px; height:6px; border-radius:50%; background:var(--mint-main); opacity:0; pointer-events:none; z-index:8; }
     #arrival.arrived .sparkle { animation:sfx 1.2s ease-out forwards; }
     #arrival.arrived .sparkle:nth-child(4)  { left:50%;top:50%;animation-delay:.15s;--dx:-90px;--dy:-110px; }
@@ -358,6 +416,7 @@
     #arrival.arrived .sparkle:nth-child(11) { left:50%;top:50%;animation-delay:.18s;--dx:-140px;--dy:-60px;width:5px;height:5px; }
     @keyframes sfx { 0%{transform:translate(-50%,-50%) translate(0,0) scale(1);opacity:1} 80%{opacity:1} 100%{transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(0);opacity:0} }
 
+    /* Destination pin */
     .dest-pin {
       display:inline-flex; align-items:center; justify-content:center;
       width:50px; height:50px; background:var(--mint-main);
@@ -368,43 +427,55 @@
     .dest-pin:hover { transform:rotate(-45deg) scale(1.12); }
     .dest-pin i { transform:rotate(45deg); color:white; width:22px; height:22px; }
 
+    /* Arrival text animations */
     .a-eyebrow  { font-size:.74rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--mint-main); margin-bottom:1rem; opacity:0; transform:translateY(14px); transition:opacity .4s ease,transform .4s ease; }
     #arrival.arrived .a-eyebrow { opacity:1; transform:translateY(0); }
-    .a-headline { font-size:clamp(2rem,6vw,4rem); font-weight:700; color:var(--text-dark); line-height:1.1; letter-spacing:-1px; margin-bottom:1.2rem; opacity:0; transform:translateY(18px); transition:opacity .4s ease,transform .4s ease; }
+    .a-headline { font-size:clamp(1.8rem, 6vw, 4rem); font-weight:700; color:var(--text-dark); line-height:1.1; letter-spacing:-1px; margin-bottom:1.2rem; opacity:0; transform:translateY(18px); transition:opacity .4s ease,transform .4s ease; }
     #arrival.arrived .a-headline { opacity:1; transform:translateY(0); }
     .a-headline em { color:var(--mint-main); font-style:italic; }
-    .a-body { font-size:clamp(.95rem,2vw,1.1rem); color:var(--text-muted); max-width:540px; margin:0 auto 2.5rem; line-height:1.75; opacity:0; transform:translateY(14px); transition:opacity .4s ease,transform .4s ease; }
+    .a-body { font-size:clamp(.9rem, 2vw, 1.1rem); color:var(--text-muted); max-width:540px; margin:0 auto 2.5rem; line-height:1.75; opacity:0; transform:translateY(14px); transition:opacity .4s ease,transform .4s ease; }
     #arrival.arrived .a-body { opacity:1; transform:translateY(0); }
     .a-ctas { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
     #arrival.arrived .a-ctas { opacity:1; transform:translateY(0); }
 
+    /* Buttons */
     .btn-primary   { background:var(--mint-dark); color:white; padding:.85rem 2.2rem; border-radius:50px; font-size:.9rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; box-shadow:0 6px 20px rgba(4,120,87,.25); transition:all .3s ease; }
     .btn-primary:hover { background:var(--mint-main); transform:translateY(-3px); box-shadow:0 12px 28px rgba(16,185,129,.35); }
     .btn-secondary { background:transparent; color:var(--mint-dark); padding:.85rem 2.2rem; border-radius:50px; font-size:.9rem; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; border:2px solid var(--mint-light); transition:all .3s ease; }
     .btn-secondary:hover { border-color:var(--mint-main); background:rgba(16,185,129,.06); transform:translateY(-3px); }
 
-    .a-stats { display:flex; justify-content:center; gap:clamp(1.5rem,5vw,4rem); flex-wrap:wrap; margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid rgba(16,185,129,.15); opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
+    /* Stats */
+    .a-stats { display:flex; justify-content:center; gap:clamp(1rem, 5vw, 4rem); flex-wrap:wrap; margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid rgba(16,185,129,.15); opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
     #arrival.arrived .a-stats { opacity:1; transform:translateY(0); }
     .stat-item { text-align:center; }
-    .stat-num  { font-size:clamp(2rem,5vw,3rem); font-weight:700; color:var(--mint-dark); line-height:1; display:block; }
+    .stat-num  { font-size:clamp(1.8rem, 5vw, 3rem); font-weight:700; color:var(--mint-dark); line-height:1; display:block; }
     .stat-lbl  { font-size:.78rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); opacity:.7; margin-top:.4rem; display:block; }
     .stat-icon { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:rgba(16,185,129,.12); margin:0 auto .5rem; }
     .stat-icon i { width:16px; height:16px; color:var(--mint-dark); }
 
-    @media (max-width:768px) { #arrival { padding:3.5rem 1.25rem 4.5rem; } .a-stats { gap:1.75rem; } }
     a:focus-visible, button:focus-visible { outline:2px solid var(--mint-main); outline-offset:3px; }
+
+    /* Tablet adjustments */
+    @media (max-width: 900px) {
+      .pos-right { padding-left: 36px; }
+      .pos-right .cp-dot  { left:-48px; }
+      .pos-right .cp-line { left:-36px; width:36px; }
+      .pos-left  { padding-right: 36px; }
+      .pos-left  .cp-dot  { right:-48px; }
+      .pos-left  .cp-line { right:-36px; width:36px; }
+    }
   </style>
 </head>
 <body>
 
   <div id="scroll-progress-bar"></div>
-  <div id="nav-container"></div>
 
   <div class="social-sidebar" aria-label="Social links">
     <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
     <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-    </div>
+  </div>
 
+  <!-- HEADER -->
   <header>
     <div class="header-badge fade-up"><span class="badge-dot"></span>EV Innovation Timeline</div>
     <h1 class="header-title serif fade-up delay-1">The Mint <em>Evolution</em></h1>
@@ -415,6 +486,7 @@
     </p>
   </header>
 
+  <!-- DESKTOP / TABLET TIMELINE -->
   <div class="timeline-container" id="tc">
     <div class="svg-wrap">
       <svg id="timeline-svg" viewBox="0 0 1000 3200" preserveAspectRatio="none">
@@ -433,7 +505,17 @@
 
     <div class="timeline-item" data-pos="0.12">
       <div class="cp-line"></div><div class="cp-dot"></div>
-      <div class="card-inner">
+      <div class="card-inner" style="height: max-content;">
+        <!-- Ghost sizer: invisible twin of the back content, drives card height -->
+        <div class="card-sizer" aria-hidden="true">
+          <div class="card-sizer-img"></div>
+          <div class="card-sizer-body">
+            <div class="card-sizer-icon"></div>
+            <div class="card-sizer-tag"></div>
+            <div class="card-sizer-title">Blueprint Phase</div>
+            <div class="card-sizer-desc">Our journey began with a single vision: redefining aerodynamic efficiency through computational fluid dynamics and elegant design.</div>
+          </div>
+        </div>
         <div class="card-front">
           <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=600" alt="Design">
           <div class="front-title">Blueprint Phase</div>
@@ -450,6 +532,15 @@
     <div class="timeline-item" data-pos="0.32">
       <div class="cp-line"></div><div class="cp-dot"></div>
       <div class="card-inner">
+        <div class="card-sizer" aria-hidden="true">
+          <div class="card-sizer-img"></div>
+          <div class="card-sizer-body">
+            <div class="card-sizer-icon"></div>
+            <div class="card-sizer-tag"></div>
+            <div class="card-sizer-title">Next-Gen Core</div>
+            <div class="card-sizer-desc">Engineers developed the dual-motor high-torque powertrain, setting a new standard for silent, potent acceleration.</div>
+          </div>
+        </div>
         <div class="card-front">
           <img src="https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&fit=crop&q=80&w=600" alt="Engine">
           <div class="front-title">Next-Gen Core</div>
@@ -466,6 +557,15 @@
     <div class="timeline-item" data-pos="0.52">
       <div class="cp-line"></div><div class="cp-dot"></div>
       <div class="card-inner">
+        <div class="card-sizer" aria-hidden="true">
+          <div class="card-sizer-img"></div>
+          <div class="card-sizer-body">
+            <div class="card-sizer-icon"></div>
+            <div class="card-sizer-tag"></div>
+            <div class="card-sizer-title">Sustainable Factory</div>
+            <div class="card-sizer-desc">Opened our first 100% solar-powered assembly line. Mint-green architecture reduced our carbon footprint by 90%.</div>
+          </div>
+        </div>
         <div class="card-front">
           <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600" alt="Factory">
           <div class="front-title">Sustainable Factory</div>
@@ -482,6 +582,15 @@
     <div class="timeline-item" data-pos="0.72">
       <div class="cp-line"></div><div class="cp-dot"></div>
       <div class="card-inner">
+        <div class="card-sizer" aria-hidden="true">
+          <div class="card-sizer-img"></div>
+          <div class="card-sizer-body">
+            <div class="card-sizer-icon"></div>
+            <div class="card-sizer-tag"></div>
+            <div class="card-sizer-title">Neural Pilot</div>
+            <div class="card-sizer-desc">Integrated neural networks for Level 4 autonomy. The car learns from your driving habits for a safer, smoother journey.</div>
+          </div>
+        </div>
         <div class="card-front">
           <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600" alt="AI">
           <div class="front-title">Neural Pilot</div>
@@ -498,6 +607,15 @@
     <div class="timeline-item" data-pos="0.92">
       <div class="cp-line"></div><div class="cp-dot"></div>
       <div class="card-inner">
+        <div class="card-sizer" aria-hidden="true">
+          <div class="card-sizer-img"></div>
+          <div class="card-sizer-body">
+            <div class="card-sizer-icon"></div>
+            <div class="card-sizer-tag"></div>
+            <div class="card-sizer-title">Global Network</div>
+            <div class="card-sizer-desc">Deployed 10,000 hyper-fast charging stations globally. Designed to blend into every urban and natural landscape.</div>
+          </div>
+        </div>
         <div class="card-front">
           <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600" alt="Charging">
           <div class="front-title">Global Network</div>
@@ -512,7 +630,7 @@
     </div>
   </div>
 
-  <!-- MOBILE TIMELINE -->
+  <!-- MOBILE TIMELINE (< 600px only) -->
   <div class="mobile-tl" id="mobile-tl">
     <div class="m-item">
       <div class="m-dot-col"><div class="m-dot"></div></div>
@@ -574,11 +692,31 @@
         </div>
       </div>
     </div>
+    <!-- Mobile arrival (shown inline after cards) -->
+    <div id="mobile-arrival" style="margin-top:2rem;opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;">
+      <div style="text-align:center;padding:2rem 1rem 3rem;background:linear-gradient(180deg,var(--mint-lightest),#dcfce7);border-radius:24px;border:1px solid rgba(16,185,129,.15);">
+        <div style="display:flex;justify-content:center;margin-bottom:1rem;">
+          <div class="dest-pin"><i data-lucide="map-pin"></i></div>
+        </div>
+        <p class="a-eyebrow" style="opacity:1;transform:none;">Destination Reached</p>
+        <h2 class="a-headline serif" style="font-size:1.9rem;opacity:1;transform:none;">The Future Is<br><em>Already Here.</em></h2>
+        <p class="a-body" style="font-size:.9rem;opacity:1;transform:none;margin-bottom:1.5rem;">From a blueprint sketched in 2021 to 10,000 charging stations powering a cleaner world.</p>
+        <div style="display:flex;flex-direction:column;gap:.75rem;align-items:center;">
+          <a href="#" class="btn-primary" style="font-size:.85rem;"><i data-lucide="zap" style="width:15px;height:15px;"></i>Reserve Your MintEV</a>
+          <a href="#" class="btn-secondary" style="font-size:.85rem;"><i data-lucide="play-circle" style="width:15px;height:15px;"></i>Watch the Story</a>
+        </div>
+        <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(16,185,129,.15);">
+          <div class="stat-item"><span class="stat-num">10K</span><span class="stat-lbl">Stations</span></div>
+          <div class="stat-item"><span class="stat-num">90%</span><span class="stat-lbl">Carbon↓</span></div>
+          <div class="stat-item"><span class="stat-num">4</span><span class="stat-lbl">Years</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ARRIVAL -->
+  <!-- DESKTOP ARRIVAL SECTION -->
   <section id="arrival">
-    <div id="burst-origin" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;">
+    <div id="burst-origin" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;height:clamp(200px,30vw,300px);">
       <div class="burst-ring"></div><div class="burst-ring"></div><div class="burst-ring"></div>
       <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
       <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
@@ -625,27 +763,20 @@
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
+    /* ── Scroll progress bar ── */
     var bar = document.getElementById('scroll-progress-bar');
     window.addEventListener('scroll', function () {
       var h = document.documentElement.scrollHeight - window.innerHeight;
       if (bar) bar.style.width = (h > 0 ? window.scrollY / h * 100 : 0) + '%';
     }, { passive: true });
 
-    var nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', function () {
-      if (nav) nav.style.boxShadow = window.scrollY > 20
-        ? '0 4px 30px rgba(4,120,87,.15)'
-        : '';
-    }, { passive: true });
-
-    
-
-    var modal   = document.getElementById('modal');
-    var mClose  = document.getElementById('modal-close');
-    var mImg    = document.getElementById('modal-img');
-    var mDate   = document.getElementById('modal-date');
-    var mTitle  = document.getElementById('modal-title');
-    var mDesc   = document.getElementById('modal-desc');
+    /* ── Modal ── */
+    var modal  = document.getElementById('modal');
+    var mClose = document.getElementById('modal-close');
+    var mImg   = document.getElementById('modal-img');
+    var mDate  = document.getElementById('modal-date');
+    var mTitle = document.getElementById('modal-title');
+    var mDesc  = document.getElementById('modal-desc');
 
     function openModal(img, date, title, desc) {
       if (!modal) return;
@@ -664,24 +795,16 @@
     if (modal)  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
-    var BP = 769;
+    var BP = 601; // breakpoint between mobile layout and scroll-animated layout
     function isMobile() { return window.innerWidth < BP; }
 
     /* ════════════════════════════════════════════════════
-       DESKTOP TIMELINE  — fully bidirectional scroll
-       ─────────────────────────────────────────────────
-       The ev-pod is ALWAYS scroll-driven — forward AND backward.
-       No one-shot "fire and forget" locking ever occurs.
-
-       Phases (all reversible):
-         0 → 0.90  normal driving: car follows path tangent
-         0.90→1.00 parking approach: car rotates to 180° (nose-down /
-                   reversing) and path point morphs to the centre of
-                   #burst-origin so it glides in smoothly
-         ≥ 0.97    arrival section shown; parked-pod visible
-         < 0.97    arrival section hidden; parked-pod hidden again
+       SCROLL-DRIVEN TIMELINE (all non-mobile screens)
+       Identical animation to original desktop — now works
+       on tablets and large phones in landscape too.
+       Fully bidirectional (scroll back = reverse).
     ════════════════════════════════════════════════════ */
-    function initDesktop() {
+    function initScrollTimeline() {
       var path      = document.getElementById('path-main');
       var pathProg  = document.getElementById('path-progress');
       var pod       = document.getElementById('ev-pod');
@@ -696,11 +819,9 @@
       pathProg.style.strokeDasharray  = TL;
       pathProg.style.strokeDashoffset = TL;
 
-      /* Arrival state — toggled reactively every frame */
       var arrivalActive    = false;
       var statsCountedOnce = false;
 
-      /* Keep the pod inside tc always (never re-parent) */
       pod.style.position = 'absolute';
 
       function update() {
@@ -710,47 +831,36 @@
         var sY   = ch / 3200;
         var rect = tc.getBoundingClientRect();
 
+        /* Trigger point: 55% down the viewport */
         var progress = (window.innerHeight * 0.55 - rect.top) / ch;
         progress = Math.max(0, Math.min(1, progress));
 
-        /* ── Path position ── */
-        var len  = progress * TL;
-        var pt   = path.getPointAtLength(len);
-        var px   = pt.x * sX;
-        var py   = pt.y * sY;
+        var len = progress * TL;
+        var pt  = path.getPointAtLength(len);
+        var px  = pt.x * sX;
+        var py  = pt.y * sY;
 
-        /* ── Travel angle (tangent) ── */
-        var pt2  = path.getPointAtLength(Math.min(len + 4, TL));
+        /* Tangent angle */
+        var pt2 = path.getPointAtLength(Math.min(len + 4, TL));
         var travelAngle = Math.atan2(
           pt2.y * sY - py,
           pt2.x * sX - px
         ) * 180 / Math.PI + 90;
 
-        /* ── Parking phase: progress 0.90 → 1.00 ──────────
-           blend  = 0 at 0.90,  1 at 1.00  (smooth step)
-           - angle morphs from travelAngle → 180° (reversing)
-           - position morphs from path point → burst-origin centre
-        ─────────────────────────────────────────────── */
+        /* Parking phase: progress 0.90 → 1.00 */
         var PARK_START = 0.90;
         var finalAngle, finalX, finalY;
 
         if (progress >= PARK_START) {
           var rawT = (progress - PARK_START) / (1 - PARK_START);
-          /* smooth-step ease */
-          var t = rawT * rawT * (3 - 2 * rawT);
+          var t = rawT * rawT * (3 - 2 * rawT); // smooth-step
 
-          /* normalise travel angle for shortest-path lerp */
           while (travelAngle >  180) travelAngle -= 360;
           while (travelAngle < -180) travelAngle += 360;
           finalAngle = travelAngle + t * (180 - travelAngle);
 
-          /* burst-origin centre in tc-local coordinates */
+          /* burst-origin centre relative to tc (accounts for scroll) */
           var burstRect = burstEl.getBoundingClientRect();
-          var tcRect    = tc.getBoundingClientRect();
-          var bx = burstRect.left + burstRect.width  / 2 - tcRect.left;
-          var by = burstRect.top  + burstRect.height / 2 - tcRect.top  + window.scrollY - (tc.getBoundingClientRect().top + window.scrollY - tc.offsetTop);
-
-          /* Recompute burst in page coords relative to tc */
           var tcTop  = tc.offsetTop;
           var tcLeft = tc.offsetLeft;
           var bPageX = burstRect.left + burstRect.width  / 2 + window.scrollX - tcLeft;
@@ -764,16 +874,15 @@
           finalY     = py;
         }
 
-        /* ── Position pod ── */
+        /* Position pod */
         pod.style.left      = finalX + 'px';
         pod.style.top       = finalY + 'px';
         pod.style.transform = 'translate(-50%,-50%) rotate(' + finalAngle + 'deg)';
-        /* opacity is managed by the arrival show/hide block below — don't override here */
 
-        /* ── Progress stroke ── */
+        /* Progress stroke */
         pathProg.style.strokeDashoffset = Math.max(0, TL - len);
 
-        /* ── Milestone cards ── */
+        /* Milestone cards */
         items.forEach(function (item) {
           var pos   = parseFloat(item.getAttribute('data-pos'));
           var ipt   = path.getPointAtLength(pos * TL);
@@ -792,7 +901,7 @@
           }
         });
 
-        /* ── Arrival section — reactive show/hide ── */
+        /* Arrival — reactive show / hide */
         var shouldArrive = progress >= 0.97;
         if (shouldArrive && !arrivalActive) {
           arrivalActive = true;
@@ -800,15 +909,12 @@
             arrivalEl.classList.add('arrived');
             if (typeof lucide !== 'undefined') lucide.createIcons();
           }
-          /* 1. ev-pod fades out (it's "becoming" the parked car) */
           pod.style.transition = 'opacity 0.35s ease';
           pod.style.opacity    = '0';
           pod.style.zIndex     = '12';
-          /* 2. parked-pod fades IN after ev-pod is gone */
           setTimeout(function () {
             if (parkedPod) parkedPod.classList.add('show');
           }, 380);
-          /* stat counters — run only once ever */
           if (!statsCountedOnce) {
             statsCountedOnce = true;
             runStatCounters();
@@ -816,7 +922,6 @@
         } else if (!shouldArrive && arrivalActive) {
           arrivalActive = false;
           if (arrivalEl) arrivalEl.classList.remove('arrived');
-          /* reverse: hide parked-pod, show ev-pod again */
           if (parkedPod) parkedPod.classList.remove('show');
           pod.style.transition = 'opacity 0.2s ease';
           pod.style.opacity    = '1';
@@ -846,6 +951,7 @@
       requestAnimationFrame(update);
       setTimeout(update, 250);
 
+      /* Click-to-modal on desktop cards */
       items.forEach(function (item) {
         var inner = item.querySelector('.card-inner');
         if (!inner) return;
@@ -861,14 +967,35 @@
       });
     }
 
-    /* MOBILE */
+    /* ── MOBILE (< 600px): intersection-observer cards + inline arrival ── */
     function initMobile() {
       var items = document.querySelectorAll('.m-item');
       if (!items.length) return;
+
+      var mobileArrival = document.getElementById('mobile-arrival');
+      var arrivalShown  = false;
+
       var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            /* show arrival after last card is visible */
+            if (e.target === items[items.length - 1] && !arrivalShown) {
+              arrivalShown = true;
+              setTimeout(function () {
+                if (mobileArrival) {
+                  mobileArrival.style.opacity   = '1';
+                  mobileArrival.style.transform = 'translateY(0)';
+                  if (typeof lucide !== 'undefined') lucide.createIcons();
+                }
+              }, 400);
+            }
+          }
+        });
       }, { threshold: 0.18, rootMargin: '0px 0px -30px 0px' });
+
       items.forEach(function (item) { obs.observe(item); });
+
       document.querySelectorAll('.m-card').forEach(function (card) {
         card.addEventListener('click', function () {
           openModal(
@@ -879,10 +1006,20 @@
           );
         });
       });
+
+      /* Hide the desktop arrival section on mobile */
+      var arrivalEl = document.getElementById('arrival');
+      if (arrivalEl) { arrivalEl.style.display = 'none'; }
     }
 
-    if (isMobile()) initMobile(); else initDesktop();
+    /* Boot the correct experience */
+    if (isMobile()) {
+      initMobile();
+    } else {
+      initScrollTimeline();
+    }
 
+    /* Reload if the user crosses the breakpoint (e.g., landscape rotation) */
     var wasMobile = isMobile();
     window.addEventListener('resize', function () {
       var nm = isMobile();
@@ -891,10 +1028,5 @@
 
   }());
   </script>
-
-  <script src="../js/footer.js" data-next="tutorial.html"></script>
-  <script src="../js/forms.js"></script>
-  <script src="../js/navbar.js"></script>
-  <script src="../js/main.js"></script>
 </body>
 </html>

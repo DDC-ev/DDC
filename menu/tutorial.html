@@ -48,32 +48,6 @@
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        mint: {
-                            DEFAULT: '#98FF98', // Primary Mint
-                            dark: '#2E7D32',    // Dark Mint
-                            light: '#F0FFF0',   // Very light, elegant mint for backgrounds
-                            glass: 'rgba(240, 255, 240, 0.7)' // Glassmorphism mint
-                        },
-                        gray: {
-                            light: '#FAFAFA',
-                            dark: '#222222'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['var(--font-poppins)', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
         body { font-family: var(--font-poppins); }
         .glass-card {
@@ -131,7 +105,7 @@
                         title="DDC EV Pods Overview" 
                         frameborder="0" 
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
+                        allowfullscreen id="tutorial-video">
                     </iframe>
                 </div>
             </div>
@@ -363,26 +337,7 @@
 
     <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
     <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-      <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#d3e4df',
-                        'dark': '#474d4d',
-                        'accent': '#99eff0',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        orbitron: ['Orbitron', 'sans-serif'],
-                        nanum: ['"Nanum Myeongjo"', 'serif'],
-                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+
 
     <!-- Initialize AOS Animation -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

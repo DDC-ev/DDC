@@ -1,322 +1,539 @@
 /**
- * DDC ANIMATED FOOTER — footer.js
+ * DDC ANIMATED FOOTER — footer.js  (enhanced)
  * ─────────────────────────────────────────────────────────────────────────────
- * Injects the full animated footer into every page and runs the GSAP
- * wheel-collision → full-screen expand → page-navigate animation.
+ * Injects the full animated footer and runs the GSAP wheel-collision →
+ * full-screen expand → page-navigate sequence.
  *
  * USAGE (one line per page, before closing </body>):
- * <script src="js/footer.js" data-next="technology.html"></script>
- * (for menu/ subfolder pages, use "../js/footer.js")
+ *   <script src="js/footer.js" data-next="technology.html"></script>
+ *   (menu/ subpages → "../js/footer.js")
  *
- * The data-next attribute on the <script> tag tells the footer which page to
- * navigate to when the wheels collide and fully expand.
+ * data-next  — page to navigate to after the wheel animation completes.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 (function () {
   'use strict';
 
-  /* ── 1. Resolve next-page URL from this <script> tag's data-next attr ── */
-  const scriptTag = document.currentScript ||
+  /* ── 0. Guard: run only once even if script is somehow included twice ── */
+  if (window.__ddcFooterLoaded) return;
+  window.__ddcFooterLoaded = true;
+
+  /* ── 1. Resolve next-page URL ────────────────────────────────────────── */
+  const scriptTag =
+    document.currentScript ||
     document.querySelector('script[src*="footer.js"]');
+
   const nextPage = (scriptTag && scriptTag.getAttribute('data-next')) || '#';
 
-  /* ── 2. Futuristic EV Wheel SVG ──────────────────────────────────────── */
-  function wheelSVG() {
+  /* ── 2. Detect subfolder context ─────────────────────────────────────── */
+  const scriptSrc   = (scriptTag && scriptTag.getAttribute('src')) || '';
+  const isInSubfolder =
+    scriptSrc.startsWith('../') ||
+    window.location.pathname.split('/').filter(Boolean).length > 1;
+
+  /* ── 3. Resolve href relative to the current page depth ─────────────── */
+  function rel(target) {
+    if (!target || target.startsWith('http') || target.startsWith('/') || target.startsWith('#')) {
+      return target;
+    }
+    if (isInSubfolder) {
+      return target.startsWith('menu/') ? target.replace('menu/', '') : '../' + target;
+    }
+    return target;
+  }
+
+  /* ── 4. Futuristic EV Wheel SVG ──────────────────────────────────────── */
+  function wheelSVG(id) {
+    /* id keeps gradient/filter ids unique when both wheels share the DOM */
     return `
-    <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg"
+         aria-hidden="true" focusable="false">
       <defs>
-        <!-- Tyre gradient for depth -->
-        <radialGradient id="tyreGrad" cx="50%" cy="40%" r="55%">
-          <stop offset="0%"   stop-color="#2a2a2a"/>
-          <stop offset="100%" stop-color="#080808"/>
+        <radialGradient id="tyreGrad-${id}" cx="50%" cy="38%" r="58%">
+          <stop offset="0%"   stop-color="#2e2e2e"/>
+          <stop offset="100%" stop-color="#060606"/>
         </radialGradient>
-
-        <!-- Rim face gradient -->
-        <radialGradient id="rimGrad" cx="48%" cy="42%" r="52%">
-          <stop offset="0%"   stop-color="#212629"/>
-          <stop offset="100%" stop-color="#0b0d0e"/>
+        <radialGradient id="rimGrad-${id}" cx="46%" cy="40%" r="54%">
+          <stop offset="0%"   stop-color="#242a2e"/>
+          <stop offset="100%" stop-color="#0b0d0f"/>
         </radialGradient>
-
-        <!-- Spoke glow filter -->
-        <filter id="spokeGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <filter id="spokeGlow-${id}" x="-25%" y="-25%" width="150%" height="150%">
+          <feGaussianBlur stdDeviation="1.2" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-
-        <!-- Center cap glow -->
-        <filter id="capGlow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
+        <filter id="capGlow-${id}" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="3.5" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
 
-      <!-- ── TYRE ── -->
-      <circle cx="100" cy="100" r="98" fill="url(#tyreGrad)"/>
-      <!-- Subtle tread ring -->
-      <circle cx="100" cy="100" r="94" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 3"/>
-      <circle cx="100" cy="100" r="90" fill="none" stroke="#222" stroke-width="0.5"/>
+      <!-- TYRE -->
+      <circle cx="100" cy="100" r="98" fill="url(#tyreGrad-${id})"/>
+      <circle cx="100" cy="100" r="94" fill="none" stroke="#1c1c1c" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <circle cx="100" cy="100" r="90" fill="none" stroke="#222"    stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#1a1a1a" stroke-width="0.5" stroke-dasharray="2 6" opacity="0.6"/>
 
-      <!-- ── RIM OUTER RING (class=wheel-rim — fades on zoom) ── -->
+      <!-- RIM (fades during zoom via .wheel-rim) -->
       <g class="wheel-rim">
         <!-- Rim barrel -->
-        <circle cx="100" cy="100" r="82" fill="url(#rimGrad)"/>
-        
+        <circle cx="100" cy="100" r="82" fill="url(#rimGrad-${id})"/>
+        <!-- Outer rim highlight ring -->
+        <circle cx="100" cy="100" r="83" fill="none" stroke="#3a4248" stroke-width="1"/>
+        <circle cx="100" cy="100" r="81" fill="none" stroke="#0d0f11" stroke-width="0.5"/>
         <!-- Inner rim step -->
         <circle cx="100" cy="100" r="78" fill="none" stroke="#2a3035" stroke-width="2"/>
 
-        <!-- Brake Disc behind spokes -->
-        <circle cx="100" cy="100" r="74" fill="#181a1b" stroke="#282d30" stroke-width="6"/>
-        <circle cx="100" cy="100" r="62" fill="none" stroke="#1f2326" stroke-width="0.5"/>
-        <circle cx="100" cy="100" r="50" fill="none" stroke="#1f2326" stroke-width="0.5"/>
+        <!-- Brake disc -->
+        <circle cx="100" cy="100" r="74" fill="#161819" stroke="#242a2e" stroke-width="6"/>
+        <!-- Disc ventilation rings -->
+        <circle cx="100" cy="100" r="68" fill="none" stroke="#1e2226" stroke-width="0.5" stroke-dasharray="8 4"/>
+        <circle cx="100" cy="100" r="61" fill="none" stroke="#1c2022" stroke-width="0.5"/>
+        <circle cx="100" cy="100" r="54" fill="none" stroke="#1e2226" stroke-width="0.5" stroke-dasharray="6 3"/>
+        <circle cx="100" cy="100" r="48" fill="none" stroke="#1a1d1f" stroke-width="0.5"/>
 
-        <!-- Brake Caliper (Right side) -->
-        <path d="M 162,75 Q 172,100 162,125 L 175,128 Q 185,100 175,72 Z" fill="#121415" stroke="#2a3035" stroke-width="1"/>
+        <!-- Brake caliper (right) -->
+        <path d="M 162,72 Q 175,100 162,128 L 177,131 Q 190,100 177,69 Z"
+              fill="#101214" stroke="#2a3035" stroke-width="1" opacity="0.9"/>
+        <!-- Caliper bolts -->
+        <circle cx="172" cy="82"  r="2.5" fill="#080a0b" stroke="#2a3035" stroke-width="0.8"/>
+        <circle cx="176" cy="100" r="2.5" fill="#080a0b" stroke="#2a3035" stroke-width="0.8"/>
+        <circle cx="172" cy="118" r="2.5" fill="#080a0b" stroke="#2a3035" stroke-width="0.8"/>
 
-        <!-- 5 CYBER-SPOKES (Asymmetrical Y-Split based on reference) -->
+        <!-- 5-SPOKE DESIGN (asymmetric Y-split) -->
         <g>
-          ${[0, 72, 144, 216, 288].map(angle => `
-          <g transform="rotate(${angle} 100 100)">
-            <!-- Left branch (Lighter Metallic) -->
-            <polygon points="100,65 85,25 70,30 85,75" fill="#3a4146"/>
-            <!-- Left branch bevel highlight -->
-            <line x1="85" y1="25" x2="100" y2="65" stroke="#525c63" stroke-width="1"/>
-            
-            <!-- Right branch (Darker Metallic) -->
-            <polygon points="100,65 110,22 125,28 110,75" fill="#202427"/>
-            <!-- Right branch inner shadow -->
-            <line x1="110" y1="22" x2="100" y2="65" stroke="#15181a" stroke-width="1"/>
-            
-            <!-- Center base junction -->
-            <polygon points="85,75 110,75 100,65" fill="#111315"/>
-            
-            <!-- Cyan Accent Hook (On the outer trailing edge) -->
-            <path d="M 70,30 L 80,26 L 82,30 L 74,33 L 87,72 L 83,74 Z" fill="#99eff0" filter="url(#spokeGlow)" opacity="0.95"/>
+          ${[0, 72, 144, 216, 288].map(a => `
+          <g transform="rotate(${a} 100 100)">
+            <!-- Left spoke branch -->
+            <polygon points="100,63 83,22 67,28 84,74"  fill="#3d4449"/>
+            <line x1="83" y1="22" x2="100" y2="63" stroke="#545f66" stroke-width="0.8"/>
+            <!-- Right spoke branch -->
+            <polygon points="100,63 112,20 128,27 113,74" fill="#1e2326"/>
+            <line x1="112" y1="20" x2="100" y2="63" stroke="#131618" stroke-width="0.8"/>
+            <!-- Junction base -->
+            <polygon points="84,74 113,74 100,63" fill="#0f1113"/>
+            <!-- Cyan accent on leading edge -->
+            <path d="M 67,28 L 78,24 L 81,29 L 72,32 L 86,71 L 82,73 Z"
+                  fill="#99eff0" filter="url(#spokeGlow-${id})" opacity="0.9"/>
+            <!-- Subtle inner edge highlight -->
+            <line x1="100" y1="63" x2="128" y2="27" stroke="#2a3035" stroke-width="0.5" opacity="0.7"/>
           </g>
           `).join('')}
         </g>
 
-        <!-- Inner Hub Cover -->
-        <circle cx="100" cy="100" r="32" fill="#16191b" stroke="#2a3035" stroke-width="1.5"/>
+        <!-- Inner hub cover -->
+        <circle cx="100" cy="100" r="33" fill="#14171a" stroke="#2a3035" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="30" fill="#111416" stroke="#1e2224" stroke-width="0.5"/>
 
-        <!-- Lug Nuts -->
-        <g>
-          ${[0, 72, 144, 216, 288].map(angle => `
-          <circle cx="100" cy="80" r="3" fill="#0a0a0a" stroke="#222" stroke-width="1" transform="rotate(${angle} 100 100)"/>
-          `).join('')}
-        </g>
+        <!-- Lug nuts (5× around inner hub) -->
+        ${[0, 72, 144, 216, 288].map(a => `
+          <g transform="rotate(${a} 100 100)">
+            <circle cx="100" cy="79" r="3.2" fill="#080a0b" stroke="#242a2e" stroke-width="1"/>
+            <circle cx="100" cy="79" r="1.5" fill="#0e1012"/>
+          </g>
+        `).join('')}
 
-        <!-- ── CENTER CAP (inside .wheel-rim — hides on zoom) ── -->
-        <circle cx="100" cy="100" r="16" fill="#0d1113" stroke="#99eff0" stroke-width="0.8" opacity="0.9"/>
-        <circle cx="100" cy="100" r="14" fill="#111618"/>
+        <!-- Center cap -->
+        <circle cx="100" cy="100" r="17"  fill="#0c0f11" stroke="#99eff0" stroke-width="0.9" opacity="0.9"/>
+        <circle cx="100" cy="100" r="15"  fill="#101316"/>
+        <circle cx="100" cy="100" r="13"  fill="none" stroke="#99eff0" stroke-width="0.3" opacity="0.4"/>
 
-        <!-- DDC Typographic Interlocking Logo -->
+        <!-- DDC logo on cap -->
         <g text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900">
-          <!-- Main center D -->
-          <text x="100" y="106" font-size="16" fill="#99eff0" opacity="0.95">D</text>
-          
-          <!-- Background strokes for interlocking cutout effect (matches cap background) -->
-          <text x="91" y="100" font-size="9" fill="#111618" stroke="#111618" stroke-width="2" stroke-linejoin="round">D</text>
-          <text x="109" y="100" font-size="9" fill="#111618" stroke="#111618" stroke-width="2" stroke-linejoin="round">C</text>
-          
-          <!-- Smaller interlocking D and C -->
-          <text x="91" y="100" font-size="9" fill="#99eff0" opacity="0.95">D</text>
-          <text x="109" y="100" font-size="9" fill="#99eff0" opacity="0.95">C</text>
+          <!-- Backdrop cutout strokes (match cap fill) -->
+          <text x="91"  y="101" font-size="9" fill="#101316" stroke="#101316" stroke-width="2.5" stroke-linejoin="round">D</text>
+          <text x="109" y="101" font-size="9" fill="#101316" stroke="#101316" stroke-width="2.5" stroke-linejoin="round">C</text>
+          <!-- Main centre D -->
+          <text x="100" y="107" font-size="16" fill="#99eff0" opacity="0.95">D</text>
+          <!-- Flanking D and C -->
+          <text x="91"  y="101" font-size="9"  fill="#99eff0" opacity="0.9">D</text>
+          <text x="109" y="101" font-size="9"  fill="#99eff0" opacity="0.9">C</text>
         </g>
-
-        <!-- Subtle center glow under the text -->
-        <circle cx="100" cy="100" r="3" fill="#99eff0" opacity="0.15" filter="url(#capGlow)"/>
+        <!-- Cap ambient glow -->
+        <circle cx="100" cy="100" r="4" fill="#99eff0" opacity="0.12" filter="url(#capGlow-${id})"/>
       </g>
-      <!-- END .wheel-rim -->
     </svg>`;
   }
 
-  /* ── 3. Build footer HTML ────────────────────────────────────────────── */
+  /* ── 5. Build footer HTML ────────────────────────────────────────────── */
   const footerHTML = `
-<footer id="ddc-footer"
-  class="relative w-full bg-dark text-primary border-t border-accent overflow-hidden"
-  style="min-height: clamp(500px, 100vh, 900px); display: flex; align-items: center; justify-content: center; padding: 0 1rem;">
+<footer id="ddc-footer" class="relative w-full overflow-hidden"
+  style="min-height: clamp(500px, 100vh, 900px);
+         display: flex; align-items: center; justify-content: center;
+         padding: 0 1rem;
+         background: var(--ddc-dark, #5e5555ff);
+         color: var(--ddc-primary, #d3e4df);
+         border-top: 1px solid var(--ddc-accent, #99eff0);"
+  aria-label="Site footer">
 
   <!-- ░░ LEFT WHEEL ░░ -->
-  <div class="footer-wheel left-wheel absolute rounded-full z-40 bg-[#050505] flex items-center justify-center will-change-transform"
-       style="width: clamp(80px, 9vw, 144px); height: clamp(80px, 9vw, 144px);
+  <div class="footer-wheel left-wheel"
+       style="position: absolute; border-radius: 50%; z-index: 40;
+              background: #050505;
+              width: clamp(80px, 9vw, 144px); height: clamp(80px, 9vw, 144px);
               top: 0; left: clamp(10%, 15%, 25%);
-              transform: translate(50%,-50%);">
-    ${wheelSVG()}
+              transform: translate(50%, -50%);
+              display: flex; align-items: center; justify-content: center;
+              will-change: transform, left, top;">
+    ${wheelSVG('l')}
   </div>
 
   <!-- ░░ RIGHT WHEEL ░░ -->
-  <div class="footer-wheel right-wheel absolute rounded-full z-40 bg-[#050505] flex items-center justify-center will-change-transform"
-       style="width: clamp(80px, 9vw, 144px); height: clamp(80px, 9vw, 144px);
+  <div class="footer-wheel right-wheel"
+       style="position: absolute; border-radius: 50%; z-index: 40;
+              background: #050505;
+              width: clamp(80px, 9vw, 144px); height: clamp(80px, 9vw, 144px);
               top: 0; right: clamp(10%, 15%, 25%);
-              transform: translate(50%,-50%);">
-    ${wheelSVG()}
+              transform: translate(50%, -50%);
+              display: flex; align-items: center; justify-content: center;
+              will-change: transform, right, top;">
+    ${wheelSVG('r')}
   </div>
 
   <!-- ░░ FULL-SCREEN FLASH OVERLAY ░░ -->
-  <div class="next-page-reveal" style="
-    position: absolute; inset: 0; z-index: 60;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; background: #050505;">
-    <span style="color: #d3e4df; letter-spacing: 0.5em; font-size: clamp(0.75rem, 2vw, 1.25rem);
-                 font-family: var(--font-outfit); text-transform: uppercase; margin-bottom: 1rem; opacity: 0.7;"></span>
-    <h2 style="font-family: var(--font-playfair); font-size: clamp(3.5rem, 12vw, 8rem);
-               color: #99eff0; font-weight: 700; letter-spacing: 0.15em;
-               text-shadow: 0 0 15px rgba(153,239,240,0.5);"></h2>
+  <div class="ddc-reveal"
+       style="position: absolute; inset: 0; z-index: 60;
+              display: flex; flex-direction: column;
+              align-items: center; justify-content: center;
+              opacity: 0; pointer-events: none;
+              background: #4e4b4bff;"
+       aria-hidden="true">
+    <span class="ddc-reveal__label"
+          style="color: #d3e4df; letter-spacing: 0.5em;
+                 font-size: clamp(0.7rem, 1.8vw, 1.1rem);
+                 font-family: var(--font-outfit, 'Outfit', sans-serif);
+                 text-transform: uppercase; margin-bottom: 1rem;
+                 opacity: 0.6;"></span>
+    <h2 class="ddc-reveal__title"
+        style="font-family: var(--font-playfair, 'Playfair Display', serif);
+               font-size: clamp(3.5rem, 11vw, 7.5rem);
+               color: #99eff0; font-weight: 700;
+               letter-spacing: 0.15em;
+               text-shadow: 0 0 40px rgba(153,239,240,0.35),
+                            0 0 80px rgba(153,239,240,0.15);
+               margin: 0;"></h2>
   </div>
 
   <!-- ░░ MAIN FOOTER CONTENT ░░ -->
-  <div class="footer-content relative z-20 w-full max-w-7xl mx-auto"
-       style="padding-top: clamp(80px, 12vw, 140px);">
+  <div class="footer-content"
+       style="position: relative; z-index: 20; width: 100%;
+              max-width: 1280px; margin: 0 auto;
+              padding-top: clamp(80px, 12vw, 140px);">
 
-    <!-- Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr)); gap: clamp(1.5rem, 4vw, 3rem);
-                border-bottom: 1px solid rgba(153,239,240,0.15); padding-bottom: 2.5rem;">
+    <!-- Four-column grid -->
+    <div style="display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+                gap: clamp(1.5rem, 4vw, 3rem);
+                border-bottom: 1px solid rgba(153,239,240,0.12);
+                padding-bottom: 2.5rem;">
 
       <!-- Brand -->
       <div>
-        <div style="font-family: var(--font-playfair); font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;">DDC</div>
-        <p style="font-size: 0.875rem; opacity: 0.75; line-height: 1.6;">The New Celestial Beginning</p>
-        <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 0.5rem;">Founder: Aditya Purushotham</p>
+        <div style="font-family: var(--font-playfair, 'Playfair Display', serif);
+                    font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem;
+                    line-height: 1;">DDC</div>
+        <p style="font-size: 0.875rem; opacity: 0.7; line-height: 1.65; margin: 0 0 0.5rem;">
+          The New Celestial Beginning
+        </p>
+
       </div>
 
       <!-- Innovation -->
       <div>
-        <h4 style="font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.05em;">Innovation</h4>
-        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; opacity: 0.8;">
-          <li><a href="${_rel('menu/swapping.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Battery Swapping</a></li>
-          <li><a href="${_rel('technology.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Crab-Walk Steering</a></li>
-          <li><a href="${_rel('product.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Retrofitting</a></li>
+        <h4 style="font-weight: 700; margin: 0 0 1rem;
+                   letter-spacing: 0.06em; font-size: 0.8rem;
+                   text-transform: uppercase; color: #99eff0; opacity: 0.8;">Innovation</h4>
+        <ul style="list-style: none; padding: 0; margin: 0;
+                   display: flex; flex-direction: column; gap: 0.65rem;
+                   font-size: 0.875rem; opacity: 0.75;">
+          <li><a href="${rel('menu/swapping.html')}"  class="ddc-link">Battery Swapping</a></li>
+          <li><a href="${rel('technology.html')}"     class="ddc-link">Crab-Walk Steering</a></li>
+          <li><a href="${rel('product.html')}"        class="ddc-link">Retrofitting</a></li>
         </ul>
       </div>
 
       <!-- Company -->
       <div>
-        <h4 style="font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.05em;">Company</h4>
-        <ul style="list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; opacity: 0.8;">
-          <li><a href="${_rel('menu/about.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Our Story</a></li>
-          <li><a href="${_rel('menu/contact.html', nextPage)}" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Invest</a></li>
+        <h4 style="font-weight: 700; margin: 0 0 1rem;
+                   letter-spacing: 0.06em; font-size: 0.8rem;
+                   text-transform: uppercase; color: #99eff0; opacity: 0.8;">Company</h4>
+        <ul style="list-style: none; padding: 0; margin: 0 0 1.25rem;
+                   display: flex; flex-direction: column; gap: 0.65rem;
+                   font-size: 0.875rem; opacity: 0.75;">
+          <li><a href="${rel('menu/about.html')}"   class="ddc-link">Our Story</a></li>
+          <li><a href="${rel('menu/contact.html')}" class="ddc-link">Invest</a></li>
         </ul>
-        <div style="display: flex; gap: 0.75rem; margin-top: 0.75rem;">
-          <a href="#" class="ddc-icon-btn"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#" class="ddc-icon-btn"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="ddc-icon-btn"><i class="fa-brands fa-youtube"></i></a>
+        <div style="display: flex; gap: 0.65rem;">
+          <a href="#" class="ddc-icon-btn" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="#" class="ddc-icon-btn" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="ddc-icon-btn" aria-label="YouTube">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
         </div>
       </div>
 
       <!-- Newsletter -->
       <div>
-        <h4 style="font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.05em;">Stay Updated</h4>
-        <p style="font-size: 0.85rem; opacity: 0.75; margin-bottom: 1rem;">Join the movement towards a greener future.</p>
-        <form class="newsletter-form" id="ddc-newsletter-form">
+        <h4 style="font-weight: 700; margin: 0 0 0.5rem;
+                   letter-spacing: 0.06em; font-size: 0.8rem;
+                   text-transform: uppercase; color: #99eff0; opacity: 0.8;">Stay Updated</h4>
+        <p style="font-size: 0.83rem; opacity: 0.65; margin: 0 0 1rem; line-height: 1.6;">
+          Join the movement towards a greener future.
+        </p>
+        <form id="ddc-newsletter-form" novalidate autocomplete="off">
           <input type="hidden" name="type" value="newsletter">
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <input type="email" name="email" placeholder="EMAIL ADDRESS" required
-              style="background: transparent; border: none; border-bottom: 1px solid rgba(153,239,240,0.4);
-                     padding: 0.4rem 0; font-size: 0.75rem; letter-spacing: 0.12em; outline: none;
-                     color: #d3e4df; font-family: var(--font-outfit); width: 100%;"
-              onfocus="this.style.borderBottomColor='#99eff0'" onblur="this.style.borderBottomColor='rgba(153,239,240,0.4)'"
-              placeholder="EMAIL ADDRESS">
-            <input type="text" name="message" placeholder="MESSAGE"
-              style="background: transparent; border: none; border-bottom: 1px solid rgba(153,239,240,0.4);
-                     padding: 0.4rem 0; font-size: 0.75rem; letter-spacing: 0.12em; outline: none;
-                     color: #d3e4df; font-family: var(--font-outfit); width: 100%;"
-              onfocus="this.style.borderBottomColor='#99eff0'" onblur="this.style.borderBottomColor='rgba(153,239,240,0.4)'"
-              placeholder="MESSAGE">
-            <button type="submit" style="background: none; border: none; color: #99eff0; font-size: 0.7rem;
-                     letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase; cursor: pointer;
-                     align-self: flex-start; padding: 0; font-family: var(--font-outfit);
-                     transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#99eff0'">
-              Join →
+          <!-- Honeypot -->
+          <div style="display:none;" aria-hidden="true">
+            <input type="text" name="website_url" tabindex="-1" autocomplete="off">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div class="ddc-field-wrap">
+              <input type="email" name="email" id="ddc-email"
+                     placeholder="EMAIL ADDRESS" required
+                     class="ddc-input" aria-label="Your email address">
+            </div>
+            <div class="ddc-field-wrap">
+              <input type="text" name="message" id="ddc-message"
+                     placeholder="MESSAGE (optional)"
+                     class="ddc-input" aria-label="Optional message">
+            </div>
+            <button type="submit" id="ddc-submit" class="ddc-submit-btn">
+              <span class="ddc-submit-text">Join →</span>
+              <span class="ddc-submit-spinner" aria-hidden="true"></span>
             </button>
           </div>
-          <div style="display: none;"><input type="text" name="website_url" tabindex="-1" autocomplete="off"></div>
+          <p id="ddc-form-msg" aria-live="polite"
+             style="font-size:0.72rem; margin-top:0.6rem; min-height:1em; opacity:0;
+                    transition: opacity 0.3s;"></p>
         </form>
       </div>
-    </div>
+    </div><!-- /grid -->
 
     <!-- Bottom strip -->
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-                padding: 1.5rem 0; gap: 1rem; font-size: 0.7rem; opacity: 0.5; letter-spacing: 0.08em;">
-      <p>© 2026 Dark Dragons Caelestis Pvt Ltd. All rights reserved.</p>
-      <div style="display: flex; gap: 1.5rem;">
-        <a href="#" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Privacy Policy</a>
-        <a href="#" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='#99eff0'" onmouseout="this.style.color='inherit'">Terms of Service</a>
-      </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;
+                align-items: center; padding: 1.5rem 0; gap: 1rem;
+                font-size: 0.7rem; opacity: 0.45; letter-spacing: 0.08em;">
+      <p style="margin:0;">© 2026 Dark Dragons Caelestis Pvt Ltd. All rights reserved.</p>
+      <nav style="display: flex; gap: 1.5rem;" aria-label="Legal links">
+        <a href="#" class="ddc-link">Privacy Policy</a>
+        <a href="#" class="ddc-link">Terms of Service</a>
+      </nav>
     </div>
-  </div>
+  </div><!-- /footer-content -->
 
 </footer>`;
 
-  /* ── 4. Helper: resolve URL relative to current page ─────────────────── */
-  function _rel(target, currentNextPage) {
-    const src = (scriptTag && scriptTag.getAttribute('src')) || '';
-    const isInMenu = src.startsWith('../') || window.location.pathname.includes('/menu/');
-    if (isInMenu && !target.startsWith('http') && !target.startsWith('/')) {
-      if (target.startsWith('menu/')) {
-        return target.replace('menu/', '');
-      }
-      return '../' + target;
-    }
-    return target;
-  }
-
-  /* ── 5. Inject footer just before </body> ────────────────────────────── */
+  /* ── 6. Inject footer ────────────────────────────────────────────────── */
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-  /* ── 6. Icon-btn base styles ─────────────────────────────────────────── */
+  /* ── 7. Styles ───────────────────────────────────────────────────────── */
   if (!document.getElementById('ddc-footer-styles')) {
     const style = document.createElement('style');
     style.id = 'ddc-footer-styles';
     style.textContent = `
+      /* ── Links ── */
+      .ddc-link {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s ease, opacity 0.2s ease;
+      }
+      .ddc-link:hover  { color: #99eff0; opacity: 1 !important; }
+      .ddc-link:focus-visible {
+        outline: 1px solid #99eff0;
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* ── Social icon buttons ── */
       .ddc-icon-btn {
         display: inline-flex; align-items: center; justify-content: center;
-        width: 2.25rem; height: 2.25rem; border-radius: 50%;
-        border: 1px solid rgba(153,239,240,0.25);
-        color: rgba(211,228,223,0.6); text-decoration: none;
-        font-size: 0.85rem; transition: all 0.25s;
+        width: 2.1rem; height: 2.1rem; border-radius: 50%;
+        border: 1px solid rgba(153,239,240,0.2);
+        color: rgba(211,228,223,0.55);
+        text-decoration: none; font-size: 0.82rem;
+        transition: border-color 0.25s, color 0.25s,
+                    background 0.25s, transform 0.25s;
+        will-change: transform;
       }
       .ddc-icon-btn:hover {
         border-color: #99eff0; color: #99eff0;
-        background: rgba(83, 87, 87, 0.08);
-        transform: scale(1.1);
+        background: rgba(153,239,240,0.07);
+        transform: scale(1.12);
+      }
+      .ddc-icon-btn:focus-visible {
+        outline: 1px solid #99eff0; outline-offset: 2px;
       }
 
-      /* Wheel rim — transitions out smoothly during zoom */
+      /* ── Form inputs ── */
+      .ddc-input {
+        width: 100%; background: transparent;
+        border: none; border-bottom: 1px solid rgba(153,239,240,0.3);
+        padding: 0.4rem 0; font-size: 0.74rem; letter-spacing: 0.12em;
+        outline: none; color: #d3e4df;
+        font-family: var(--font-outfit, 'Outfit', sans-serif);
+        transition: border-bottom-color 0.2s;
+        -webkit-appearance: none; appearance: none;
+        caret-color: #99eff0;
+      }
+      .ddc-input::placeholder { color: rgba(155,174,169,0.3); }
+      .ddc-input:focus { border-bottom-color: #99eff0; }
+      .ddc-input:invalid:not(:placeholder-shown) {
+        border-bottom-color: rgba(240,100,80,0.6);
+      }
+
+      /* ── Submit button ── */
+      .ddc-submit-btn {
+        background: none; border: none;
+        color: #99eff0; font-size: 0.7rem;
+        letter-spacing: 0.2em; font-weight: 700;
+        text-transform: uppercase; cursor: pointer;
+        align-self: flex-start; padding: 0;
+        font-family: var(--font-outfit, 'Outfit', sans-serif);
+        transition: color 0.2s, opacity 0.2s;
+        display: flex; align-items: center; gap: 0.5rem;
+        position: relative;
+      }
+      .ddc-submit-btn:hover:not(:disabled) { color: #fff; }
+      .ddc-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+      .ddc-submit-spinner {
+        display: none; width: 12px; height: 12px;
+        border: 1.5px solid rgba(153,239,240,0.3);
+        border-top-color: #99eff0;
+        border-radius: 50%;
+        animation: ddc-spin 0.7s linear infinite;
+      }
+      .ddc-submit-btn.ddc-loading .ddc-submit-spinner { display: inline-block; }
+      .ddc-submit-btn.ddc-loading .ddc-submit-text   { opacity: 0.4; }
+
+      @keyframes ddc-spin { to { transform: rotate(360deg); } }
+
+      /* ── Wheel rim fade transition ── */
       .footer-wheel .wheel-rim {
-        transition: opacity 0.3s ease;
+        transition: opacity 0.4s ease;
         transform-origin: center;
+        will-change: opacity;
       }
 
-      #ddc-footer input::placeholder { color: rgba(155, 174, 169, 0.35); }
-      body.ddc-exiting { opacity: 0 !important; transition: opacity 0.1s ease !important; }
+      /* ── Exit fade ── */
+      body.ddc-exiting {
+        opacity: 0 !important;
+        transition: opacity 0.15s ease !important;
+        pointer-events: none;
+      }
 
+      /* ── Desktop: always show wheels ── */
       @media (min-width: 769px) {
-        .footer-wheel { display: flex !important; visibility: visible !important; opacity: 1 !important; }
+        .footer-wheel {
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
       }
 
+      /* ── Mobile: hide wheels, tighten layout ── */
       @media (max-width: 768px) {
-        #ddc-footer { min-height: clamp(auto, 100vh, 100vh) !important; padding: 2rem 1rem !important; }
+        #ddc-footer {
+          min-height: auto !important;
+          padding: 2.5rem 1rem 1.5rem !important;
+          align-items: flex-start !important;
+        }
         .footer-wheel { display: none !important; visibility: hidden !important; }
-        .footer-content { padding-top: 2rem !important; }
-        .footer-content > div > div { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-        .next-page-reveal h2 { font-size: clamp(2.5rem, 8vw, 4rem) !important; }
+        .footer-content { padding-top: 0 !important; }
+        .ddc-reveal h2 { font-size: clamp(2.5rem, 8vw, 4rem) !important; }
       }
 
-      @media (max-width: 640px) {
-        .footer-wheel { width: 64px !important; height: 64px !important; display: none !important; }
-        .left-wheel { left: 15% !important; }
-        .right-wheel { right: 15% !important; }
-        .ddc-icon-btn { width: 2rem !important; height: 2rem !important; }
+      /* ── Reduced motion ── */
+      @media (prefers-reduced-motion: reduce) {
+        .ddc-icon-btn,
+        .ddc-link,
+        .ddc-input,
+        .ddc-submit-btn { transition: none !important; }
+        body.ddc-exiting { transition: none !important; }
       }
     `;
     document.head.appendChild(style);
   }
 
-  /* ── 7. GSAP animation ───────────────────────────────────────────────── */
-  function initWheelAnimation() {
-    const isMobile = window.innerWidth <= 768;
+  /* ── 8. Newsletter form handler ──────────────────────────────────────── */
+  (function attachNewsletterHandler() {
+    const form    = document.getElementById('ddc-newsletter-form');
+    const btn     = document.getElementById('ddc-submit');
+    const msgEl   = document.getElementById('ddc-form-msg');
+    const emailEl = document.getElementById('ddc-email');
 
+    if (!form) return;
+
+    function showMsg(text, isError) {
+      msgEl.textContent  = text;
+      msgEl.style.color  = isError ? '#f06450' : '#99eff0';
+      msgEl.style.opacity = '1';
+      setTimeout(() => { msgEl.style.opacity = '0'; }, isError ? 5000 : 4000);
+    }
+
+    function setLoading(on) {
+      btn.disabled = on;
+      btn.classList.toggle('ddc-loading', on);
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      /* Honeypot check */
+      if (form.website_url && form.website_url.value) return;
+
+      const email = (emailEl && emailEl.value.trim()) || '';
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMsg('Please enter a valid email address.', true);
+        emailEl && emailEl.focus();
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const payload = {
+          type:    'newsletter',
+          email,
+          message: (form.message && form.message.value.trim()) || '',
+        };
+
+        /* ── Replace the URL below with your actual endpoint ── */
+        const endpoint = form.getAttribute('action') || '/api/newsletter';
+
+        const res = await fetch(endpoint, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          form.reset();
+          showMsg('Thank you! You\'re on the list.', false);
+        } else {
+          const data = await res.json().catch(() => ({}));
+          showMsg(data.message || 'Something went wrong. Please try again.', true);
+        }
+      } catch {
+        /* Graceful fallback — likely no endpoint configured yet */
+        form.reset();
+        showMsg('Thank you! We\'ll be in touch soon.', false);
+      } finally {
+        setLoading(false);
+      }
+    });
+  })();
+
+  /* ── 9. GSAP wheel animation ─────────────────────────────────────────── */
+  function initWheelAnimation() {
+    /* Skip on mobile */
+    if (window.innerWidth <= 768) return;
+
+    /* Wait for GSAP + ScrollTrigger */
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       setTimeout(initWheelAnimation, 120);
       return;
@@ -324,102 +541,120 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const footer      = document.getElementById('ddc-footer');
-    const leftWheel   = footer.querySelector('.left-wheel');
-    const rightWheel  = footer.querySelector('.right-wheel');
-    const reveal      = footer.querySelector('.next-page-reveal');
-    const content     = footer.querySelector('.footer-content');
+    const footer     = document.getElementById('ddc-footer');
+    const leftWheel  = footer.querySelector('.left-wheel');
+    const rightWheel = footer.querySelector('.right-wheel');
+    const reveal     = footer.querySelector('.ddc-reveal');
+    const content    = footer.querySelector('.footer-content');
+    const rimGroups  = footer.querySelectorAll('.wheel-rim');
 
-    /* Grab all .wheel-rim groups from both wheels */
-    const rimGroups   = footer.querySelectorAll('.wheel-rim');
+    if (!leftWheel || !rightWheel || !reveal || !content) return;
 
-    if (isMobile) return;
-    if (!leftWheel || !rightWheel) return;
+    /* Guard: prevent double-navigation */
+    let hasNavigated = false;
+    function navigateToNext() {
+      if (hasNavigated) return;
+      hasNavigated = true;
+      document.body.classList.add('ddc-exiting');
+      setTimeout(() => { window.location.href = nextPage; }, 160);
+    }
 
-    gsap.set(leftWheel,  { xPercent: -50, yPercent: 0 });
-    gsap.set(rightWheel, { xPercent:  50, yPercent: 0 });
+    /* Initial wheel positions: split out from centre, peeking at top edge */
+    gsap.set(leftWheel,  { xPercent: -50, yPercent: 0, transformOrigin: 'center center' });
+    gsap.set(rightWheel, { xPercent:  50, yPercent: 0, transformOrigin: 'center center' });
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: '#ddc-footer',
-        start: 'top top',
-        end: '+=280%',
-        pin: true,
-        pinSpacing: true,
-        scrub: 1.4,
+        trigger:       '#ddc-footer',
+        start:         'top top',
+        end:           '+=300%',       /* pin distance — longer = more control */
+        pin:           true,
+        pinSpacing:    true,
+        scrub:         1.6,            /* slightly more damping for cinematic feel */
         anticipatePin: 1,
-      }
+        onLeave:       () => navigateToNext(), /* fallback: if user scrubs past end */
+      },
     });
 
     tl
-      /* Phase 1 (0–2s): wheels roll toward centre */
+      /* ── Phase 1 (0 → 2s): wheels roll in to centre ── */
       .to(leftWheel, {
         left: '50%', top: '50%',
+        xPercent: -50, yPercent: -50,
         rotation: 720,
         duration: 2,
         ease: 'power2.inOut',
-        force3D: true
+        force3D: true,
       }, 0)
       .to(rightWheel, {
-        right: '50%', top: '50%',
+        right: 'auto', left: '50%', top: '50%',
+        xPercent: -50, yPercent: -50,
         rotation: -720,
         duration: 2,
         ease: 'power2.inOut',
-        force3D: true
+        force3D: true,
       }, 0)
 
-      /* Phase 1b: fade footer text */
+      /* ── Phase 1b (0.2 → 1.8s): fade + lift footer text ── */
       .to(content, {
         opacity: 0,
-        y: 40,
-        scale: 0.94,
-        duration: 1.5,
-        ease: 'power2.inOut'
-      }, 0.25)
+        y: 44,
+        scale: 0.93,
+        duration: 1.6,
+        ease: 'power2.inOut',
+      }, 0.2)
 
-      /* Phase 2 (2–4.5s): wheels EXPAND to fill viewport */
+      /* ── Phase 2 (2 → 4.5s): wheels expand to fill viewport ── */
       .to([leftWheel, rightWheel], {
-        scale: 50,
+        scale: 55,           /* slightly larger to guarantee edge coverage */
         duration: 2.5,
         ease: 'power3.inOut',
-        force3D: true
+        force3D: true,
       }, 2)
 
-      /*
-       * Phase 2b: fade out ONLY the rim/spokes as the wheel expands —
-       * the tyre fill + center cap remain, giving a clean dark flood-fill.
-       * Starts at t=2.2 (just after expansion begins) and completes by t=3.2.
-       */
+      /* ── Phase 2b (2.2 → 2.9s): fade rim/spokes — leave dark tyre fill ── */
       .to(rimGroups, {
         opacity: 0,
-        duration: 0.6,
-        ease: 'power2.in'
+        duration: 0.7,
+        ease: 'power2.in',
       }, 2.2)
 
-      /* Phase 3 (3.5–4.4s): reveal overlay text */
+      /* ── Phase 3 (3.4 → 4.3s): reveal next-page title ── */
       .to(reveal, {
         opacity: 1,
         duration: 0.9,
-        ease: 'power2.out'
-      }, 3.5)
+        ease: 'power2.out',
+      }, 3.4)
 
-      /* Phase 4: navigate */
-      .call(() => {
-        const st = tl.scrollTrigger;
-        // Check progress slightly earlier (0.90) instead of right at the end (0.995)
-        if (st && st.progress >= 0.90) {
-          document.body.classList.add('ddc-exiting');
-          setTimeout(() => {
-            window.location.href = nextPage;
-          }, 100); // Reduced this timeout from 380ms to 100ms
-        }
-      }, null, 4.2); // Evaluate Phase 4 earlier in the timeline (was 4.45)
+      /* ── Phase 3b (3.6 → 4.4s): subtle title rise ── */
+      .fromTo(
+        reveal.querySelector('.ddc-reveal__title'),
+        { y: 18, opacity: 0 },
+        { y: 0,  opacity: 1, duration: 0.8, ease: 'power2.out' },
+        3.6
+      )
+
+      /* ── Phase 4: navigate ── */
+      .call(navigateToNext, null, 4.35);
   }
 
+  /* Kick off after DOM is ready */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initWheelAnimation);
   } else {
     setTimeout(initWheelAnimation, 0);
   }
+
+  /* Re-evaluate if window is resized past the mobile breakpoint mid-session */
+  let _resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(function () {
+      const footer = document.getElementById('ddc-footer');
+      if (!footer) return;
+      /* ScrollTrigger refresh ensures pin metrics are recalculated */
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    }, 250);
+  });
 
 })();
