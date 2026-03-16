@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How DDC EV Pods Work | Dark Dragons Caelestis</title>
+    
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&family=Playfair+Display:ital,wght@0,600;1,600&family=Alumni+Sans+Pinstripe:ital@0;1&family=Nanum+Myeongjo&family=Orbitron:wght@400;700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!--=============== GSAP ===============-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                        'offwhite': '#f4f9f8',
+                        mint: {
+                            DEFAULT: '#98FF98', // Primary Mint
+                            dark: '#2E7D32',    // Dark Mint
+                            light: '#F0FFF0',   // Very light, elegant mint for backgrounds
+                            glass: 'rgba(240, 255, 240, 0.7)' // Glassmorphism mint
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['var(--font-jakarta)', 'sans-serif'],
+                        serif: ['var(--font-playfair)', 'serif'],
+                        orbitron: ['var(--font-orbitron)', 'sans-serif'],
+                        nanum: ['var(--font-nanum)', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body { font-family: var(--font-poppins); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(152, 255, 152, 0.4);
+        }
+        /* Custom styling for the video embed to maintain 16:9 aspect ratio */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Custom shadow for mint glow */
+        .shadow-mint-glow {
+            box-shadow: 0 10px 40px -10px rgba(152, 255, 152, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gray-light text-gray-dark antialiased">
+
+    <!-- Floating Navbar -->
+   <div id="nav-container"></div>
+
+    <!-- HERO SECTION -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-mint-light relative overflow-hidden">
+        <!-- Decorative background elements -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-mint opacity-30 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-mint-dark opacity-10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10" data-aos="fade-up" data-aos-duration="1000">
+            <h1 class="text-[clamp(2rem,5vw,4.5rem)] font-extrabold text-gray-900 leading-tight mb-6">
+                How DDC EV Pods Work <br> 
+                <span class="text-mint-dark">Complete Guide in 10 Minutes</span>
+            </h1>
+            <p class="text-[clamp(1rem,1.5vw,1.25rem)] text-gray-700 mb-10 max-w-3xl mx-auto font-medium">
+                Discover how our autonomous battery-swapping pods are eliminating charge times and revolutionizing campus mobility forever.
+            </p>
+
+            <!-- Embedded YouTube Video -->
+            <div class="max-w-4xl mx-auto bg-white p-3 rounded-3xl shadow-mint-glow mb-8" data-aos="zoom-in" data-aos-delay="200">
+                <div class="video-container rounded-2xl overflow-hidden shadow-inner bg-gray-100">
+                    <!-- YouTube Embed (Responsive, No Autoplay) -->
+                    <iframe 
+                        src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0" 
+                        title="DDC EV Pods Overview" 
+                        frameborder="0" 
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen id="tutorial-video">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Video Info Bullets -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm text-sm font-semibold text-gray-700 border border-mint/30">
+                    <i class="fa-solid fa-graduation-cap text-mint-dark text-lg"></i>
+                    <span>What you'll learn: Swapping Tech</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm text-sm font-semibold text-gray-700 border border-mint/30">
+                    <i class="fa-solid fa-building text-mint-dark text-lg"></i>
+                    <span>Who it's for: Campuses & Orgs</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white px-5 py-2.5 rounded-full shadow-sm text-sm font-semibold text-gray-700 border border-mint/30">
+                    <i class="fa-regular fa-clock text-mint-dark text-lg"></i>
+                    <span>Duration: 10 Minutes</span>
+                </div>
+            </div>
+
+            <a href="#cta" class="inline-flex items-center justify-center gap-2 bg-mint-dark text-white text-lg px-8 py-4 rounded-full font-bold hover:bg-green-800 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                Watch Full Demo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 bg-white relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-mint-dark font-bold tracking-wider uppercase text-sm mb-2 block">The Problem</span>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900">Why the Old Way is Broken</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Problem 1 with Image -->
+                <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="../images/battery.jpeg" alt="EV Charging" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">Charging Time</h3>
+                        <p class="text-gray-600">EVs sit idle for hours connected to cables, resulting in massive vehicle downtime and inefficiency.</p>
+                    </div>
+                </div>
+                
+                <!-- Problem 2 with Image -->
+                <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="../images/battery_cost.png" alt="Expensive Battery" class="w-full h-full object-fill group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
+                            <i class="fa-solid fa-battery-quarter"></i>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">Battery Cost</h3>
+                        <p class="text-gray-600">High upfront battery costs lock organizations into expensive, rapidly depreciating assets.</p>
+                    </div>
+                </div>
+
+                <!-- Problem 3 with Image -->
+                <div class="bg-gray-light rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-transparent hover:border-mint group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="../images/infra.jpeg" alt="Infrastructure Gap" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 w-12 h-12 bg-white/90 backdrop-blur text-red-600 rounded-full flex items-center justify-center text-xl shadow-lg">
+                            <i class="fa-solid fa-plug-circle-xmark"></i>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">Infrastructure Gap</h3>
+                        <p class="text-gray-600">Rigid charging stations consume valuable real estate and require expensive grid upgrades.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION (With Background Video) -->
+    <section id="how-it-works" class="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- HTML5 Looping Background Video -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-10">
+                <source src="https://cdn.pixabay.com/video/2020/05/21/40003-424364028_tiny.mp4" type="video/mp4">
+            </video>
+            <!-- Mint Green Overlay for Video -->
+            <div class="absolute inset-0 bg-mint-light/90 backdrop-blur-sm"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-mint-dark font-bold tracking-wider uppercase text-sm mb-2 block">The DDC Solution</span>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900">Seamless Autonomy in 4 Steps</h2>
+                <p class="mt-4 text-gray-700 max-w-2xl mx-auto font-medium">Our BEV platform utilizes smart EV Pods and rapid Battery Swapping to keep fleets moving 24/7.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Connecting Line for Desktop -->
+                <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-mint-dark/30 -translate-y-1/2 z-0"></div>
+
+                <div class="grid lg:grid-cols-4 gap-8 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="glass-card rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 mx-auto bg-mint-dark text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 shadow-md border-4 border-white">1</div>
+                        <h4 class="text-xl font-bold mb-3 text-gray-900">Summon Pod</h4>
+                        <p class="text-sm text-gray-600 font-medium">User summons an EV Pod instantly via the mobile application.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="glass-card rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 mx-auto bg-mint-dark text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 shadow-md border-4 border-white">2</div>
+                        <h4 class="text-xl font-bold mb-3 text-gray-900">Auto-Navigate</h4>
+                        <p class="text-sm text-gray-600 font-medium">The pod autonomously navigates through the campus to the user.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="glass-card rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 transform scale-105 border-mint" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 mx-auto bg-mint text-mint-dark rounded-full flex items-center justify-center text-2xl font-bold mb-6 shadow-md border-4 border-white">3</div>
+                        <h4 class="text-xl font-bold mb-3 text-mint-dark">Battery Swap</h4>
+                        <p class="text-sm text-gray-700 font-medium">Automated 100% battery swap completed in under 3 minutes.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="glass-card rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-16 h-16 mx-auto bg-mint-dark text-white rounded-full flex items-center justify-center text-2xl font-bold mb-6 shadow-md border-4 border-white">4</div>
+                        <h4 class="text-xl font-bold mb-3 text-gray-900">Return to Base</h4>
+                        <p class="text-sm text-gray-600 font-medium">Pod returns to station or proceeds to the next user seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                
+                <!-- Large Feature Image -->
+                <div class="lg:w-5/12 relative" data-aos="fade-right">
+                    <div class="absolute inset-0 bg-mint rounded-3xl transform translate-x-4 translate-y-4 opacity-50"></div>
+                    <img src="../images/orion.png" alt="Futuristic EV Concept" class="relative z-10 rounded-3xl shadow-xl w-full object-fill h-[500px]">
+                    <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg z-20 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-mint-dark text-white rounded-full flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 font-bold uppercase">Safety First</p>
+                            <p class="text-gray-900 font-bold">360° Sensor Coverage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-7/12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6" data-aos="fade-up">Designed for Agility & Efficiency</h2>
+                    <p class="text-gray-600 mb-10 text-lg" data-aos="fade-up" data-aos-delay="100">Our pods are engineered with unmatched maneuverability to handle complex campus environments effortlessly.</p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <!-- Feature 1 -->
+                        <div class="border border-mint/20 rounded-2xl p-6 hover:shadow-mint-glow transition-all bg-mint-light/30 hover:bg-white group" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="w-12 h-12 bg-mint/30 text-mint-dark rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-mint group-hover:text-mint-dark transition-colors shadow-sm">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2 text-gray-900">Joystick Control</h4>
+                            <p class="text-gray-600 text-sm">Easy maneuvering and manual override when required.</p>
+                        </div>
+                        
+                        <!-- Feature 2 -->
+                        <div class="border border-mint/20 rounded-2xl p-6 hover:shadow-mint-glow transition-all bg-mint-light/30 hover:bg-white group" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="w-12 h-12 bg-mint/30 text-mint-dark rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-mint group-hover:text-mint-dark transition-colors shadow-sm">
+                                <i class="fa-solid fa-arrows-spin"></i>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2 text-gray-900">360° Rotation</h4>
+                            <p class="text-gray-600 text-sm">Zero-radius turning perfect for tight spaces and corners.</p>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="border border-mint/20 rounded-2xl p-6 hover:shadow-mint-glow transition-all bg-mint-light/30 hover:bg-white group" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="w-12 h-12 bg-mint/30 text-mint-dark rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-mint group-hover:text-mint-dark transition-colors shadow-sm">
+                                <i class="fa-solid fa-arrows-left-right"></i>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2 text-gray-900">Crab Walk</h4>
+                            <p class="text-gray-600 text-sm">Sideways movement allows flawless parallel docking.</p>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="border border-mint/20 rounded-2xl p-6 hover:shadow-mint-glow transition-all bg-mint-light/30 hover:bg-white group" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="w-12 h-12 bg-mint/30 text-mint-dark rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-mint group-hover:text-mint-dark transition-colors shadow-sm">
+                                <i class="fa-solid fa-battery-full"></i>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2 text-gray-900">Battery Swapping</h4>
+                            <p class="text-gray-600 text-sm">Fully automated 3-minute swap for zero downtime.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF / WHY DDC -->
+    
+
+    <!-- CTA SECTION -->
+    <section id="cta" class="py-24 px-4 sm:px-6 lg:px-8 bg-mint relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white opacity-30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-mint-dark opacity-20 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+        
+        <div class="max-w-4xl mx-auto relative z-10" data-aos="zoom-in">
+            <div class="bg-white rounded-[2.5rem] p-10 md:p-16 text-center shadow-2xl border border-white/50 relative overflow-hidden">
+                <!-- Inner subtle mint glow -->
+                <div class="absolute inset-0 bg-gradient-to-br from-mint-light/50 to-transparent pointer-events-none"></div>
+                
+                <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 relative z-10">Ready to Transform Your Campus?</h2>
+                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto relative z-10">
+                    Experience the future of zero-downtime, autonomous mobility. See the DDC EV Pod in action at your location.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                    <a href="booking.html" class="bg-mint-dark text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        Book a Campus Demo <i class="fa-solid fa-calendar-check"></i>
+                    </a>
+                    <a href="contact.html" class="bg-mint-light text-mint-dark border-2 border-mint-dark px-8 py-4 rounded-full font-bold text-lg hover:bg-mint transition-all flex items-center justify-center gap-2">
+                        Contact Our Team
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
+    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
+
+
+    <!-- Initialize AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,       // whether animation should happen only once - while scrolling down
+            offset: 100,      // offset (in px) from the original trigger point
+            duration: 800,    // values from 0 to 3000, with step 50ms
+            easing: 'ease-out-cubic', // default easing for AOS animations
+        });
+    </script>
+    <script src="../js/main.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/forms.js"></script>
+    <script src="../js/footer.js" data-next="index.html"></script>
+</body>
+</html>

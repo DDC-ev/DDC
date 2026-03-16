@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="XliptIAx_vfbr-hl3D-R5z87V1Ppihym_9AvrvQ9px8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Dragons Caelestis - Mobilizing India</title>
+    
+
+    <script src="https://cdn.tailwindcss.com"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!--=============== REMIXICONS ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    
+    <!--=============== GOOGLE FONTS FOR CARDS ===============-->
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body >
+
+    <!-- Navigation -->
+    <div id="nav-container"></div>
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 px-6 min-h-[80vh] flex items-center">
+        <div class="hero-shape"></div>
+        <div class="max-w-4xl mx-auto text-center items-center">
+            <div class="flex flex-col justify-center h-full">
+                <span class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-emerald-700 bg-mint-200 rounded-full w-fit mx-auto">
+                    A DDC INITIATIVE
+                </span>
+                
+                <!-- Main Gradient Headline (Motive) -->
+                <h1 class="text-5xl md:text-7xl font-bold leading-[1.1] mb-6 font-jakarta">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 via-cyan-500 to-blue-600">
+                        Intelligent Motion
+                    </span>
+                </h1>
+                
+                <p class="text-lg text-emerald-800/80 mb-10 max-w-lg leading-relaxed mx-auto font-outfit">
+                    We are building the next generation of autonomous EV pods with instant battery swapping and 90° geometry.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button class="px-8 py-4 bg-emerald-900 text-white rounded-2xl font-semibold hover-lift" onclick="window.location.href = 'product.html';">
+                        View The Prototype
+                    </button>
+                    <button class="px-8 py-4 bg-white text-emerald-900 border border-mint-200 rounded-2xl font-semibold hover-lift" onclick="window.location.href = 'technology.html';">
+                        Our Logic
+                    </button>
+                </div>
+
+                <!-- Tagline at the bottom -->
+                <div class="mt-auto pt-6 border-t border-emerald-200/50 max-w-md mx-auto w-full">
+                    <p class="text-emerald-900 font-bold tracking-wide uppercase text-sm">
+                        Connecting past to future, one platform at a time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems & Solutions -->
+    <section id="solutions" class="py-24 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-emerald-950 mb-4">Solving the Mobility Crisis</h2>
+                <p class="text-emerald-700 max-w-2xl mx-auto">We aren't just building cars; we are fixing the infrastructure of movement.</p>
+            </div>
+
+            <!-- Video Section -->
+            <div class="video-section mb-24 shadow-2xl border-4 border-emerald-50">
+                <video id="solutionVideo" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1626847037657-fd3622613ce3?auto=format&fit=crop&w=1200&q=80">
+                    <source src="images/orion video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <!-- Overlay Gradient -->
+                <div class="video-overlay bg-gradient-to-t from-emerald-900/60 to-transparent"></div>
+                <!-- Label -->
+                <div class="absolute bottom-8 left-8 text-white pointer-events-none font-jakarta">
+                    <span class="bg-mint-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Demo</span>
+                    <h3 class="text-2xl font-bold">Autonomous Navigation</h3>
+                </div>
+            </div>
+
+            <!-- Expanding Image Scroll Section -->
+            <div id="expand-trigger" class="relative h-[250vh] mb-24 rounded-[40px] overflow-visible">
+                <div class="sticky top-0 h-screen w-full flex overflow-hidden rounded-[40px] border border-mint-200 shadow-2xl">
+                    <!-- Text Side (Left) -->
+                    <div class="w-full md:w-1/2 h-full bg-mint-50 flex flex-col justify-center p-12 md:p-20 z-0 relative">
+                        <span class="text-mint-600 font-bold tracking-wider uppercase mb-4 text-sm">The Material Evolution</span>
+                        <h3 class="text-4xl md:text-5xl font-bold text-emerald-950 mb-6 leading-tight">From Fiberglass to <span class="text-emerald-500">Gold Sample.</span></h3>
+                        <p class="text-emerald-800/80 text-lg leading-relaxed max-w-md">
+                            We didn't let a lack of capital stop our engineering. We used low-fidelity materials like PVC and fiberglass to prove our execution. 
+                            <br><br>
+                            Now, we are transitioning from functional mock-ups to the <strong>Industrial Gold Sample</strong> using professional-grade materials.
+                        </p>
+                    </div>
+                    
+                    <!-- Image Side (Right - Expands) -->
+                    <div id="expanding-image" class="absolute right-0 top-0 h-full w-1/2 bg-emerald-900 z-10 shadow-2xl" style="will-change: width; width: 0%;">
+                         <img src="images/chaiss.png" class="w-full h-full object-cover" alt="Industrial Design High Fidelity">
+                         <!-- Gradient Overlay -->
+                         <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/20 to-transparent"></div>
+                         
+                         <!-- Caption that fades in -->
+                         <div id="image-caption" class="absolute bottom-12 right-12 text-white text-right opacity-0 transition-opacity duration-700 font-jakarta">
+                            <h4 class="text-3xl font-bold mb-2">Ready for Scale</h4>
+                            <p class="text-emerald-100/80 text-sm font-outfit">High-fidelity manufacturing.</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Grid -->
+             <!--
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <div class="p-10 rounded-3xl bg-mint-50 border border-mint-100 hover-lift">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Time Efficiency</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">Traditional EVs take hours to charge. Our swapping ecosystem gets you back on the road in <span class="font-bold text-emerald-600">3 minutes</span>.</p>
+                </div>
+
+                <div class="p-10 rounded-3xl bg-mint-100 border border-mint-200 hover-lift">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                      
+ <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 512 512" fill="currentColor">
+  <path d="M433.8 262.4c-12-19.8-31.5-31.5-52.5-33l3.3-15.8c2-9.6-1.5-19.6-9-25.9s-17.8-8-27-4.5l-33.1 12.5c-15.6-14-36.2-22.1-57.7-22.1c-15.1 0-29.6 4-42.3 11.4c-6.2-4.1-13.8-5.8-21.2-4.5L166.1 185c-9.2 1.6-16.7 8.3-19.2 17.3s.5 18.5 7.6 24.6l19.9 17.2c-15.7 7.7-28.1 21.5-34.1 38.6c-7.9-1.9-16.3-2.3-24.5-.9c-19.4 3.3-35.3 17.4-42 36.4s-3.7 39.4 8 55.4l14.2 19.3c-6.1 13.7-6.5 29.5-1 43.6s17.4 24.5 31.9 28.5l14.2 3.9C157.9 494.3 182.2 512 208.5 512l95 0c26.3 0 50.6-17.7 67.4-42.9l14.2-3.9c14.4-4 26.4-14.4 31.9-28.5s5.1-29.9-1-43.6l14.2-19.3c11.7-16 14.7-36.5 8-55.4s-22.6-33.1-42-36.4c-8.2-1.4-16.6-1-24.5 .9c1.9-6.8 2.5-14 1.7-21.1zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm128 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM256 448c-35.3 0-64-28.7-64-64c0-8.8 7.2-16 16-16s16 7.2 16 16c0 17.7 14.3 32 32 32s32-14.3 32-32c0-8.8 7.2-16 16-16s16 7.2 16 16c0 35.3-28.7 64-64 64z"/>
+</svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Crab-Walk Geometry</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">Proprietary 90° steering logic validated via simulation. Unmatched maneuverability for tight urban spaces.</p>
+                </div>
+
+                <div class="p-10 rounded-3xl bg-mint-50 border border-mint-100 hover-lift">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 text-emerald-600 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-4">Value Retention</h3>
+                    <p class="text-emerald-800/70 leading-relaxed">We decouple the battery cost from the vehicle, solving the resale value crisis and lowering upfront costs.</p>
+                </div>
+            </div>
+        -->
+        </div>
+    </section>
+
+      <section id="fusion-section" style="padding-bottom: 70px;"
+        class="w-full h-[80vh] md:h-screen min-h-[500px] md:min-h-[600px] bg-primary overflow-hidden relative z-20">
+        <div class="w-full h-full relative mx-auto flex">
+
+            <!-- Resulting Image (Center) -->
+            <div
+                class="fusion-result absolute top-1/2 left-1/2 w-[90vw] md:w-[85vw] h-[50vh] md:h-[85vh] rounded-2xl md:rounded-[3rem] overflow-hidden shadow-2xl z-30 pointer-events-none"style="animation-delay: 10s;">
+                <img src="images/chasis.png" alt="New Image Result" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-dark/40 flex items-center justify-center">
+                    <div class="text-center px-4">
+                        <span class="text-accent uppercase tracking-[0.3em] text-sm md:text-lg font-bold mb-4 block"style="color: #99eff0;">The
+                            Result</span>
+                        <h3
+                            class="text-primary font-serif text-4xl md:text-7xl lg:text-[6rem] font-bold tracking-widest drop-shadow-lg" style="color: #d3e4df;">
+                            SYNTHESIS</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Card (Description) - Takes full width on mobile so text isn't squashed -->
+            <div
+                class="fusion-left absolute left-0 top-0 w-full md:w-1/2 h-full bg-dark text-primary p-6 sm:p-10 md:p-16 lg:p-32 z-20 flex flex-col justify-center shadow-2xl">
+                <span
+                    class="text-accent uppercase tracking-widest text-[0.5rem] md:text-sm font-bold mb-2 md:mb-6 block">future
+                    process</span>
+                <h2
+                    class="text-3xl sm:text-4xl md:text-[3rem] lg:text-[4.5rem] font-serif font-bold mb-4 md:mb-8 leading-tight"style="line-height: 1;">
+                    bev platform</h2>
+                <p class="text-primary/80 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-xl">
+                    At DDC, we develop advanced BEV platforms integrated with intelligent autonomous navigation
+                    technology. Our electric vehicle platform ensures efficient performance, zero emissions, and a
+                    strong, reliable foundation. Combined with smart sensors, cameras, and intelligent control systems,
+                    our autonomous technology enables safe, precise, and driverless mobility. Together, these
+                    technologies power the future of clean, smart, and sustainable transportation.
+                </p>
+            </div>
+
+            <!-- Right Card (Image) - Hidden on mobile to save space, visible on md+ screens -->
+            <div class="fusion-right hidden md:block absolute right-0 top-0 w-1/2 h-full z-20 shadow-2xl">
+                <img src="images/bev_platform_1772117007372.png" alt="Tech Component" class="w-full h-full object-cover">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 
+     <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto mint-gradient rounded-[40px] p-8 md:p-12 text-center text-emerald-950">
+            <h2 class="text-4xl font-bold mb-6">The Logic is Proven.</h2>
+            <p class="text-lg mb-12 opacity-80 max-w-2xl mx-auto">We don't use capital for trial & error. We use it for
+                industrial scale. Here is what we have already validated:</p>
+
+            
+            <div class="founders__content">
+
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Battery Tech" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">Founder</span>
+                        <h3 class="card__name">MR. ADHITHA PURUSOTHAMAN</h3>
+                        <p class="card__description">Finalized the automated docking sequence, battery-bay alignment and
+                            power station loop cycle.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-file-list-3-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-check-double-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-share-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-information-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Ergonomics" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">CO FOUNDER</span>
+                        <h3 class="card__name">PRAVEEN KUMAR</h3>
+                        <p class="card__description">Life-size mock-up used to finalize ingress/egress points and cabin
+                            volume validation.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-ruler-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-eye-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-team-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-folder-open-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=1000"
+                        alt="Mechanics" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">MECHNAICAL</span>
+                        <h3 class="card__name">SANJAY.R</h3>
+                        <p class="card__description">Frozen designs for the crab-walk enabler coupling and steering
+                            mechanisms.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-settings-4-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-compasses-2-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-tools-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-save-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">NAVIGATION DEPART</span>
+                        <h3 class="card__name">DiNESH</h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">WEBSITE DEVELOPER</span>
+                        <h3 class="card__name">YESHWANT.G.N</h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="card__article">
+                    <img src="https://images.unsplash.com/photo-1589792923962-537704632910?auto=format&fit=crop&q=80&w=600"
+                        alt="Manufacturing" class="card__bg">
+                    <div class="card__data">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Icon" class="card__perfil p-2">
+                        <span class="card__role">HARDWARE DEPARTMENT</span>
+                        <h3 class="card__name">AFSAR </h3>
+                        <p class="card__description">Ready to transition from low-fidelity fiberglass to the 'Industrial
+                            Gold Sample' with professional materials.</p>
+                    </div>
+                    <div class="card__actions">
+                        <button class="card__button">
+                            <i class="ri-more-fill card__more"></i>
+                            <i class="ri-close-line card__close"></i>
+                        </button>
+                        <div class="card__menu">
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-building-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-truck-line"></i></a>
+                            </div>
+                            <div class="card__icons">
+                                <a href="#" class="card__icon"><i class="ri-global-line"></i></a>
+                                <a href="#" class="card__icon"><i class="ri-bar-chart-line"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-12">
+                <button
+                    class="px-8 py-4 bg-emerald-950 text-white rounded-2xl font-bold hover:scale-105 transition-transform">
+                    Partner With Us
+                </button>
+                <button
+                    class="px-8 py-4 bg-white/30 backdrop-blur-md border border-white/40 rounded-2xl font-bold hover:bg-white/40 transition-all text-emerald-950">
+                    Contact 
+                </button>
+            </div>
+        </div>
+    </section>
+
+-->
+   
+    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
+    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
+   
+<script>
+const trigger = document.getElementById("expand-trigger");
+const expandingImage = document.getElementById("expanding-image");
+const caption = document.getElementById("image-caption");
+
+window.addEventListener("scroll", () => {
+    const rect = trigger.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Calculate how far we've scrolled inside the section
+    const totalScroll = trigger.offsetHeight - windowHeight;
+    const scrollProgress = Math.min(
+        Math.max((windowHeight - rect.top) / totalScroll, 0),
+        1
+    );
+
+    // Animate width from 0% to 100%
+    expandingImage.style.width = `${scrollProgress * 100}%`;
+
+    // Fade caption near end
+    if (scrollProgress > 0.75) {
+        caption.style.opacity = 1;
+    } else {
+        caption.style.opacity = 0;
+    }
+});
+</script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        };
+ gsap.set(".fusion-result", { xPercent: -50, yPercent: -50, scale: 0.75, opacity: 0 });
+
+        const fusionTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#fusion-section",
+                start: "top top",
+                end: "+=150%",
+                pin: true,
+                scrub: 1
+            }
+        });
+
+        fusionTl.to(".fusion-left", {
+            left: "50%",
+            xPercent: -50,
+            opacity: 0,
+            scale: 0.8,
+            duration: 2,
+            ease: "power2.inOut"
+        }, 0)
+            .to(".fusion-right", {
+                right: "50%",
+                xPercent: 50,
+                opacity: 0,
+                scale: 0.8,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0)
+            .to(".fusion-result", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.5,
+                ease: "power2.out"
+            }, 1);
+
+
+        // 7. Hero Text Reveal Animation
+        window.addEventListener('load', () => {
+            gsap.from(".hero-line", {
+                y: "110%",
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power4.out",
+                delay: 0.2
+            });
+        });
+        
+</script>
+  <script src="js/footer.js" data-next="technology.html"></script>
+  <script src="js/main.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>

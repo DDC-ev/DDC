@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Swapping Reinvented</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+ 
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        .animate-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 2s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        .animate-pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: #3ED6B2;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            z-index: -1;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
+        }
+        .animate-dash {
+            animation: dash 1s linear infinite;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(62, 214, 178, 0.05);
+        }
+
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+    </style>
+</head>
+<body class="font-inter bg-[#F7FFFC] text-[#1C1C1C] overflow-x-hidden relative selection:bg-[#3ED6B2] selection:text-white">
+<div id="nav-container"></div>
+    <!-- Global Background Glows -->
+    <div class="absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-float pointer-events-none bg-[#3ED6B2] w-[400px] h-[400px] top-[-100px] left-[-100px]"></div>
+    <div class="absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-float pointer-events-none bg-[#A8FFE6] w-[500px] h-[500px] top-[20%] right-[-200px] animation-delay-2000"></div>
+    <div class="absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-30 animate-float pointer-events-none bg-[#3ED6B2] w-[600px] h-[600px] bottom-[-200px] left-[10%] animation-delay-4000"></div>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative min-h-[90vh] flex items-center pt-[var(--space-2xl)] pb-[var(--space-xl)] px-[var(--space-md)] lg:px-[var(--space-2xl)] max-w-7xl mx-auto z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+            
+            <!-- Hero Content -->
+            <div class="flex flex-col items-start space-y-8 z-10">
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white border border-[#3ED6B2]/30 text-[#0F2E2E] text-sm font-medium shadow-sm mb-2">
+                    <!-- TODO: Update specific JSON URL for zap -->
+                     <lord-icon src="https://cdn.lordicon.com/rpviwvwn.json" trigger="hover" colors="primary:#3ED6B2" style="width:1rem;height:1rem"></lord-icon>
+                    <span>The Future of Indian Smart Infrastructure</span>
+                </div>
+                
+                <h1 class="text-[clamp(2.5rem,6vw,5.5rem)] font-poppins font-bold text-[#0F2E2E] leading-[1.1] relative tracking-tight">
+                    Battery Swapping <br />
+                    <span class="relative inline-block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#0F2E2E] to-[#3ED6B2]">
+                        Reinvented
+                        <svg class="absolute w-[110%] h-6 -bottom-1 left-[-5%] overflow-visible" viewBox="0 0 200 20" preserveAspectRatio="none">
+                            <path 
+                                d="M0,15 C50,25 150,-5 200,15" 
+                                fill="none" 
+                                stroke="#3ED6B2" 
+                                stroke-width="4" 
+                                stroke-linecap="round"
+                                class="animate-draw" 
+                            />
+                        </svg>
+                    </span>
+                </h1>
+                
+                <p class="text-[clamp(1rem,1.5vw,1.25rem)] text-[#1C1C1C]/80 max-w-lg leading-relaxed">
+                    Fully Automated 4-Wheeler Battery Swapping in Under 3 Minutes. Eliminate charge anxiety and high ownership costs with our seamless infrastructure.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto pt-4">
+                    <button class="group relative px-8 py-4 bg-[#0F2E2E] text-white rounded-[16px] font-medium text-lg overflow-hidden shadow-lg hover:shadow-xl hover:shadow-[#3ED6B2]/20 transition-all duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#3ED6B2] to-[#A8FFE6] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                        <span class="relative flex items-center justify-center space-x-2">
+                            <span>Explore Technology</span>
+                            <!-- TODO: Update specific JSON URL for arrow-right -->
+                            <lord-icon src="https://cdn.lordicon.com/zmkotitn.json" trigger="hover" colors="primary:#ffffff" style="width:1.25rem;height:1.25rem" class="group-hover:translate-x-1 transition-transform"></lord-icon>
+                        </span>
+                    </button>
+                    <button class="px-8 py-4 bg-white text-[#0F2E2E] border border-[#3ED6B2]/30 rounded-[16px] font-medium text-lg hover:bg-[#F7FFFC] hover:border-[#3ED6B2] transition-all duration-300 shadow-sm hover:shadow-md">
+                        Book a Demo 
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hero 3D Illustration Placeholder -->
+            <div class="relative w-full aspect-square lg:aspect-[4/3] flex items-center justify-center z-10">
+    <div class="relative w-full h-full max-w-[500px] max-h-[500px] flex items-center justify-center">
+        <img src="../images/battery.jpeg" alt="AI EV Battery Docking Station" class="w-full h-auto rounded-[24px] shadow-2xl border border-white/10 object-cover">
+        
+        <div class="absolute inset-0 border-[1px] border-dashed border-[#3ED6B2]/30 rounded-full animate-[spin_60s_linear_infinite] -z-10"></div>
+        <div class="absolute inset-8 border-[1px] border-dashed border-[#0F2E2E]/10 rounded-full animate-[spin_40s_linear_infinite_reverse] -z-10"></div>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- Wave Separator -->
+    <div class="w-full overflow-hidden leading-none text-[#ffffff]">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-[calc(100%+1.3px)] h-[60px] lg:h-[100px]">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.22,200.2,111.9,240.86,106.41,281.33,83.9,321.39,56.44Z" class="fill-white"></path>
+        </svg>
+    </div>
+
+    <!-- 2. PROBLEM -> SOLUTION BLOCK -->
+    <section class="py-24 px-6 lg:px-20 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center mb-16 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out">
+                <h2 class="text-[clamp(2rem,4vw,3.5rem)] font-poppins font-bold text-[#0F2E2E] mb-4">The EV Paradigm Shift</h2>
+                <p class="text-[#1C1C1C]/70 max-w-2xl mx-auto text-[var(--text-lg)]">Transitioning from the limitations of legacy charging to the freedom of instant energy.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                <!-- The Problem -->
+                <div class="space-y-6 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 100ms;">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+                            <!-- TODO: Update JSON URL -->
+                            <lord-icon src="https://cdn.lordicon.com/fwkrbvja.json" trigger="hover" style="width:1.5rem;height:1.5rem" colors="primary:#1C1C1C"></lord-icon>
+                        </div>
+                        <h3 class="text-[var(--text-2xl)] font-poppins font-semibold text-[#1C1C1C]">Traditional Charging</h3>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gray-50 border border-gray-100 group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="mt-1 text-[#1C1C1C]/40 group-hover:text-red-400 transition-colors"><!-- TODO: Update specific JSON URL for clock -->
+                            <lord-icon src="https://cdn.lordicon.com/kbtmbyzy.json" trigger="hover" colors="primary:#1C1C1C" style="width:3rem;height:3rem"></lord-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#1C1C1C]">1–6 Hour Delays</h4>
+                            <p class="text-[#1C1C1C]/60 mt-1">Long wait times impacting productivity and daily schedules.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gray-50 border border-gray-100 group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="mt-1 text-[#1C1C1C]/40 group-hover:text-red-400 transition-colors"style="transform: rotate(90deg);"><!-- TODO: Update specific JSON URL for zap -->
+                            <lord-icon src="https://cdn.lordicon.com/ezityrjj.json" trigger="hover" colors="primary:#1C1C1C"  style="width:3rem;height:3rem"></lord-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#1C1C1C]">Battery Degradation</h4>
+                            <p class="text-[#1C1C1C]/60 mt-1">Fast-charging destroys cell chemistry over time.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gray-50 border border-gray-100 group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="mt-1 text-[#1C1C1C]/40 group-hover:text-red-400 transition-colors">
+                            <!-- TODO: Update JSON URL -->
+                            <lord-icon src="https://cdn.lordicon.com/eaegfqtv.json" trigger="hover" style="width:3rem;height:3rem" colors="primary:#1C1C1C"></lord-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-[#1C1C1C]">High Ownership Cost</h4>
+                            <p class="text-[#1C1C1C]/60 mt-1">Paying upfront for an asset that rapidly depreciates.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Solution -->
+                <div class="space-y-6 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 200ms;">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div class="w-10 h-10 rounded-full bg-[#3ED6B2]/20 flex items-center justify-center">
+                            <!-- TODO: Update specific JSON URL for check-circle -->
+                            <lord-icon src="https://cdn.lordicon.com/qncyoyoi.json" trigger="hover" style="width:1.5rem;height:1.5rem" colors="primary:#0F2E2E"></lord-icon>
+                        </div>
+                        <h3 class="text-2xl font-poppins font-semibold text-[#0F2E2E]">Our Swapping Ecosystem</h3>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gradient-to-br from-[#F7FFFC] to-[#e6fbf5] border border-[#3ED6B2]/30 shadow-sm group hover:-translate-y-1 hover:shadow-md hover:shadow-[#3ED6B2]/10 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-[#3ED6B2]/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-[#3ED6B2]/20 transition-colors"></div>
+                        <div class="mt-1 text-[#3ED6B2] bg-white p-2 rounded-lg shadow-sm z-10"><!-- TODO: Update specific JSON URL for refresh-cw -->
+                            <lord-icon src="https://cdn.lordicon.com/guqkthkk.json" trigger="hover" colors="primary:#3ED6B2" style="width:3rem;height:3rem"></lord-icon>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="font-semibold text-lg text-[#0F2E2E]">< 3 Min Automated Swap</h4>
+                            <p class="text-[#1C1C1C]/70 mt-1">Drive in, swap out, drive off. Faster than filling a gas tank.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gradient-to-br from-[#F7FFFC] to-[#e6fbf5] border border-[#3ED6B2]/30 shadow-sm group hover:-translate-y-1 hover:shadow-md hover:shadow-[#3ED6B2]/10 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-[#3ED6B2]/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-[#3ED6B2]/20 transition-colors"></div>
+                        <div class="mt-1 text-[#3ED6B2] bg-white p-2 rounded-lg shadow-sm z-10"><!-- TODO: Update specific JSON URL for layers -->
+                            <lord-icon src="https://cdn.lordicon.com/jectmwqf.json" trigger="hover" style="width:3rem;height:3rem" colors="primary:#1C1C1C"></lord-icon></div>
+                        <div class="relative z-10">
+                            <h4 class="font-semibold text-lg text-[#0F2E2E]">Compact Deployment</h4>
+                            <p class="text-[#1C1C1C]/70 mt-1">Modular stations fit into existing city infrastructure easily.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 rounded-[20px] bg-gradient-to-br from-[#F7FFFC] to-[#e6fbf5] border border-[#3ED6B2]/30 shadow-sm group hover:-translate-y-1 hover:shadow-md hover:shadow-[#3ED6B2]/10 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-[#3ED6B2]/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-[#3ED6B2]/20 transition-colors"></div>
+                        <div class="mt-1 text-[#3ED6B2] bg-white p-2 rounded-lg shadow-sm z-10"style="transform: rotate(90deg);"><!-- TODO: Update specific JSON URL for shield-check -->
+                            <lord-icon src="https://cdn.lordicon.com/paytkhxp.json" trigger="hover" style="width:3rem;height:3rem" colors="primary:#1C1C1C"></lord-icon></div>
+                        <div class="relative z-10">
+                            <h4 class="font-semibold text-lg text-[#0F2E2E]">BaaS (Battery-as-a-Service)</h4>
+                            <p class="text-[#1C1C1C]/70 mt-1">Zero upfront battery cost. Pay only for the energy you consume.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. HOW IT WORKS (Animated Timeline) -->
+    <section class="py-24 px-6 lg:px-20 bg-[#0F2E2E] text-white relative z-10 overflow-hidden">
+        <!-- Abstract background graphics -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-b from-[#3ED6B2]/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out">
+                <h2 class="text-[clamp(2rem,4vw,3.5rem)] font-poppins font-bold text-white mb-4">Precision Engineered Flow</h2>
+                <p class="text-white/70 max-w-2xl mx-auto text-[var(--text-lg)]">A frictionless, zero-touch experience designed for maximum throughput and safety.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Desktop Horizontal Line -->
+                <div class="hidden lg:block absolute top-12 left-0 w-full h-1 bg-gradient-to-r from-[#0F2E2E] via-[#3ED6B2] to-[#0F2E2E]"></div>
+                
+                <!-- Mobile Vertical Line -->
+                <div class="block lg:hidden absolute top-0 left-6 w-1 h-full bg-gradient-to-b from-[#0F2E2E] via-[#3ED6B2] to-[#0F2E2E]"></div>
+
+                <div class="flex flex-col lg:flex-row justify-between relative z-10 space-y-12 lg:space-y-0">
+                    
+                    <div class="flex lg:flex-col items-start lg:items-center relative pl-16 lg:pl-0 w-full lg:w-1/5 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 0ms;">
+                        <div class="absolute left-0 lg:static w-12 h-12 rounded-full bg-[#1a4a4a] border-2 border-[#3ED6B2] flex items-center justify-center text-[#3ED6B2] font-poppins font-bold z-10 lg:mb-6 shadow-[0_0_20px_rgba(62,214,178,0.3)]">01</div>
+                        <div class="lg:text-center">
+                            <h4 class="text-xl font-semibold mb-2">Vehicle Arrival</h4>
+                            <p class="text-white/60 text-sm leading-relaxed">Pod enters station bounds.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex lg:flex-col items-start lg:items-center relative pl-16 lg:pl-0 w-full lg:w-1/5 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 150ms;">
+                        <div class="absolute left-0 lg:static w-12 h-12 rounded-full bg-[#1a4a4a] border-2 border-[#3ED6B2] flex items-center justify-center text-[#3ED6B2] font-poppins font-bold z-10 lg:mb-6 shadow-[0_0_20px_rgba(62,214,178,0.3)]">02</div>
+                        <div class="lg:text-center">
+                            <h4 class="text-xl font-semibold mb-2">AI Alignment</h4>
+                            <p class="text-white/60 text-sm leading-relaxed">Sensors auto-dock vehicle.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex lg:flex-col items-start lg:items-center relative pl-16 lg:pl-0 w-full lg:w-1/5 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 300ms;">
+                        <div class="absolute left-0 lg:static w-12 h-12 rounded-full bg-[#1a4a4a] border-2 border-[#3ED6B2] flex items-center justify-center text-[#3ED6B2] font-poppins font-bold z-10 lg:mb-6 shadow-[0_0_20px_rgba(62,214,178,0.3)]">03</div>
+                        <div class="lg:text-center">
+                            <h4 class="text-xl font-semibold mb-2">Extraction</h4>
+                            <p class="text-white/60 text-sm leading-relaxed">Robotics safely remove battery.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex lg:flex-col items-start lg:items-center relative pl-16 lg:pl-0 w-full lg:w-1/5 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 450ms;">
+                        <div class="absolute left-0 lg:static w-12 h-12 rounded-full bg-[#1a4a4a] border-2 border-[#3ED6B2] flex items-center justify-center text-[#3ED6B2] font-poppins font-bold z-10 lg:mb-6 shadow-[0_0_20px_rgba(62,214,178,0.3)]">04</div>
+                        <div class="lg:text-center">
+                            <h4 class="text-xl font-semibold mb-2">Insertion</h4>
+                            <p class="text-white/60 text-sm leading-relaxed">Fully charged cell loaded.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex lg:flex-col items-start lg:items-center relative pl-16 lg:pl-0 w-full lg:w-1/5 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 600ms;">
+                        <div class="absolute left-0 lg:static w-12 h-12 rounded-full bg-[#1a4a4a] border-2 border-[#3ED6B2] flex items-center justify-center text-[#3ED6B2] font-poppins font-bold z-10 lg:mb-6 shadow-[0_0_20px_rgba(62,214,178,0.3)]">05</div>
+                        <div class="lg:text-center">
+                            <h4 class="text-xl font-semibold mb-2">Departure</h4>
+                            <p class="text-white/60 text-sm leading-relaxed">Exit in under 3 minutes.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curved Divider Bottom -->
+    <div class="w-full overflow-hidden leading-none bg-[#F7FFFC]">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-[calc(100%+1.3px)] h-[60px] lg:h-[100px] rotate-180">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.22,200.2,111.9,240.86,106.41,281.33,83.9,321.39,56.44Z" class="fill-[#0F2E2E]"></path>
+        </svg>
+    </div>
+
+    <!-- 4. TECHNOLOGY DIFFERENTIATORS -->
+    <section class="py-24 px-6 lg:px-20 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out">
+                <h2 class="text-3xl lg:text-5xl font-poppins font-bold text-[#0F2E2E] mb-4">Core Differentiators</h2>
+                <p class="text-[#1C1C1C]/70 max-w-2xl mx-auto text-lg">Proprietary technology engineered for scalability and ultimate reliability.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="glass-card p-8 rounded-[24px] group hover:-translate-y-2 transition-all duration-500 cursor-default reveal opacity-0 translate-y-12 ease-out" style="transition-delay: 0ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-[#0F2E2E] text-[#3ED6B2] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <!-- TODO: Update specific JSON URL for cpu -->
+                        <lord-icon src="https://cdn.lordicon.com/njpauqoc.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                    </div>
+                    <h3 class="text-xl font-poppins font-bold text-[#0F2E2E] mb-3 leading-snug">Fully Automated 4-Wheeler Swapping</h3>
+                    <p class="text-[#1C1C1C]/70 leading-relaxed text-sm">No human intervention. Precision robotics handle the entire payload transfer.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-[24px] group hover:-translate-y-2 transition-all duration-500 cursor-default reveal opacity-0 translate-y-12 ease-out" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-[#0F2E2E] text-[#3ED6B2] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <!-- TODO: Update specific JSON URL for building-2 -->
+<lord-icon src="https://cdn.lordicon.com/qhgmphtg.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                    </div>
+                    <h3 class="text-xl font-poppins font-bold text-[#0F2E2E] mb-3 leading-snug">Compact Autonomous Stations</h3>
+                    <p class="text-[#1C1C1C]/70 leading-relaxed text-sm">20% smaller footprint than competitors. Deployable in dense urban environments.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-[24px] group hover:-translate-y-2 transition-all duration-500 cursor-default reveal opacity-0 translate-y-12 ease-out" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-[#0F2E2E] text-[#3ED6B2] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <!-- TODO: Update specific JSON URL for refresh-cw -->
+<lord-icon src="https://cdn.lordicon.com/zruuduya.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                    </div>
+                    <h3 class="text-xl font-poppins font-bold text-[#0F2E2E] mb-3 leading-snug">BaaS Subscription Platform</h3>
+                    <p class="text-[#1C1C1C]/70 leading-relaxed text-sm">Dynamic pricing algorithms ensuring lowest cost per kilometer.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-[24px] group hover:-translate-y-2 transition-all duration-500 cursor-default md:col-span-2 lg:col-span-1 lg:col-start-2 reveal opacity-0 translate-y-12 ease-out" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-[#0F2E2E] text-[#3ED6B2] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <!-- TODO: Update specific JSON URL for smartphone -->
+<lord-icon src="https://cdn.lordicon.com/wzrwaorf.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                    </div>
+                    <h3 class="text-xl font-poppins font-bold text-[#0F2E2E] mb-3 leading-snug">Autonomous-Ready Integration</h3>
+                    <p class="text-[#1C1C1C]/70 leading-relaxed text-sm">Software stack prepared for next-gen self-driving fleet docking.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-[24px] group hover:-translate-y-2 transition-all duration-500 cursor-default md:col-span-2 lg:col-span-1 lg:col-start-3 reveal opacity-0 translate-y-12 ease-out" style="transition-delay: 400ms;">
+                    <div class="w-14 h-14 rounded-2xl bg-[#0F2E2E] text-[#3ED6B2] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                        <!-- TODO: Update specific JSON URL for zap -->
+<lord-icon src="https://cdn.lordicon.com/rpviwvwn.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                    </div>
+                    <h3 class="text-xl font-poppins font-bold text-[#0F2E2E] mb-3 leading-snug">Chemistry Upgrade Support</h3>
+                    <p class="text-[#1C1C1C]/70 leading-relaxed text-sm">Station architecture supports solid-state and future battery formats.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SMART ENERGY ECOSYSTEM -->
+    <section class="py-24 px-6 lg:px-20 bg-white border-y border-[#3ED6B2]/10 relative z-10 overflow-hidden">
+        <div class="absolute rounded-full mix-blend-multiply filter blur-[100px] opacity-10 animate-float pointer-events-none bg-[#3ED6B2] w-[300px] h-[300px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out">
+                <h2 class="text-3xl lg:text-5xl font-poppins font-bold text-[#0F2E2E] mb-4">Smart Energy Ecosystem</h2>
+                <p class="text-[#1C1C1C]/70 max-w-2xl mx-auto text-lg">A fully connected hardware and software loop powering the future fleet.</p>
+            </div>
+
+            <div class="relative w-full max-w-4xl mx-auto h-[500px] md:h-[300px] mt-10">
+                <!-- Connecting Lines Desktop -->
+                <svg class="hidden md:block absolute inset-0 w-full h-full z-0 opacity-50" style="pointer-events: none;">
+                    <path d="M100,150 C 250,150 250,50 400,50" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                    <path d="M400,50 C 550,50 550,150 700,150" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                    <path d="M100,150 C 250,150 250,250 400,250" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                    <path d="M400,250 C 550,250 550,150 700,150" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                    <path d="M400,50 L 400,250" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                    <path d="M700,50 L 700,250" fill="none" stroke="#3ED6B2" stroke-width="2" stroke-dasharray="6,6" class="animate-dash" />
+                </svg>
+
+                <!-- Nodes -->
+                <div class="flex flex-col md:flex-row justify-between items-center h-full relative z-10" style="transition-delay: 100ms;">
+                    
+                    <!-- Left -->
+                    <div class="relative group reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 100ms;">
+                        <div class="w-20 h-20 bg-white border border-[#3ED6B2] shadow-[0_0_20px_rgba(62,214,178,0.2)] rounded-full flex items-center justify-center animate-pulse-ring z-10 relative">
+                            <!-- TODO: Update specific JSON URL for car-front -->
+                        <i data-lucide="car-front" class="w-8 h-8 text-[#0F2E2E]"></i>
+                        </div>
+                        <div class="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-center w-32 font-medium text-[#0F2E2E]">EV Pods</div>
+                    </div>
+
+                    <!-- Middle Top / Bottom -->
+                    <div class="flex flex-col justify-between h-[300px] md:h-full w-full md:w-auto items-center py-10 md:py-0 relative" style="align-items: center;right: 47px; bottom: 10px;">
+                        <!-- Mobile vertical line -->
+                        <div class="md:hidden absolute top-0 bottom-0 left-1/2 w-0.5 border-l-2 border-dashed border-[#3ED6B2] opacity-50"></div>
+                        
+                        <div class="relative z-10 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 200ms;">
+                             <div class="w-24 h-24 bg-[#0F2E2E] text-[#3ED6B2] shadow-xl shadow-[#0F2E2E]/20 rounded-2xl flex items-center justify-center relative transform transition-transform hover:scale-105">
+                                 <!-- TODO: Update specific JSON URL for layers -->
+                                  <lord-icon src="https://cdn.lordicon.com/jectmwqf.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                             </div>
+                             <div class="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-center w-40 font-bold text-[#0F2E2E]">Swapping Station</div>
+                        </div>
+
+                        <div class="relative z-10 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 300ms;">
+                             <div class="w-20 h-20 bg-white border border-[#3ED6B2] rounded-full flex items-center justify-center shadow-md transform transition-transform hover:scale-105">
+                                 <!-- TODO: Update specific JSON URL for cloud -->
+                            <lord-icon src="https://cdn.lordicon.com/yvjimpju.json" trigger="loop" delay="2000" colors="primary:#3ED6B2,secondary:#3ED6B2" style="width:60px;height:60px"></lord-icon>
+                             </div>
+                             <div class="absolute top-full mt-4 left-1/2 -translate-x-1/2 text-center w-32 font-medium text-[#0F2E2E]">Cloud System</div>
+                        </div>
+                    </div>
+
+                    <!-- Right -->
+                    <div class="flex flex-row md:flex-col justify-center space-x-12 md:space-x-0 md:space-y-24 z-10" style="align-items:start; position: relative; right: 10rem;">
+                        <div class="relative reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 400ms;">
+                            <div class="w-16 h-16 bg-white border border-[#3ED6B2]/50 rounded-xl flex items-center justify-center shadow-sm">
+                                <!-- TODO: Update specific JSON URL for smartphone -->
+                                <i data-lucide="smartphone" class="w-7 h-7 text-[#0F2E2E]/70"></i>
+                            </div>
+                            <div class="absolute top-full mt-2 left-1/2 -translate-x-1/2 text-center w-24 text-sm font-medium text-[#1C1C1C]/80">Mobile App</div>
+                        </div>
+
+                        <div class="relative reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 500ms;">
+                            <div class="w-16 h-16 bg-white border border-[#3ED6B2]/50 rounded-xl flex items-center justify-center shadow-sm">
+                                <!-- TODO: Update specific JSON URL for building-2 -->
+                                <i data-lucide="building-2" class="w-7 h-7 text-[#0F2E2E]/70"></i>
+                            </div>
+                            <div class="absolute top-full mt-2 left-1/2 -translate-x-1/2 text-center w-28 text-sm font-medium text-[#1C1C1C]/80">Fleet Operators</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TRUST NUMBERS SECTION -->
+    <section class="py-24 px-6 lg:px-20 bg-gradient-to-br from-[#0F2E2E] to-[#1a4a4a] text-white relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 divide-x-0 lg:divide-x lg:divide-[#3ED6B2]/20">
+                
+                <div class="text-center px-4 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 0ms;">
+                    <div class="flex items-baseline justify-center space-x-1 mb-2">
+                        <span class="text-4xl lg:text-6xl font-poppins font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3ED6B2] to-[#A8FFE6]">
+                            < 3
+                        </span>
+                        <span class="text-xl lg:text-2xl text-white/80 font-medium">Minutes</span>
+                    </div>
+                    <p class="text-white/60 font-medium tracking-wide text-sm lg:text-base">Automated Swap Time</p>
+                </div>
+
+                <div class="text-center px-4 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 100ms;">
+                    <div class="flex items-baseline justify-center space-x-1 mb-2">
+                        <span class="text-4xl lg:text-6xl font-poppins font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3ED6B2] to-[#A8FFE6]">
+                            8–10
+                        </span>
+                        <span class="text-xl lg:text-2xl text-white/80 font-medium">Years</span>
+                    </div>
+                    <p class="text-white/60 font-medium tracking-wide text-sm lg:text-base">Battery Lifecycle Extension</p>
+                </div>
+
+                <div class="text-center px-4 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 200ms;">
+                    <div class="flex items-baseline justify-center space-x-1 mb-2">
+                        <span class="text-4xl lg:text-6xl font-poppins font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3ED6B2] to-[#A8FFE6]">
+                            2–3
+                        </span>
+                        <span class="text-xl lg:text-2xl text-white/80 font-medium">Years</span>
+                    </div>
+                    <p class="text-white/60 font-medium tracking-wide text-sm lg:text-base">Asset Payback Period</p>
+                </div>
+
+                <div class="text-center px-4 reveal opacity-0 translate-y-12 transition-all duration-1000 ease-out" style="transition-delay: 300ms;">
+                    <div class="flex items-baseline justify-center space-x-1 mb-2">
+                        <span class="text-4xl lg:text-6xl font-poppins font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3ED6B2] to-[#A8FFE6]">
+                            ₹150
+                        </span>
+                        <span class="text-xl lg:text-2xl text-white/80 font-medium">/ Swap</span>
+                    </div>
+                    <p class="text-white/60 font-medium tracking-wide text-sm lg:text-base">Est. Energy Cost</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Mobile CTA -->
+    <div 
+style="
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:clamp(0.6rem,2vw,1rem);
+padding-bottom:max(clamp(0.6rem,2vw,1rem), env(safe-area-inset-bottom));
+background:rgba(255,255,255,0.85);
+backdrop-filter:blur(14px);
+border-top:1px solid rgba(62,214,178,0.2);
+z-index:50;
+">
+
+<button onclick=""
+style="
+width:min(92%,420px);
+min-width:220px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:clamp(0.4rem,1vw,0.6rem);
+
+padding:clamp(0.7rem,2vw,1rem) clamp(1rem,3vw,1.5rem);
+
+background:#0F2E2E;
+color:#ffffff;
+
+border-radius:clamp(12px,2vw,16px);
+
+font-weight:600;
+font-size:clamp(0.9rem,1vw + 0.3rem,1.1rem);
+
+box-shadow:0 8px 20px rgba(62,214,178,0.25);
+
+transition:all .25s ease;
+">
+
+<span>Book a Demo</span>
+
+<lord-icon 
+src="https://cdn.lordicon.com/zmkotitn.json"
+trigger="hover"
+colors="primary:#ffffff"
+style="
+width:clamp(1rem,2vw,1.3rem);
+height:clamp(1rem,2vw,1.3rem);
+">
+</lord-icon>
+
+</button>
+
+    </div>
+
+
+    <!-- Initialization Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+           
+            // Set up Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('opacity-0', 'translate-y-12');
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        // Unobserve after revealing
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with the 'reveal' class
+            document.querySelectorAll('.reveal').forEach((element) => {
+                observer.observe(element);
+            });
+        });
+    </script>
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <script>
+        ScrollReveal().reveal('.reveal', {
+            duration: 1000,
+            distance: '50px',
+            origin: 'bottom',
+            opacity: 0,
+            easing: 'ease-in-out',
+            reset: true
+        });
+    </script>
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#d3e4df',
+                        'dark': '#474d4d',
+                        'accent': '#99eff0',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        nanum: ['"Nanum Myeongjo"', 'serif'],
+                        helvetica: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+ gsap.set(".fusion-result", { xPercent: -50, yPercent: -50, scale: 0.75, opacity: 0 });
+
+        const fusionTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#fusion-section",
+                start: "top top",
+                end: "+=150%",
+                pin: true,
+                scrub: 1
+            }
+        });
+
+        fusionTl.to(".fusion-left", {
+            left: "50%",
+            xPercent: -50,
+            opacity: 0,
+            scale: 0.8,
+            duration: 2,
+            ease: "power2.inOut"
+        }, 0)
+            .to(".fusion-right", {
+                right: "50%",
+                xPercent: 50,
+                opacity: 0,
+                scale: 0.8,
+                duration: 2,
+                ease: "power2.inOut"
+            }, 0)
+            .to(".fusion-result", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.5,
+                ease: "power2.out"
+            }, 1);
+
+
+        // 7. Hero Text Reveal Animation
+        window.addEventListener('load', () => {
+            gsap.from(".hero-line", {
+                y: "110%",
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power4.out",
+                delay: 0.2
+            });
+        });
+        
+</script>
+<script src="../js/footer.js" data-next="../product.html"></script>
+<script src="../js/main.js"></script>
+<script src="../js/navbar.js"></script>
+<script src="../js/forms.js"></script>
+</body>
+</html>

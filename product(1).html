@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDC | Universal Electric Mobility Platform</title>
+    
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mint: {
+                            100: '#E8FCF3',
+                            200: '#CFF7E6', // Primary Soft Mint
+                            300: '#A3E8CA',
+                        },
+                        emerald: {
+                            DEFAULT: '#0F3D3E', // Accent Deep Emerald
+                            light: '#1B5B5C'
+                        },
+                        charcoal: '#222222' // Text
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base & Resets */
+        body {
+            background-color: #F8FDFB;
+            color: #222222;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 61, 62, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Parallax & 3D Clip Masks */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .clip-colossal {
+            clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+            transition: clip-path 0.5s ease;
+        }
+        
+        .clip-colossal:hover {
+            clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 98%);
+        }
+
+        .clip-diagonal {
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        /* Ambient Background Glows */
+        .glow-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -50px) scale(1.1); }
+        }
+
+        /* Custom Button Hover */
+        .btn-primary {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* 3D Slit Carousel CSS - Vertical (Top to Bottom) */
+        .slit-container {
+            perspective: 1200px;
+            display: flex;
+            flex-direction: column; /* Stack slices vertically */
+            width: 100%;
+            height: 100%;
+        }
+        .slit-slice {
+            position: relative;
+            flex: 1;
+            width: 100%; /* Full width for horizontal slices */
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .slit-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            background-repeat: no-repeat;
+            background-size: 100% calc(100% * var(--slices)); /* Stretch background vertically */
+        }
+        .slit-front {
+            transform: rotateX(0deg); /* Rotate around X axis for top-to-bottom */
+        }
+        .slit-back {
+            transform: rotateX(180deg);
+        }
+        .content-wrapper {
+            transition: all 0.4s ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        /* --- Retail Product Cards CSS --- */
+        .product-card {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: auto;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card .imgbx {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Cutout curves - #f0fdf4 is Tailwind's mint-50 background */
+        .product-card .imgbx::before {
+            content: '';
+            position: absolute;
+            bottom: 0px; left: 55%;
+            width: 20px; height: 20px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: -6px 6px  #f0fdf4; 
+        }
+        .product-card .imgbx::after {
+            content: '';
+            position: absolute;
+            top: 63%; left: -1px;
+            width: 20px; height: 20px;
+            background: transparent;
+            border-radius: 50%;
+             box-shadow: -6px 6px  #f0fdf4; 
+        }
+        .product-card .content {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            background: #0F3D3E; /* emerald */
+            border-radius: 15px;
+            border-top-left-radius: 0;
+            padding: 0 25px;
+        }
+        .product-card .content .price {
+            position: absolute;
+            top: -80px; left: 0;
+            height: 80px;
+            width: 55%;
+            background: #0F3D3E;
+            border-top: 10px solid #f0fdf4;
+            border-right: 10px solid #f0fdf4;
+            border-top-right-radius: 25px;
+        }
+        .product-card .content .price::before {
+            content: '';
+            position: absolute;
+            width: 25px; height: 25px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: -10px -10px 0 #f0fdf4;
+        }
+        .product-card .content .price::after {
+            content: '';
+            position: absolute;
+            width: 25px; height: 25px;
+            bottom: 0; right: -25px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: -10px 10px 0 #0F3D3E;
+        }
+        .product-card .content .price a {
+            position: relative;
+            background: #f0fdf4;
+            padding: 10px 15px;
+            margin: 15px 15px 0 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 700;
+            color: #0F3D3E;
+            border-radius: 7px;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .product-card .content .price a:hover {
+            background: #CFF7E6; /* mint-200 */
+        }
+        .product-card .specs {
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+        }
+        .product-card .specs li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #f0fdf4;
+            font-weight: 300;
+        }
+        .product-card .specs li span {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-mint-300 selection:text-emerald">
+
+    <!-- Ambient Background Elements -->
+    <div class="glow-blob bg-mint-200 w-[500px] h-[500px] top-[-10%] left-[-10%]"></div>
+    <div class="glow-blob bg-mint-300 w-[600px] h-[600px] top-[40%] right-[-10%] animation-delay-2000"></div>
+
+    <!-- Navigation -->
+     <nav id="mainNav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-2 md:px-8 md:py-3 transition-all duration-300 flex items-center justify-between gap-8 md:gap-12 w-[95%] max-w-5xl md:min-w-fit shadow-lg shadow-emerald-900/5">
+
+        <!-- Left Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-6 text-sm font-medium">
+    <!-- FEATURES DROPDOWN -->
+    <div class="relative group">
+        <a href="technology.html"
+           class="nav-item-link transition-colors animate-fade-in-words delay-100 whitespace-nowrap">
+            Signature Series
+        </a>
+
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
+                    bg-[#474d4d] text-white rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 
+                    group-hover:visible transition-all duration-300 
+                    min-w-[200px] py-3 flex flex-col text-sm">
+
+            <a href="technology.html" class="dropdown-item">Battery Swapping</a>
+            <a href="technology.html" class="dropdown-item">Features</a>
+        </div>
+    </div>
+
+    <a href="product.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+        What We Build
+    </a>
+
+    <a href="menu/blog.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap text-accent">
+        NEWS/media
+    </a>
+</div>
+
+        <!-- Center Logo -->
+        <div class="logo-container z-10">
+            <div class="logo-icon flex items-center justify-center">
+                <a href="index.html" aria-label="Go to Home" class="flex items-center justify-center">
+                    <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 md:h-12 w-auto drop-shadow-md">
+                        <path d="M40.9 4H99.1L136 40.9V99.1L99.1 136H40.9L4 99.1V40.9L40.9 4Z" stroke="var(--primary)" stroke-width="3" fill="none" />
+                        <g font-family="Nanum Myeongjo, serif" font-weight="400" text-anchor="middle">
+                            <text x="48" y="95" font-size="73" fill="#f1e498">D</text>
+                            <text x="94" y="95" font-size="73" fill="#f1e498">C</text>
+                            <text x="70" y="107" font-size="110" stroke="#474d4d" stroke-width="2" fill="#f1e498" paint-order="stroke">D</text>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <a href="index.html" class="logo-text tracking-widest cursor-pointer whitespace-nowrap z-10">
+                DP_01
+            </a>
+        </div>
+
+        <!-- Right Links Wrapper -->
+        <div class="nav-section hidden md:flex items-center gap-4 text-sm font-medium">
+            <!-- WHO WE ARE DROPDOWN -->
+    <div class="relative group">
+        <a href="menu/about.htmlS"
+           class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+            Who We Are
+        </a>
+
+        <div class="dropdown-menu absolute left-1/2 -translate-x-1/2 mt-4 
+                    bg-[#474d4d] text-white rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 
+                    group-hover:visible transition-all duration-300 
+                    min-w-[200px] py-3 flex flex-col text-sm">
+
+            <a href="menu/about.html" class="dropdown-item">About Us</a>
+            <a href="menu/journey.html" class="dropdown-item">Journey</a>
+        </div>
+    </div>
+
+    <a href="menu/tutorial.html"
+       class="nav-item-link transition-colors animate-fade-in-words delay-200 whitespace-nowrap">
+        hop on go
+    </a>
+            <a href="menu/contact.html" class="bg-emerald-500 text-white px-5 py-2 rounded-full hover:bg-emerald-800 transition-all animate-fade-in-words delay-300 text-xs tracking-wide uppercase font-bold whitespace-nowrap">Contact Us</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-emerald-500 px-4" id="mobileMenuBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-[-1] parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1674483861298-204128ddb381?auto=format&fit=crop&q=80&w=2000'); opacity: 0.15; filter: grayscale(50%) contrast(120%);"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full glass border-emerald/10 text-emerald text-xs font-semibold tracking-widest uppercase reveal">
+                A Universal Electric Mobility Platform
+            </div>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-emerald font-bold leading-tight mb-6 reveal" style="transition-delay: 100ms;">
+                Driving the <span class="italic font-light">Future</span> of <br> Modular Mobility.
+            </h1>
+            <p class="text-lg md:text-xl text-charcoal/80 max-w-2xl mx-auto mb-10 font-sans font-light reveal" style="transition-delay: 200ms;">
+                Powering autonomous EV pods and intelligent battery-swapping infrastructure. India’s next wave of elegant electric architecture.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal" style="transition-delay: 300ms;">
+                <a href="#platform" class="btn-primary bg-emerald text-white px-8 py-4 rounded-full font-medium w-full sm:w-auto text-center shadow-xl shadow-emerald/20">
+                    Explore Platform
+                </a>
+                <a href="#pods" class="bg-white text-emerald border border-emerald/20 px-8 py-4 rounded-full font-medium w-full sm:w-auto text-center hover:bg-mint-100 transition shadow-sm">
+                    View EV Pods
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE DDC PLATFORM -->
+    <section id="platform" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Our Ecosystem</h2>
+                <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-6">The DDC BEV Platform</h3>
+                <p class="text-charcoal/70 text-lg font-light leading-relaxed">
+                    A universal electric architecture designed to power OEM vehicles, retrofits, and autonomous pods — engineered with integrated battery swapping and intelligent mobility software.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
+                        <i data-lucide="cpu" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">Autonomous Navigation</h4>
+                    <p class="text-sm text-charcoal/70 leading-relaxed">Precision-engineered sensor fusion enabling safe, self-driving capabilities in mapped environments.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
+                        <i data-lucide="move-3d" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">360° Movement</h4>
+                    <p class="text-sm text-charcoal/70 leading-relaxed">Omni-directional steering system allowing crab-walk and zero-radius turns in dense urban centers.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
+                        <i data-lucide="battery-charging" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">Seamless Swapping</h4>
+                    <p class="text-sm text-charcoal/70 leading-relaxed">Automated docking logic ensuring a completely touchless battery swap in under three minutes.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-500 reveal group" style="transition-delay: 400ms;">
+                    <div class="w-14 h-14 bg-mint-200 rounded-2xl flex items-center justify-center mb-6 text-emerald group-hover:scale-110 transition">
+                        <i data-lucide="smartphone" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold text-emerald mb-3">App Integration</h4>
+                    <p class="text-sm text-charcoal/70 leading-relaxed">Summon your pod, monitor battery health, and handle subscription payments through one elegant interface.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: EV PODS (FLAGSHIP) -->
+    <section id="pods" class="py-24 bg-mint-100/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div class="max-w-2xl">
+                    <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Our Flagship</h2>
+                    <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-4">Autonomous EV Pods</h3>
+                    <p class="text-charcoal/70 text-lg font-light">Multi-directional mobility vehicles built flawlessly upon the DDC foundation.</p>
+                </div>
+                <div class="mt-6 md:mt-0 text-right">
+                    <p class="text-sm font-medium text-emerald bg-white px-4 py-2 rounded-full shadow-sm inline-block">
+                        Flexible Leasing & Deployment Models Available
+                    </p>
+                </div>
+            </div>
+
+            <!-- Pod Variants (3D Slit Carousel) -->
+            <div class="relative z-10 reveal" style="transition-delay: 200ms;">
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                    
+                    <!-- Carousel Left Side -->
+                    <div class="w-full lg:w-[55%] relative">
+                        <div class="relative w-full h-[400px] md:h-[450px] rounded-[2rem] shadow-2xl overflow-hidden glass border-white/50 ring-1 ring-emerald/5">
+                            <div id="slit-slider" class="slit-container">
+                                <!-- JS Injects Slices -->
+                            </div>
+                            <!-- Subtle lighting overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-emerald/20 to-transparent mix-blend-overlay pointer-events-none"></div>
+                        </div>
+                        
+                        <!-- Navigation Controls -->
+                        <div class="absolute -bottom-7 left-1/2 -translate-x-1/2 flex gap-4 z-20">
+                            <button onclick="prevPod()" class="w-14 h-14 rounded-full bg-emerald text-white flex items-center justify-center hover:bg-emerald-light transition-all shadow-xl shadow-emerald/30 hover:-translate-y-1 active:translate-y-0">
+                                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                            </button>
+                            <button onclick="nextPod()" class="w-14 h-14 rounded-full bg-emerald text-white flex items-center justify-center hover:bg-emerald-light transition-all shadow-xl shadow-emerald/30 hover:-translate-y-1 active:translate-y-0">
+                                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Content Right Side -->
+                    <div class="w-full lg:w-[45%] min-h-[300px] flex flex-col justify-center pt-8 lg:pt-0">
+                        <div id="pod-content-wrapper" class="content-wrapper opacity-0 translate-y-4">
+                            <!-- JS Injects Content -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- SECTION 4: RETAIL MODELS -->
+    <section id="retail" class="py-24 bg-mint-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-emerald font-semibold tracking-widest uppercase text-sm mb-3">Direct Purchase</h2>
+                <h3 class="font-serif text-4xl md:text-5xl text-emerald font-bold mb-4">Available Models</h3>
+                <p class="text-charcoal/70 text-lg font-light max-w-2xl mx-auto">Explore our lineup of commercial electric vehicles, available for direct purchase by fleet operators, communities, and enterprise clients.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 reveal" style="transition-delay: 200ms;">
+                
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <!-- Sleek white EV front - Centered -->
+                    <div class="imgbx shadow-lg" style="background-image: url('./images/bev-2.png');object-fit:fill;"></div>
+                    <div class="content shadow-xl">
+                        <div class="price">
+                            <a href="#">$45,000</a>
+                        </div>
+                        <div class="pt-2 text-white/90">
+                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">BEV Platform<h4>
+                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Passenger Pod</p>
+                            <ul class="specs">
+                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 250km</li>
+                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 6 Seat</li>
+                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 80km/h</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <!-- Autonomous White Shuttle Pod -->
+                    <div class="imgbx shadow-lg" style="background-image: url('./images/battrey.png'); background-position: center;object-fit: fill;"></div>
+                    <div class="content shadow-xl">
+                        <div class="price">
+                            <a href="#">$62,000</a>
+                        </div>
+                        <div class="pt-2 text-white/90">
+                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">battery-swapping</h4>
+                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Luxury Transit</p>
+                            <ul class="specs">
+                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 320km</li>
+                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 8 Seat</li>
+                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 100km/h</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <!-- Modern White EV Delivery Van -->
+                    <div class="imgbx shadow-lg" style="background-image: url('./images/pod.png'); background-position: center;object-fit: fill;"></div>
+                    <div class="content shadow-xl">
+                        <div class="price">
+                            <a href="#">$55,000</a>
+                        </div>
+                        <div class="pt-2 text-white/90">
+                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">pod</h4>
+                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Logistics Unit</p>
+                            <ul class="specs">
+                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 400-900km</li>
+                                <li><span><i data-lucide="users" class="w-5 h-5 text-mint-300"></i></span> 6,8,12 Seater</li>
+                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 90km/h</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <!-- Modern Silver/White EV Utility Truck -->
+                    <div class="imgbx shadow-lg" style="background-image: url('./images/sensor.webp'); object-fit: contain; background-position: center 80%;"></div>
+                    <div class="content shadow-xl">
+                        <div class="price">
+                            <a href="#">$70,000</a>
+                        </div>
+                        <div class="pt-2 text-white/90">
+                            <h4 class="font-serif text-lg font-bold mb-1 tracking-wide">navigation system</h4>
+                            <p class="text-xs text-mint-300 mb-3 uppercase tracking-wider">Industrial Mod</p>
+                            <ul class="specs">
+                                <li><span><i data-lucide="zap" class="w-5 h-5 text-mint-300"></i></span> 300km</li>
+                                <li><span><i data-lucide="cog" class="w-5 h-5 text-mint-300"></i></span> AWD</li>
+                                <li><span><i data-lucide="gauge" class="w-5 h-5 text-mint-300"></i></span> 110km/h</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: BATTERY SWAPPING (BaaS) -->
+    <section id="baas" class="py-24 relative overflow-hidden bg-emerald text-white">
+        <!-- Abstract dark background shapes -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-light rounded-full mix-blend-multiply filter blur-[100px] opacity-50 z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                
+                <div class="w-full lg:w-1/2 space-y-8 reveal">
+                    <div>
+                        <h2 class="text-mint-300 font-semibold tracking-widest uppercase text-sm mb-3">Battery-as-a-Service</h2>
+                        <h3 class="font-serif text-4xl md:text-5xl font-bold mb-6">Energy Without Ownership.</h3>
+                        <p class="text-white/80 text-lg font-light leading-relaxed">
+                            Battery ownership remains the largest barrier to EV adoption. We solved it. Our autonomous 4-wheeler swapping stations can be deployed in homes, campuses, and city centers.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="glass-dark p-6 rounded-2xl border border-white/10">
+                            <i data-lucide="zap" class="text-mint-300 w-8 h-8 mb-4"></i>
+                            <h5 class="font-bold text-lg mb-2">&lt; 3-Min Swap</h5>
+                            <p class="text-sm text-white/60 font-light">Zero downtime. Automated mechanics handle the entire process seamlessly.</p>
+                        </div>
+                        <div class="glass-dark p-6 rounded-2xl border border-white/10">
+                            <i data-lucide="credit-card" class="text-mint-300 w-8 h-8 mb-4"></i>
+                            <h5 class="font-bold text-lg mb-2">Pay Per Swap</h5>
+                            <p class="text-sm text-white/60 font-light">Eliminate upfront battery costs with our flexible subscription models.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 reveal">
+                    <div class="video-section shadow-2xl shadow-black/50 border border-white/10">
+                        <video autoplay loop muted playsinline>
+                            <source src="./images/v1760605652/video.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay bg-gradient-to-t from-emerald to-transparent opacity-80"></div>
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <div class="glass-dark p-4 rounded-xl flex items-center justify-between font-jakarta">
+                                <div>
+                                    <p class="text-xs text-mint-300 uppercase tracking-wider font-bold">System Status</p>
+                                    <p class="font-serif text-xl">Station Online</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full border-2 border-mint-300 flex items-center justify-center">
+                                    <div class="w-3 h-3 bg-mint-300 rounded-full animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: WHY DDC & USE CASES -->
+    <section id="why-ddc" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- Trust Anchors & Why Us -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+                <div class="reveal">
+                    <h3 class="font-serif text-4xl text-emerald font-bold mb-8">Why DDC?</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="layers" class="w-5 h-5 text-emerald"></i></div>
+                            <div>
+                                <h4 class="font-bold text-emerald text-lg">No Battery Ownership</h4>
+                                <p class="text-charcoal/70 text-sm font-light">Our BaaS model fundamentally shifts capital expenditure to operational ease.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="maximize" class="w-5 h-5 text-emerald"></i></div>
+                            <div>
+                                <h4 class="font-bold text-emerald text-lg">Retrofit Compatibility</h4>
+                                <p class="text-charcoal/70 text-sm font-light">Engineered to integrate smoothly, even accommodating unibody structures.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-mint-100 p-2 rounded-lg mr-4 mt-1"><i data-lucide="navigation" class="w-5 h-5 text-emerald"></i></div>
+                            <div>
+                                <h4 class="font-bold text-emerald text-lg">App-Based Autonomous Summoning</h4>
+                                <p class="text-charcoal/70 text-sm font-light">Vehicle deployment managed through an intuitive, centralized digital platform.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="reveal bg-mint-50 rounded-3xl p-10 border border-mint-200">
+                    <h3 class="font-serif text-2xl text-emerald font-bold mb-8 flex items-center">
+                        <i data-lucide="shield-check" class="w-6 h-6 mr-3 text-mint-300 fill-emerald"></i>
+                        Trust & Compliance
+                    </h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Safety Architecture</h4>
+                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Designed specifically for ARAI / ICAT certification pathways utilizing automotive-grade redundant systems.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-charcoal text-sm uppercase tracking-wider mb-2">Institutional Backing</h4>
+                            <p class="text-charcoal/70 text-sm font-light border-l-2 border-mint-300 pl-4">Engineered with JNN Institute support. Developed by a 35-member technical team dedicating 1,000+ R&D hours monthly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ecosystem Deployments -->
+            <div class="text-center mb-12 reveal">
+                <h3 class="font-serif text-4xl text-emerald font-bold mb-4">Ecosystem Deployments</h3>
+                <p class="text-charcoal/70 font-light">Versatile integration across premium commercial and civic landscapes.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 reveal">
+                <!-- Use Case Items -->
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=600&q=80" alt="Smart Campuses" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart Campuses</h4>
+                    </div>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80" alt="Resorts & Tourism" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Resorts & Tourism</h4>
+                    </div>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Smart Cities" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Smart Cities</h4>
+                    </div>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" alt="Gated Communities" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Gated Communities</h4>
+                    </div>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&w=600&q=80" alt="Fleet Operators" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Fleet Operators</h4>
+                    </div>
+                </div>
+                <div class="relative h-48 rounded-2xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Industrial Zones" class="w-full h-full object-cover transition duration-700 group-hover:scale-110 group-hover:filter group-hover:brightness-50">
+                    <div class="absolute inset-0 bg-emerald/40 group-hover:bg-emerald/60 transition duration-500 flex items-center justify-center">
+                        <h4 class="text-white font-serif font-bold text-lg tracking-wide text-center px-4">Industrial Zones</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-emerald text-white pt-20 pb-10 border-t border-emerald-light relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start mb-16 border-b border-white/10 pb-16">
+                <div class="mb-10 md:mb-0 text-center md:text-left">
+                    <div class="text-white font-serif font-bold text-4xl tracking-wider mb-4">
+                        DDC<span class="text-mint-300">.</span>
+                    </div>
+                    <p class="text-white/60 font-light max-w-sm">
+                        India’s first universal modular electric mobility platform. Elevating transit, piece by piece.
+                    </p>
+                </div>
+                <div class="flex space-x-12">
+                    <div>
+                        <h5 class="font-bold mb-4 text-mint-300 tracking-wider text-sm uppercase">Platform</h5>
+                        <ul class="space-y-2 text-white/60 text-sm font-light">
+                            <li><a href="#" class="hover:text-white transition">Architecture</a></li>
+                            <li><a href="#" class="hover:text-white transition">EV Pods</a></li>
+                            <li><a href="#" class="hover:text-white transition">Battery Network</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="font-bold mb-4 text-mint-300 tracking-wider text-sm uppercase">Company</h5>
+                        <ul class="space-y-2 text-white/60 text-sm font-light">
+                            <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                            <li><a href="#" class="hover:text-white transition">Investors</a></li>
+                            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-light">
+                <p>&copy; 2026 DDC Mobility. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script for Interactions -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Navbar Blur & Shrink on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('top-2', 'md:py-2');
+                navbar.classList.remove('top-6', 'md:py-3');
+            } else {
+                navbar.classList.add('top-6', 'md:py-3');
+                navbar.classList.remove('top-2', 'md:py-2');
+            }
+        });
+
+        // Intersection Observer for Scroll Reveal Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Reveal only once
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+
+        // --- 3D Slit Carousel Logic ---
+        const podData = [
+            {
+                title: "ORION",
+                seats: "6 Seater",
+                desc: "The compact standard for smart campuses and gated communities. Designed for quiet, efficient, and continuous loop transport with ultimate spatial economy.",
+                features: ["Unibody structural integrity", "Human-Control Mode with Joystick Precision"],
+                img: "./images/orion.png"
+            },
+            {
+                title: "LUNARITE",
+                seats: "8 Seater",
+                desc: "Optimized for luxury resort and tourism transit. Features panoramic viewing angles and upgraded interior materials for a premium passenger experience.",
+                features: ["Adaptive climate control", "Intelligent luggage spatial arrangement"],
+                img: "./images/pod.png"
+            },
+            {
+                title: "STELLARIS",
+                seats: "12 Seater",
+                desc: "The high-capacity workhorse for smart cities and industrial zones. Engineered for rapid ingress/egress and high-frequency deployment.",
+                features: ["Mass transit synchronization capability", "Extended life-cycle modular components"],
+                img: "./images/stalaris1.png"
+            }
+        ];
+
+        const sliderEl = document.getElementById('slit-slider');
+        const slicesCount = 8; // Number of vertical slices
+        let currentPodIndex = 0;
+        let slitRotation = 0;
+        let isAnimating = false;
+
+        // Initialize Slices
+        sliderEl.style.setProperty('--slices', slicesCount);
+        for (let i = 0; i < slicesCount; i++) {
+            const slice = document.createElement('div');
+            slice.className = 'slit-slice';
+            slice.style.transitionDelay = `${i * 60}ms`; // Staggered delay for wave effect
+
+            const front = document.createElement('div');
+            front.className = 'slit-face slit-front';
+            front.style.backgroundImage = `url(${podData[0].img})`;
+            front.style.backgroundPosition = `center ${(i / (slicesCount - 1)) * 100}%`;
+
+            const back = document.createElement('div');
+            back.className = 'slit-face slit-back';
+            back.style.backgroundPosition = `center ${(i / (slicesCount - 1)) * 100}%`;
+
+            slice.appendChild(front);
+            slice.appendChild(back);
+            sliderEl.appendChild(slice);
+        }
+
+        // Initialize First Content
+        updateContentDOM(0, true);
+
+        function nextPod() {
+            if (isAnimating) return;
+            changePod(1);
+        }
+
+        function prevPod() {
+            if (isAnimating) return;
+            changePod(-1);
+        }
+
+        function changePod(direction) {
+            isAnimating = true;
+            let nextIndex = currentPodIndex + direction;
+            
+            // Loop array safely
+            if (nextIndex >= podData.length) nextIndex = 0;
+            if (nextIndex < 0) nextIndex = podData.length - 1;
+
+            slitRotation += direction * -180;
+            
+            // Determine which face is becoming visible
+            const flipCount = Math.abs(slitRotation / 180);
+            const willShowFront = flipCount % 2 === 0;
+            const faceToUpdate = willShowFront ? '.slit-front' : '.slit-back';
+
+            const slices = document.querySelectorAll('.slit-slice');
+            slices.forEach(slice => {
+                const face = slice.querySelector(faceToUpdate);
+                // Update the hidden face to the target image right before rotating
+                face.style.backgroundImage = `url(${podData[nextIndex].img})`;
+                // Apply 3D rotation (rotateX for top-to-bottom)
+                slice.style.transform = `rotateX(${slitRotation}deg)`;
+            });
+
+            updateContentDOM(nextIndex);
+            currentPodIndex = nextIndex;
+
+            // Lock controls until animation wave completes
+            setTimeout(() => { isAnimating = false; }, 1000 + (slicesCount * 60)); 
+        }
+
+        function updateContentDOM(index, isInit = false) {
+            const wrapper = document.getElementById('pod-content-wrapper');
+            const pod = podData[index];
+            
+            const buildHTML = () => `
+                <div class="flex items-center space-x-4 mb-5">
+                    <h4 class="font-serif text-3xl md:text-4xl font-bold text-emerald">${pod.title}</h4>
+                    <span class="px-3 py-1 bg-mint-200 text-emerald text-xs font-bold rounded-full uppercase tracking-wider shadow-sm">${pod.seats}</span>
+                </div>
+                <p class="text-charcoal/70 font-light text-lg mb-8 leading-relaxed">${pod.desc}</p>
+                <div class="h-px w-full bg-emerald/10 mb-8"></div>
+                <ul class="space-y-4 text-sm text-charcoal/80">
+                    ${pod.features.map(f => `
+                        <li class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-mint-100 flex items-center justify-center mr-4 flex-shrink-0">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald"></i>
+                            </div>
+                            <span class="font-medium">${f}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+
+            if (isInit) {
+                wrapper.innerHTML = buildHTML();
+                lucide.createIcons();
+                setTimeout(() => {
+                    wrapper.style.opacity = '1';
+                    wrapper.style.transform = 'translateY(0)';
+                }, 100);
+            } else {
+                // Fade out, update, fade in
+                wrapper.style.opacity = '0';
+                wrapper.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    wrapper.innerHTML = buildHTML();
+                    lucide.createIcons();
+                    wrapper.style.opacity = '1';
+                    wrapper.style.transform = 'translateY(0)';
+                }, 400); 
+            }
+        }
+    </script>
+</body>
+</html>

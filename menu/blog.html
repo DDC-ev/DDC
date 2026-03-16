@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERIDIAN | Global Intelligence & Editorial</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ 
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Tailwind CSS (no config block) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ─── Design Tokens ─────────────────────────────────────── */
+        :root {
+            /* Emerald palette */
+            --e-50:  #ecfdf5;
+            --e-100: #d1fae5;
+            --e-200: #a7f3d0;
+            --e-300: #6ee7b7;
+            --e-400: #34d399;
+            --e-500: #10b981;
+            --e-600: #059669;
+            --e-700: #047857;
+            --e-800: #065f46;
+            --e-900: #064e3b;
+            --e-950: #022c22;
+
+            /* Mint palette (teal-leaning) */
+            --m-50:  #f0fdf9;
+            --m-100: #ccfbf1;
+            --m-200: #99f6e4;
+            --m-300: #5eead4;
+            --m-400: #2dd4bf;
+            --m-500: #14b8a6;
+            --m-600: #0d9488;
+            --m-700: #0f766e;
+            --m-800: #115e59;
+            --m-900: #134e4a;
+
+            /* Gold */
+            --gold-400: #fbbf24;
+            --gold-500: #f59e0b;
+
+            /* Typography */
+            --font-serif:   'Playfair Display', serif;
+            --font-sans:    'Outfit', sans-serif;
+            --font-dm:      'DM Sans', sans-serif;
+            --font-orbitron:'Orbitron', sans-serif;
+
+            /* Shadows */
+            --shadow-soft: 0 20px 40px -15px rgba(13,148,136,0.15);
+            --shadow-glow: 0 0 20px rgba(94,234,212,0.3);
+        }
+
+        /* ─── Base ───────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            background: #fff;
+            color: var(--e-950);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-serif  { font-family: var(--font-serif) !important; }
+        .font-dm     { font-family: var(--font-dm)    !important; }
+        .font-orb    { font-family: var(--font-orbitron) !important; }
+
+        /* ─── Glassmorphism ──────────────────────────────────────── */
+        .glass-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* ─── View system ────────────────────────────────────────── */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .view-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Image hover zoom ───────────────────────────────────── */
+        .img-zoom { overflow: hidden; }
+        .img-zoom img { transition: transform 0.7s ease; }
+        .img-zoom:hover img { transform: scale(1.05); }
+
+        /* ─── React slider animations ────────────────────────────── */
+        .fade-enter-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            transition: opacity 500ms cubic-bezier(0.16,1,0.3,1), transform 500ms cubic-bezier(0.16,1,0.3,1);
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to   { width: 100%; }
+        }
+        .animate-progress { animation: progress 5s linear infinite; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes reactFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ─── Scrollbar ──────────────────────────────────────────── */
+        ::-webkit-scrollbar       { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--e-950); }
+
+        /* ─── Colour utility classes (replaces Tailwind config) ─── */
+        /* Emerald */
+        .bg-e-50    { background-color: var(--e-50); }
+        .bg-e-100   { background-color: var(--e-100); }
+        .bg-e-200   { background-color: var(--e-200); }
+        .bg-e-950   { background-color: var(--e-950); }
+        .text-e-400 { color: var(--e-400); }
+        .text-e-500 { color: var(--e-500); }
+        .text-e-600 { color: var(--e-600); }
+        .text-e-700 { color: var(--e-700); }
+        .text-e-800 { color: var(--e-800); }
+        .text-e-900 { color: var(--e-900); }
+        .text-e-950 { color: var(--e-950); }
+        .border-e-50  { border-color: var(--e-50); }
+        .border-e-100 { border-color: var(--e-100); }
+        .border-e-200 { border-color: var(--e-200); }
+        .border-e-950 { border-color: var(--e-950); }
+        .hover-text-e-600:hover { color: var(--e-600); }
+        .hover-bg-e-800:hover   { background-color: var(--e-800); }
+
+        /* Mint */
+        .bg-m-50    { background-color: var(--m-50); }
+        .bg-m-100   { background-color: var(--m-100); }
+        .text-m-200 { color: var(--m-200); }
+        .text-m-400 { color: var(--m-400); }
+        .text-m-600 { color: var(--m-600); }
+        .text-m-800 { color: var(--m-800); }
+        .text-m-900 { color: var(--m-900); }
+        .border-m-200 { border-color: var(--m-200); }
+
+        /* Gold */
+        .text-gold-400 { color: var(--gold-400); }
+        .fill-gold-400 { fill: var(--gold-400); }
+
+        /* ─── Sticky membership widget ───────────────────────────── */
+        .sticky-widget {
+            position: fixed;
+            bottom: 32px; right: 32px;
+            z-index: 40;
+            background: var(--e-950);
+            color: #ecfdf5;
+            padding: 16px 24px 16px 16px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+            border: 1px solid var(--e-800);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sticky-widget:hover { background: var(--e-800); }
+        .sticky-btn {
+            background: var(--e-500);
+            color: var(--e-950);
+            padding: 8px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .sticky-btn:hover { background: var(--e-400); transform: scale(1.08); }
+
+        /* ─── Hero button ────────────────────────────────────────── */
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            color: #fff;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 16px 32px;
+            background: transparent;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            width: fit-content;
+        }
+        .hero-btn:hover { background: #fff; color: var(--e-950); }
+        .hero-btn svg { transition: transform 0.2s; }
+        .hero-btn:hover svg { transform: translateX(4px); }
+
+        /* ─── Journal card ───────────────────────────────────────── */
+        .journal-card { cursor: pointer; }
+        .journal-card .jcard-img {
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            margin-bottom: 24px;
+            background: var(--e-200);
+        }
+        .journal-card .jcard-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: transform 0.7s ease, opacity 0.4s ease;
+        }
+        .journal-card:hover .jcard-img img { transform: scale(1.05); opacity: 1; }
+        .journal-card .jcard-cat {
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            font-weight: 900;
+            color: var(--e-500);
+            text-transform: uppercase;
+            font-style: italic;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .journal-card .jcard-title {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            color: var(--e-950);
+            line-height: 1.35;
+            transition: color 0.2s;
+        }
+        .journal-card:hover .jcard-title { color: var(--e-700); }
+
+        /* ─── Review slider ──────────────────────────────────────── */
+        .review-section {
+            padding: 96px 32px;
+            background: linear-gradient(135deg, var(--m-50) 0%, #fff 50%, var(--m-100) 100%);
+            font-family: var(--font-dm);
+        }
+        .review-card {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .review-card-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--m-300), var(--m-500), var(--m-300));
+        }
+        .review-left {
+            background: linear-gradient(135deg, var(--m-600) 0%, var(--m-800) 100%);
+            padding: 40px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .review-right {
+            padding: 48px 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: color-mix(in srgb, var(--m-50) 50%, transparent);
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .review-grid { grid-template-columns: 1fr !important; }
+            .review-right { padding: 32px 24px; }
+        }
+        .review-dot-btn {
+            height: 8px;
+            border-radius: 100px;
+            border: none;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: width 0.3s, background 0.3s;
+        }
+        .review-dot-btn.active { width: 32px !important; background: #fff; }
+        .review-nav-btn {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .review-nav-btn:hover { background: #fff; color: var(--m-900); }
+        .review-img-ring {
+            animation: spinSlow 10s linear infinite;
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px dashed rgba(255,255,255,0.2);
+        }
+        .review-content-enter {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        .progress-bar-wrap {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 4px;
+            background: var(--m-100);
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--m-400);
+            animation: progress 5s linear infinite;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Navigation slot -->
+    <div id="nav-container"></div>
+
+    <!-- MAIN VIEWS -->
+    <main>
+
+        <!-- ══════════════════ HOME VIEW ══════════════════ -->
+        <section id="homeView" class="view-section active">
+
+            <!-- Hero -->
+<div style="position:relative;height:100vh;width:100%;overflow:hidden;background:var(--e-50);">
+                <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(2,44,34,0.6), transparent);z-index:10;"></div>
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000" alt="Hero" style="width:100%;height:100%;object-fit:cover;">
+                <div style="position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:64px;padding-left:clamp(24px,6vw,96px);padding-right:clamp(24px,6vw,96px);">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+                        <span style="width:48px;height:1px;background:var(--e-400);display:block;"></span>
+                        <span style="color:var(--e-400);font-size:10px;letter-spacing:0.3em;font-weight:700;text-transform:uppercase;">Intelligence Exclusive</span>
+                    </div>
+                    <h1 class="font-serif" style="font-size:clamp(40px,7vw,88px);color:#fff;max-width:900px;line-height:0.95;margin-bottom:32px;letter-spacing:-0.03em;">
+                        The Architecture of <br>
+                        <em>Digital Sovereignty.</em>
+                    </h1>
+                    <button class="hero-btn" onclick="showView('article')">
+                        Read the Thesis
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Breaking Intelligence -->
+            <div style="background:#fff;padding:80px 24px;border-bottom:1px solid var(--e-50);">
+                <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr;gap:64px;" class="breaking-grid">
+                    <!-- Lead story -->
+                    <div>
+                        <h3 style="font-size:10px;letter-spacing:0.4em;font-weight:700;color:var(--e-500);margin-bottom:32px;text-transform:uppercase;font-style:italic;">Breaking Intelligence</h3>
+                        <div onclick="showView('article')" style="cursor:pointer;" class="lead-story">
+                            <div class="img-zoom" style="aspect-ratio:16/9;margin-bottom:32px;">
+                                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200"
+                                     style="width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter 0.7s ease;"
+                                     onmouseover="this.style.filter='grayscale(0)'" onmouseout="this.style.filter='grayscale(1)'"
+                                     alt="News">
+                            </div>
+                            <h2 class="font-serif" style="font-size:clamp(24px,3vw,36px);color:var(--e-950);line-height:1.25;margin-bottom:16px;transition:color 0.2s;"
+                                onmouseover="this.style.color='var(--e-600)'" onmouseout="this.style.color='var(--e-950)'">
+                                The Great Re-alignment: How central banks are quietly hedging against the dollar.
+                            </h2>
+                            <p style="color:rgba(6,79,57,0.6);line-height:1.8;font-size:14px;max-width:640px;margin-bottom:24px;">
+                                As geopolitical tensions mount, the silent shift in reserve currencies marks a turning point for global markets. Veridian explores the data behind the headlines...
+                            </p>
+                            <div style="display:flex;align-items:center;gap:16px;font-size:10px;letter-spacing:0.15em;font-weight:700;color:rgba(6,79,57,0.4);text-transform:uppercase;">
+                                <span>By Julian Thorne</span>
+                                <span style="width:4px;height:4px;background:var(--e-200);border-radius:50%;display:block;"></span>
+                                <span>8 Min Read</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar -->
+                    <div style="display:flex;flex-direction:column;gap:32px;">
+                        <h3 style="font-size:10px;letter-spacing:0.4em;font-weight:700;color:var(--e-500);text-transform:uppercase;font-style:italic;text-decoration:underline;text-decoration-color:var(--e-200);text-underline-offset:8px;">Top of Mind</h3>
+                        <div style="cursor:pointer;border-bottom:1px solid var(--e-50);padding-bottom:32px;" onmouseover="this.querySelector('h4').style.color='var(--e-600)'" onmouseout="this.querySelector('h4').style.color='var(--e-950)'">
+                            <span style="font-size:10px;font-weight:700;color:var(--e-300);display:block;margin-bottom:8px;">01 / MARKETS</span>
+                            <h4 class="font-serif" style="font-size:18px;color:var(--e-950);line-height:1.4;transition:color 0.2s;">Why Silicon Valley is betting on the return of Nuclear Power.</h4>
+                        </div>
+                        <div style="cursor:pointer;border-bottom:1px solid var(--e-50);padding-bottom:32px;" onmouseover="this.querySelector('h4').style.color='var(--e-600)'" onmouseout="this.querySelector('h4').style.color='var(--e-950)'">
+                            <span style="font-size:10px;font-weight:700;color:var(--e-300);display:block;margin-bottom:8px;">02 / WORK</span>
+                            <h4 class="font-serif" style="font-size:18px;color:var(--e-950);line-height:1.4;transition:color 0.2s;">The end of the Remote Work experiment: A data-driven autopsy.</h4>
+                        </div>
+                        <div style="cursor:pointer;padding-bottom:32px;" onmouseover="this.querySelector('h4').style.color='var(--e-600)'" onmouseout="this.querySelector('h4').style.color='var(--e-950)'">
+                            <span style="font-size:10px;font-weight:700;color:var(--e-300);display:block;margin-bottom:8px;">03 / LUXURY</span>
+                            <h4 class="font-serif" style="font-size:18px;color:var(--e-950);line-height:1.4;transition:color 0.2s;">How luxury fashion is weaponizing 'Quiet Wealth'.</h4>
+                        </div>
+                        <!-- Newsletter -->
+                        <div style="background:var(--e-50);padding:32px;border:1px solid var(--e-100);margin-top:16px;">
+                            <h5 style="font-size:11px;font-weight:700;letter-spacing:0.15em;margin-bottom:16px;color:var(--e-900);text-transform:uppercase;">Veridian Daily</h5>
+                            <p style="font-size:11px;color:rgba(6,79,57,0.7);margin-bottom:24px;line-height:1.6;text-transform:uppercase;letter-spacing:0.05em;">Daily insights delivered at 6:00 AM EST.</p>
+                            <button style="width:100%;padding:12px;background:var(--e-950);color:#fff;font-size:10px;letter-spacing:0.15em;font-weight:700;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;"
+                                    onmouseover="this.style.background='var(--e-800)'" onmouseout="this.style.background='var(--e-950)'">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journal Grid -->
+            <div style="padding:80px 24px;background:rgba(236,253,245,0.3);">
+                <div style="max-width:1280px;margin:0 auto;">
+                    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;margin-bottom:64px;gap:24px;">
+                        <h2 class="font-serif" style="font-size:clamp(32px,5vw,56px);color:var(--e-950);font-style:italic;">The Journal</h2>
+                        <button style="font-size:10px;letter-spacing:0.3em;font-weight:700;color:var(--e-950);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;text-transform:uppercase;">
+                            VIEW ARCHIVE
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                    <div id="journalGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;"></div>
+                </div>
+            </div>
+
+            <!-- Review Slider mount point -->
+            <div id="reviews-mount-point"></div>
+
+        </section><!-- /homeView -->
+
+
+        <!-- ══════════════════ ARTICLE VIEW ══════════════════ -->
+        <section id="articleView" class="view-section" style="padding-top:128px;padding-left:24px;padding-right:24px;">
+            <div style="max-width:896px;margin:0 auto;">
+                <div style="display:flex;justify-content:center;margin-bottom:48px;">
+                    <span style="font-size:10px;letter-spacing:0.4em;font-weight:700;color:var(--e-500);text-transform:uppercase;padding:4px 16px;border:1px solid var(--e-100);border-radius:100px;">Long Read / Economics</span>
+                </div>
+                <h1 class="font-serif" style="font-size:clamp(36px,6vw,72px);text-align:center;color:var(--e-950);line-height:1.15;margin-bottom:32px;">
+                    The Great Re-alignment: <br>
+                    <em style="color:rgba(4,120,87,0.8);">How central banks are quietly hedging against the dollar.</em>
+                </h1>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:16px;margin-bottom:64px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:40px;height:40px;border-radius:50%;background:var(--e-200);overflow:hidden;">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100" alt="Author" style="width:100%;height:100%;object-fit:cover;">
+                        </div>
+                        <div>
+                            <p style="font-size:11px;font-weight:700;color:var(--e-900);text-transform:uppercase;">Julian Thorne</p>
+                            <p style="font-size:10px;color:var(--e-500);font-weight:500;">Chief Economics Editor</p>
+                        </div>
+                    </div>
+                    <p style="font-size:10px;letter-spacing:0.15em;color:var(--e-400);font-weight:700;text-transform:uppercase;">October 24, 2024 • 12 Minute Read</p>
+                </div>
+                <div style="width:100%;aspect-ratio:16/9;overflow:hidden;margin-bottom:80px;background:var(--e-100);">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1500" style="width:100%;height:100%;object-fit:cover;" alt="Featured">
+                </div>
+                <div style="max-width:672px;margin:0 auto;">
+                    <p class="font-serif" style="font-size:20px;font-weight:500;line-height:1.8;color:rgba(6,78,59,0.8);margin-bottom:48px;font-style:italic;border-left:4px solid var(--e-100);padding-left:24px;">
+                        For nearly eight decades, the United States dollar has operated as the unchallenged sun around which the planetary economy orbits. But in the hushed corridors of Basel and Singapore, a new gravity is beginning to take hold.
+                    </p>
+                    <div style="color:rgba(2,44,34,0.8);font-size:18px;line-height:1.9;">
+                        <p style="margin-bottom:32px;">The data is unmistakable, yet largely absent from the mainstream cycle. Central banks in the global south have increased their non-dollar reserves by nearly 14% in the last fiscal year alone. This isn't a loud exodus, but a calculated diversification—a hedging of bets in an increasingly bipolar world.</p>
+                        <h2 class="font-serif" style="font-size:32px;color:var(--e-950);margin-top:64px;margin-bottom:24px;font-weight:700;">The Silent Shift</h2>
+                        <p style="margin-bottom:32px;">From the introduction of digital sovereigns to the resurgence of physical bullion as a strategic asset, the tools of fiscal independence are evolving. What remains to be seen is how the legacy institutions of the West will adapt to a world that no longer requires their permission to transact.</p>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--e-100);border-bottom:1px solid var(--e-100);padding:32px 0;margin-top:80px;margin-bottom:80px;">
+                        <div style="display:flex;gap:24px;">
+                            <button style="display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.15em;color:var(--e-900);text-transform:uppercase;background:none;border:none;cursor:pointer;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                Share
+                            </button>
+                            <button style="display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:0.15em;color:var(--e-900);text-transform:uppercase;background:none;border:none;cursor:pointer;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Reprint
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy (empty placeholder) -->
+        <section id="privacy" class="view-section" style="padding-top:128px;padding-left:24px;padding-right:24px;"></section>
+
+        <!-- ══════════════════ PRESS VIEW ══════════════════ -->
+        <section id="pressView" class="view-section" style="padding-top:128px;padding-left:24px;padding-right:24px;">
+            <div style="max-width:1280px;margin:0 auto;">
+                <div style="margin-bottom:80px;">
+                    <h4 style="font-size:10px;letter-spacing:0.4em;font-weight:700;color:var(--e-500);margin-bottom:16px;text-transform:uppercase;">Newsroom</h4>
+                    <h1 class="font-serif" style="font-size:clamp(36px,6vw,64px);color:var(--e-950);font-style:italic;margin-bottom:32px;letter-spacing:-0.02em;">Media & Press.</h1>
+                    <p style="font-size:20px;color:rgba(6,78,59,0.6);max-width:640px;line-height:1.7;">
+                        Official brand assets, corporate announcements, and resources for the global journalist community.
+                    </p>
+                </div>
+                <div style="display:grid;grid-template-columns:2fr 1fr;gap:48px;" class="press-grid">
+                    <div>
+                        <h3 style="font-size:11px;letter-spacing:0.3em;font-weight:900;color:var(--e-950);margin-bottom:40px;text-transform:uppercase;border-bottom:1px solid var(--e-950);padding-bottom:16px;display:inline-block;">Latest Releases</h3>
+                        <div style="display:flex;flex-direction:column;gap:40px;">
+                            <div>
+                                <span style="font-size:10px;font-weight:700;color:var(--e-400);display:block;margin-bottom:8px;letter-spacing:0.15em;text-transform:uppercase;">Oct 20, 2024</span>
+                                <h4 class="font-serif" style="font-size:22px;color:var(--e-950);cursor:pointer;transition:color 0.2s;"
+                                    onmouseover="this.style.color='var(--e-600)'" onmouseout="this.style.color='var(--e-950)'">
+                                    Veridian Media Group Announces Strategic Partnership with Quartz Analytics.
+                                </h4>
+                                <button style="margin-top:16px;font-size:10px;letter-spacing:0.15em;font-weight:700;color:var(--e-950);display:flex;align-items:center;gap:8px;text-transform:uppercase;background:none;border:none;cursor:pointer;">
+                                    READ RELEASE
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div>
+                                <span style="font-size:10px;font-weight:700;color:var(--e-400);display:block;margin-bottom:8px;letter-spacing:0.15em;text-transform:uppercase;">Oct 12, 2024</span>
+                                <h4 class="font-serif" style="font-size:22px;color:var(--e-950);cursor:pointer;transition:color 0.2s;"
+                                    onmouseover="this.style.color='var(--e-600)'" onmouseout="this.style.color='var(--e-950)'">
+                                    Veridian Quarterly: Circulation Reaches Milestone of 2 Million Digital Subscribers.
+                                </h4>
+                                <button style="margin-top:16px;font-size:10px;letter-spacing:0.15em;font-weight:700;color:var(--e-950);display:flex;align-items:center;gap:8px;text-transform:uppercase;background:none;border:none;cursor:pointer;">
+                                    READ RELEASE
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background:var(--e-50);padding:40px;border:1px solid var(--e-100);">
+                        <h3 style="font-size:11px;letter-spacing:0.3em;font-weight:900;color:var(--e-950);margin-bottom:32px;text-transform:uppercase;">Brand Assets</h3>
+                        <div style="display:flex;flex-direction:column;gap:0;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--e-200);padding:16px 0;cursor:pointer;transition:background 0.15s;">
+                                <span style="font-size:11px;font-weight:700;color:rgba(6,78,59,0.6);text-transform:uppercase;">Primary Logo Kit</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--e-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--e-200);padding:16px 0;cursor:pointer;">
+                                <span style="font-size:11px;font-weight:700;color:rgba(6,78,59,0.6);text-transform:uppercase;">Typography Spec</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--e-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            </div>
+                        </div>
+                        <div style="margin-top:64px;padding-top:32px;border-top:1px solid var(--e-200);">
+                            <h3 style="font-size:11px;letter-spacing:0.3em;font-weight:900;color:var(--e-950);margin-bottom:16px;text-transform:uppercase;">Media Inquiries</h3>
+                            <p style="font-size:12px;font-weight:700;color:var(--e-950);text-decoration:underline;text-decoration-color:var(--e-400);">press@veridian.media</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Sticky membership widget -->
+    <div class="sticky-widget" onclick="window.location.href='contact.html';">
+        <div>
+            <p style="font-size:8px;letter-spacing:0.4em;font-weight:700;color:var(--e-400);text-transform:uppercase;margin-bottom:4px;">Membership</p>
+            <p class="font-serif" style="font-size:13px;font-style:italic;">Unlock Full Intelligence</p>
+        </div>
+        <button class="sticky-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+
+    <!-- Responsive grid fixes -->
+    <style>
+        @media (max-width: 768px) {
+            .breaking-grid { grid-template-columns: 1fr !important; }
+            .press-grid    { grid-template-columns: 1fr !important; }
+        }
+    </style>
+
+    <!-- ── Scripts ── -->
+    <script>
+        
+
+        const journalItems = [
+            { cat: "Design", title: "Minimalism is a trap. The case for complex textures.", img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=800" },
+            { cat: "Tech",   title: "When algorithms become curators of our collective taste.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800" },
+            { cat: "Wealth", title: "The hidden tax havens of the 21st century meta-cities.", img: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800" },
+            { cat: "Culture","title": "Why physical books are the ultimate status symbol.", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800" }
+        ];
+
+        function showView(viewName) {
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(viewName + 'View') || document.getElementById(viewName);
+            if (target) target.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Populate journal grid
+        const grid = document.getElementById('journalGrid');
+        journalItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'journal-card';
+            card.innerHTML = `
+                <div class="jcard-img img-zoom">
+                    <img src="${item.img}" alt="${item.title}">
+                </div>
+                <span class="jcard-cat">${item.cat}</span>
+                <h4 class="font-serif jcard-title">${item.title}</h4>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Scroll-aware nav (if mainNav exists after navbar.js runs)
+        let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('mainNav');
+            if (!nav) return;
+            const cur = Math.max(0, window.scrollY);
+            if (cur < lastScrollY || cur <= 50) nav.classList.remove('scrolled');
+            else if (cur > 50 && cur > lastScrollY) nav.classList.add('scrolled');
+            lastScrollY = cur;
+        });
+    </script>
+
+    <!-- Review Slider (vanilla JS, no React dependency) -->
+    <script>
+        const reviews = [
+            { id:1, name:"Isabella V.", role:"Interior Designer", img:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200", rating:5, title:"A breath of fresh air", text:"The attention to detail is simply phenomenal. I've never used a service that felt so intuitive and looked so elegant. The mint aesthetic isn't just a color choice; it feels like a philosophy of calm and clarity." },
+            { id:2, name:"Marcus Chen", role:"Creative Director", img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200", rating:5, title:"Exceeded every expectation", text:"From the onboarding process to the final delivery, everything was seamless. The team understood my vision perfectly and executed it with a level of polish that is rare to find these days." },
+            { id:3, name:"Sarah Jenkins", role:"Wellness Coach", img:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200", rating:4, title:"Beautifully crafted", text:"I was looking for something that resonated with my brand's natural ethos, and this hit the mark perfectly. The design system is robust yet incredibly flexible. Highly recommended." },
+            { id:4, name:"David Ross", role:"Architect", img:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200", rating:5, title:"Premium quality throughout", text:"Robust, reliable, and radiantly designed. It handles complex workflows with ease while maintaining a visual simplicity that keeps me focused. A true masterpiece of modern UI." }
+        ];
+
+        let current = 0;
+        let autoTimer = null;
+        let paused = false;
+
+        function stars(n) {
+            return [...Array(5)].map((_,i) => `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="${i<n?'var(--gold-400)':'none'}" stroke="${i<n?'var(--gold-400)':'#d1d5db'}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>`).join('');
+        }
+
+        function renderReview() {
+            const r = reviews[current];
+            // Image
+            const imgEl = document.getElementById('rv-img');
+            if (imgEl) { imgEl.style.opacity='0'; setTimeout(()=>{ imgEl.src=r.img; imgEl.style.opacity='1'; },200); }
+            // Content
+            const content = document.getElementById('rv-content');
+            if (content) {
+                content.style.opacity='0';
+                content.style.transform='translateY(16px)';
+                setTimeout(()=>{
+                    content.innerHTML = `
+                        <div style="margin-bottom:20px;">${stars(r.rating)}</div>
+                        <h3 class="font-serif" style="font-size:clamp(20px,2.5vw,28px);color:var(--m-900);margin-bottom:20px;line-height:1.3;">"${r.title}"</h3>
+                        <p style="color:#6b7280;font-size:16px;line-height:1.8;margin-bottom:32px;font-family:var(--font-dm);">${r.text}</p>
+                        <div style="border-top:1px solid var(--m-200);padding-top:24px;">
+                            <h4 class="font-serif" style="font-size:18px;font-weight:700;color:var(--m-900);">${r.name}</h4>
+                            <p style="color:var(--m-600);font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-top:4px;font-family:var(--font-dm);">${r.role}</p>
+                        </div>`;
+                    content.style.opacity='1';
+                    content.style.transform='translateY(0)';
+                }, 220);
+            }
+            // Dots
+            document.querySelectorAll('.rv-dot').forEach((d,i)=>{
+                d.style.width = i===current ? '32px' : '8px';
+                d.style.background = i===current ? '#fff' : 'rgba(255,255,255,0.3)';
+            });
+            // Progress bar restart
+            restartProgress();
+        }
+
+        function restartProgress() {
+            const fill = document.getElementById('rv-progress');
+            if (!fill) return;
+            fill.style.animation='none';
+            fill.offsetHeight; // reflow
+            if (!paused) fill.style.animation='progress 5s linear forwards';
+        }
+
+        function next() { current=(current+1)%reviews.length; renderReview(); }
+        function prev() { current=(current-1+reviews.length)%reviews.length; renderReview(); }
+        function goTo(i) { current=i; renderReview(); }
+
+        function startAuto() {
+            clearInterval(autoTimer);
+            if (!paused) autoTimer = setInterval(next, 5000);
+        }
+
+        function buildSlider() {
+            const mount = document.getElementById('reviews-mount-point');
+            mount.innerHTML = `
+            <div class="review-section">
+                <div style="position:relative;width:100%;max-width:900px;margin:0 auto;">
+                    <!-- Decorative blobs -->
+                    <div style="position:absolute;top:-80px;left:-80px;width:256px;height:256px;background:var(--m-300);border-radius:50%;filter:blur(64px);opacity:0.15;pointer-events:none;"></div>
+                    <div style="position:absolute;bottom:-80px;right:-80px;width:320px;height:320px;background:var(--m-400);border-radius:50%;filter:blur(64px);opacity:0.15;pointer-events:none;"></div>
+
+                    <div class="review-card"
+                         onmouseenter="paused=true;clearInterval(autoTimer);document.getElementById('rv-progress').style.animationPlayState='paused';"
+                         onmouseleave="paused=false;startAuto();document.getElementById('rv-progress').style.animationPlayState='running';">
+                        <div class="review-card-bar"></div>
+                        <div class="review-grid" style="display:grid;grid-template-columns:5fr 7fr;min-height:480px;">
+                            <!-- Left -->
+                            <div class="review-left">
+                                <div style="position:absolute;top:0;right:0;margin:-64px -64px 0 0;width:256px;height:256px;border-radius:50%;border:30px solid rgba(255,255,255,0.04);"></div>
+                                <div style="position:relative;z-index:1;">
+                                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+                                        <div style="width:32px;height:1px;background:var(--m-200);"></div>
+                                        <span style="font-size:11px;letter-spacing:0.2em;color:var(--m-100);text-transform:uppercase;font-family:var(--font-dm);">Testimonials</span>
+                                    </div>
+                                    <h2 class="font-serif" style="font-size:clamp(22px,3vw,36px);line-height:1.25;">
+                                        Trusted by <br><em style="color:var(--m-200);">Visionaries</em>
+                                    </h2>
+                                </div>
+                                <!-- Avatar -->
+                                <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:center;flex:1;padding:32px 0;">
+                                    <div style="position:relative;width:180px;height:180px;">
+                                        <div class="review-img-ring" style="position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(255,255,255,0.2);"></div>
+                                        <div style="position:absolute;inset:8px;border-radius:50%;overflow:hidden;border:4px solid rgba(255,255,255,0.1);box-shadow:0 20px 40px rgba(0,0,0,0.3);">
+                                            <img id="rv-img" src="${reviews[0].img}" alt="" style="width:100%;height:100%;object-fit:cover;transition:opacity 0.3s;">
+                                        </div>
+                                        <div style="position:absolute;bottom:-8px;right:-8px;background:#fff;color:var(--m-900);border-radius:50%;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--m-600)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Controls -->
+                                <div style="position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;">
+                                    <div style="display:flex;gap:8px;align-items:center;" id="rv-dots"></div>
+                                    <div style="display:flex;gap:12px;">
+                                        <button class="review-nav-btn" onclick="prev()">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                                        </button>
+                                        <button class="review-nav-btn" onclick="next()">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Right -->
+                            <div class="review-right">
+                                <div style="position:absolute;top:32px;right:32px;opacity:0.25;">
+                                    <svg width="56" height="56" viewBox="0 0 24 24" fill="var(--m-400)">
+                                        <path d="M14.017 21v-3c0-1.105.895-2 2-2h3c.552 0 1-.448 1-1V9c0-.552-.448-1-1-1h-4c-.552 0-1 .448-1 1v2c0 .552-.448 1-1 1h-1V5h10v10c0 3.314-2.686 6-6 6h-2zm-9 0v-3c0-1.105.895-2 2-2h3c.552 0 1-.448 1-1V9c0-.552-.448-1-1-1H6c-.552 0-1 .448-1 1v2c0 .552-.448 1-1 1H3V5h10v10c0 3.314-2.686 6-6 6H5z"/>
+                                    </svg>
+                                </div>
+                                <div id="rv-content" style="transition:opacity 0.3s, transform 0.3s;min-height:300px;display:flex;flex-direction:column;justify-content:center;"></div>
+                                <div class="progress-bar-wrap">
+                                    <div id="rv-progress" class="progress-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:32px;">
+                        <p style="color:rgba(19,78,74,0.35);font-size:12px;font-weight:500;letter-spacing:0.2em;font-family:var(--font-dm);">EXPERIENCE EXCELLENCE</p>
+                    </div>
+                </div>
+            </div>`;
+
+            // Build dots
+            const dotsEl = document.getElementById('rv-dots');
+            reviews.forEach((_,i) => {
+                const btn = document.createElement('button');
+                btn.className = 'review-dot-btn rv-dot';
+                btn.style.width = i===0 ? '32px' : '8px';
+                btn.style.background = i===0 ? '#fff' : 'rgba(255,255,255,0.3)';
+                btn.onclick = () => goTo(i);
+                dotsEl.appendChild(btn);
+            });
+
+            renderReview();
+            startAuto();
+        }
+
+        document.addEventListener('DOMContentLoaded', buildSlider);
+    </script>
+
+    <!-- External scripts (navbar, footer, etc.) -->
+    <script src="../js/footer.js" data-next="booking.html"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/main.js"></script>
+
+</body>
+</html>

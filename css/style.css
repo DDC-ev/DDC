@@ -1,0 +1,679 @@
+/* ==========================================================================
+   0. FONT IMPORTS
+   ========================================================================== */
+@import url("font.css");
+@import url("icons.css");
+
+/* --- Google Fonts --- */
+
+
+/* ==========================================================================
+   1. GLOBAL RESET & BOX-MODEL FIX
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+img,
+video,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* ==========================================================================
+   2. CSS CUSTOM PROPERTIES (Design Tokens)
+   ========================================================================== */
+:root {
+    /* --- Brand Color Palette --- */
+ 
+
+  --gray-50:  #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+    /* --- Site Theme Colors --- */
+    --primary:    #f0f4f1;
+    --dark:       #5a6363;
+    --accent:     #d4e8e3;
+    --offwhite:   #fafbfa;
+ --gold-main: #c6a75e;
+    --gold-light: #e8d8b0;
+    --gold-soft: #e9d7a1;
+    
+    --peacock: #d9e6e1;
+    /* --- Alias for backward-compat --- */
+    --body-bg:    var(--primary);
+    --text-main:  var(--dark);
+    --text-muted: #9ba5a3;
+    --accent-glow: rgba(180, 190, 185, 0.4);
+
+    /* --- Legacy Card Variables --- */
+    --first-color:  var(--accent);
+    --white-color:  #ffffff;
+    --body-color:   var(--primary);
+    --title-color:  var(--dark);
+    --body-font:    "Outfit", sans-serif;
+    --h2-font-size: clamp(1.5rem, 3vw, 2.25rem);
+    --h3-font-size: clamp(1rem, 2vw, 1.25rem);
+    --small-font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+
+    /* --- Fonts --- */
+    --font-main:    'Outfit', sans-serif;
+    --font-display: 'Unbounded', sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+    --font-playfair: 'Playfair Display', serif;
+    --font-poppins: 'Poppins', sans-serif;
+    --font-orbitron: 'Orbitron', sans-serif;
+    --font-exo: 'Exo 2', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    --font-oswald: 'Oswald', sans-serif;
+    --font-nanum: 'Nanum Myeongjo', serif;
+
+    /* ==========================================================================
+       VIDEO & MEDIA UTILITIES
+       ========================================================================== */
+    --aspect-video: 16 / 9;
+    --video-opacity: 0.9;
+    --video-radius: 40px;
+
+    /* ==========================================================================
+       FLUID TYPOGRAPHY SCALE  (clamp: min | fluid | max)
+       Use these variables every    re instead of fixed px/rem values.
+       ========================================================================== */
+    --text-xs:   clamp(0.65rem,  1.2vw,  0.75rem);  /*  10px → 12px  */
+    --text-sm:   clamp(0.75rem,  1.5vw,  0.875rem); /*  12px → 14px  */
+    --text-base: clamp(0.875rem, 1.8vw,  1rem);     /*  14px → 16px  */
+    --text-lg:   clamp(1rem,     2vw,    1.125rem);  /*  16px → 18px  */
+    --text-xl:   clamp(1.125rem, 2.5vw,  1.25rem);  /*  18px → 20px  */
+    --text-2xl:  clamp(1.25rem,  3vw,    1.5rem);   /*  20px → 24px  */
+    --text-3xl:  clamp(1.5rem,   4vw,    2rem);     /*  24px → 32px  */
+    --text-4xl:  clamp(2rem,     5vw,    2.5rem);   /*  32px → 40px  */
+    --text-5xl:  clamp(2.5rem,   7vw,    3.5rem);   /*  40px → 56px  */
+    --text-6xl:  clamp(3rem,     9vw,    4.5rem);   /*  48px → 72px  */
+    --text-7xl:  clamp(3.5rem,   11vw,   5.5rem);  /*  56px → 88px  */
+
+    /* ==========================================================================
+       FLUID SPACING SCALE  (clamp: min | fluid | max)
+       ========================================================================== */
+    --space-2xs: clamp(0.125rem, 0.5vw, 0.25rem); /*  2px  → 4px   */
+    --space-xs:  clamp(0.25rem, 1vw,  0.5rem);   /*  4px  → 8px   */
+    --space-sm:  clamp(0.5rem,  1.5vw, 0.75rem); /*  8px  → 12px  */
+    --space-md:  clamp(0.75rem, 2vw,   1.25rem); /*  12px → 20px  */
+    --space-lg:  clamp(1.25rem, 3vw,   2rem);    /*  20px → 32px  */
+    --space-xl:  clamp(2rem,    5vw,   3.5rem);  /*  32px → 56px  */
+    --space-2xl: clamp(3.5rem,  8vw,   6rem);    /*  56px → 96px  */
+    --space-3xl: clamp(5rem,    12vw,  10rem);   /*  80px → 160px */
+}
+
+/* ==========================================================================
+   3. BASE STYLES
+   ========================================================================== */
+html {
+    font-size: 16px; /* Base REM reference */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* Ensures perfect fluid width without horizontal scrolling */
+    width: clamp(320px, 100%, 100vw);
+    background-color: var(--primary);
+    color: var(--dark);
+}
+
+/* ==========================================================================
+   4. LAYOUT UTILITIES
+   ========================================================================== */
+
+/* Fluid-width centered container — never wider than 1400px */
+.optimal-container {
+    width: min(100% - var(--space-lg) * 2, 1400px);
+    margin-inline: auto;
+}
+
+/* Hero sections — always full screen but never below 600px */
+.hero-section {
+    min-height: max(600px, 100vh);
+    padding-block: var(--space-2xl);
+    display: flex;
+    align-items: center;
+}
+
+/* Auto-arranging dynamic grid */
+.dynamic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--space-lg);
+    width: 100%;
+}
+
+/* --- Font Family Utilities --- */
+.font-jakarta { font-family: var(--font-jakarta); }
+.font-playfair { font-family: var(--font-playfair); }
+.font-poppins { font-family: var(--font-poppins); }
+.font-outfit { font-family: var(--font-outfit); }
+.font-orbitron { font-family: var(--font-orbitron); }
+.font-exo { font-family: var(--font-exo); }
+.font-inter { font-family: var(--font-inter); }
+.font-oswald { font-family: var(--font-oswald); }
+.font-nanum { font-family: var(--font-nanum); }
+.font-display { font-family: var(--font-display); }
+
+/* --- Video Utilities --- */
+.video-section {
+    width: 100%;
+    aspect-ratio: var(--aspect-video);
+    border-radius: var(--video-radius);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--dark);
+}
+
+.video-section video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: var(--video-opacity);
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* Hide on mobile */
+.desktop-only {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .desktop-only {
+        display: block;
+    }
+}
+
+/* ==========================================================================
+   5. CONTAINER QUERIES  (@container)
+   ========================================================================== */
+
+/* Define the resizable smart container */
+.smart-wrapper {
+    container-type: size;
+    container-name: ddcContainer;
+    width: 100%;
+    height: 400px;
+    resize: both;
+    overflow: auto;
+    border: 1px dashed rgba(148, 224, 232, 0.3);
+    border-radius: 1rem;
+    margin-bottom: var(--space-lg);
+}
+
+/* Base card — mobile first */
+.smart-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.5rem;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.smart-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+/* Container query 1: 500px–700px width → row layout */
+@container ddcContainer (min-width: 500px) and (max-width: 700px) {
+    .smart-card {
+        flex-direction: row;
+        align-items: center;
+        background: rgba(180, 190, 185, 0.08);
+        border-left: 4px solid #c4d3ce;
+    }
+    .smart-image {
+        width: 40%;
+        height: 100%;
+    }
+}
+
+/* Container query 2: wider than 700px OR taller than 500px → grid */
+@container ddcContainer (width > 700px) or (block-size > 500px) {
+    .smart-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+        padding: var(--space-md);
+        background: linear-gradient(135deg, rgba(212, 232, 227, 0.1), rgba(90, 99, 99, 0.8));
+        border: 1px solid rgba(180, 190, 185, 0.2);
+        border-radius: 1rem;
+    }
+    .smart-image {
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+    }
+}
+
+/* Container query 3: NOT smaller than 300px → scale typography */
+@container ddcContainer not (inline-size < 300px) {
+    .smart-title {
+        font-size: var(--text-2xl);
+        color: #9ba5a3;
+        font-family: var(--font-orbitron);
+    }
+}
+
+/* ==========================================================================
+   6. GRID LAYOUT UTILITY  (media-query driven)
+   ========================================================================== */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: var(--space-lg);
+}
+
+/* ==========================================================================
+   7. NAVBAR STYLES
+   ========================================================================== */
+.dropdown-menu {
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(211, 228, 223, 0.15);
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+}
+
+.dropdown-item:hover {
+    background-color: rgba(153, 239, 240, 0.15);
+    color: var(--accent);
+}
+
+/* Glass Navbar */
+.glass-nav {
+    background: rgba(90, 99, 99, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(180, 190, 185, 0.15);
+}
+
+#mainNav {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+    background: rgba(71, 77, 77, 0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(211, 228, 223, 0.12);
+}
+
+/* Minimized state */
+#mainNav.minimized {
+    width: 120px;
+    height: 48px;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    background-color: var(--dark);
+    border-color: var(--dark);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+#mainNav.minimized .nav-section {
+    opacity: 0;
+    width: 0;
+    flex: 0 0 0%;
+    padding: 0;
+    margin: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Logo */
+/* DEFAULT (TOP) → TRANSPARENT (MOBILE) */
+#mainNav {
+    background: transparent;
+    border: 1px solid transparent;
+    backdrop-filter: blur(0px);
+}
+
+/* TABLET AND LAPTOP (>= 768px) → GREY */
+@media (min-width: 768px) {
+    #mainNav {
+        background: rgba(58, 63, 63, 0.85); 
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(211, 228, 223, 0.12);
+    }
+}
+
+/* SCROLLED STATE */
+#mainNav.scrolled {
+    background: rgba(71, 77, 77, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(211, 228, 223, 0.12);
+}
+
+/* MINIMIZED NAV */
+#mainNav.minimized {
+    width: 140px;
+    height: 56px;
+    justify-content: center;
+    border-radius: 999px;
+}
+
+/* HIDE MENU WHEN MINIMIZED */
+#mainNav.minimized .nav-section {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+}
+
+/* LOGO CENTER WHEN MINIMIZED */
+#mainNav.minimized .logo-container {
+    position: absolute;
+    left: 50%;
+    
+    transform: translateX(-50%);
+}
+
+/* LOGO TEXT ANIMATION */
+.logo-text {
+    opacity: 0;
+    transition: 0.3s;
+}
+
+#mainNav.minimized .logo-text {
+    opacity: 1;
+}
+
+.logo-icon {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-icon a { pointer-events: auto; }
+
+.logo-text {
+    font-family: var(--font-oswald);
+    font-size: clamp(14px, 1.5vw, 30px);
+    font-weight: 600; 
+    letter-spacing: -1px;
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    position: absolute;
+    color: var(--primary);
+}
+
+#mainNav.minimized .logo-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(45deg);
+    pointer-events: none;
+}
+
+#mainNav.minimized .logo-text {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+    transition-delay: 0.1s;
+}
+
+.nav-item-link {
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    color: #f5f6f5;
+    font-size: var(--text-sm);
+}
+
+.nav-item-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                left  0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.nav-item-link:hover { color: var(--accent); }
+.nav-item-link:hover::after { width: 100%; }
+
+/* ==========================================================================
+   8. GLASS & GLOW UTILITIES
+   ========================================================================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+}
+
+.text-glow {
+    text-shadow: 0 0 20px rgba(180, 190, 185, 0.4);
+}
+
+.mint-gradient {
+    background: linear-gradient(135deg, #dce8e4 0%, #c4d3ce 100%);
+}
+
+/* ==========================================================================
+   9. HERO & DECORATIVE ELEMENTS
+   ========================================================================== */
+.hero-shape {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: clamp(200px, 40vw, 600px);
+    height: clamp(200px, 40vw, 600px);
+    background: radial-gradient(circle, rgba(212, 232, 227, 0.4) 0%, rgba(250, 251, 250, 0) 70%);
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(180, 190, 185, 0.1);
+}
+
+/* ==========================================================================
+   10. ANIMATIONS
+   ========================================================================== */
+@keyframes fade-in-delayed {
+    0%   { opacity: 0; transform: translateY(5px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-words {
+    animation: fade-in-delayed 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+
+/* ==========================================================================
+   11. CARD STYLES (Founders / Team)
+   ========================================================================== */
+
+/* ==========================================================================
+   12. MISCELLANEOUS COMPONENTS
+   ========================================================================== */
+.location-item {
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+.location-item:hover {
+    background-color: rgba(180, 190, 185, 0.1);
+    border-left-color: #c4d3ce;
+    padding-left: 1rem;
+}
+
+/* ==========================================================================
+   13. FOOTER
+   ========================================================================== */
+.footer {
+    width: 100%;
+    height: auto;
+    /* Fixed: was hardcoded 20rem causing massive gap */
+    padding-top: clamp(4rem, 10vw, 8rem);
+}
+.next-page-reveal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Fade out effect */
+
+
+body.fade-out {
+  opacity: 0;
+}
+/* ==========================================================================
+   14. MEDIA QUERIES — STANDARD BREAKPOINTS
+   ========================================================================== */
+#mainNav.minimized #mobileMenuBtn { align-self: flex-end;}
+/* ── Mobile-only (≤ 575px) ───────────────────────────────────────────────── */
+@media (max-width: 575px) {
+    .desktop-only { display: none !important; }
+
+    .grid-layout { grid-template-columns: 1fr; }
+
+    /* Nav: show mobile menu button, hide nav links */
+    #mainNav.minimized #mobileMenuBtn { display: none !important; 
+    align-self: flex-end;}
+
+    #mainNav.open .nav-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(95% - 2rem);
+        max-width: 520px;
+        background: rgba(71, 77, 77, 0.92);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        padding: 0.75rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        z-index: 60;
+    }
+
+    /* Typography */
+    h1 { font-size: var(--text-4xl); }
+    h2 { font-size: var(--text-3xl); }
+    h3 { font-size: var(--text-2xl); }
+    p  { font-size: var(--text-base); }
+
+    /* Cards: stack in single column */
+    .founders__content { grid-template-columns: 1fr; }
+    .card__article { width: min(300px, 100%); }
+
+    /* Sections: reduce padding */
+    section { padding-block: clamp(2rem, 6vw, 4rem); }
+}
+
+/* ── Small tablet (576px–767px) ──────────────────────────────────────────── */
+@media (min-width: 576px) and (max-width: 767px) {
+    .grid-layout { grid-template-columns: repeat(2, 1fr); }
+    .founders__content { grid-template-columns: repeat(2, minmax(0, 320px)); }
+    h1 { font-size: var(--text-5xl); }
+    h2 { font-size: var(--text-4xl); }
+}
+
+/* ── Tablet (768px–1023px) ───────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .grid-layout { grid-template-columns: repeat(2, 1fr); }
+
+    #mainNav.minimized {
+        width: 140px;
+        height: 56px;
+    }
+
+    /* Slightly larger nav */
+    .nav-item-link { font-size: var(--text-base); }
+}
+
+/* ── Laptop / Desktop (≥ 1024px) ────────────────────────────────────────── */
+@media (min-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-lg);
+    }
+
+    .desktop-only { display: block; }
+
+    #mainNav.minimized {
+        width: 140px;
+        height: 56px;
+    }
+}
+
+/* ── Wide Desktop (≥ 1400px) ─────────────────────────────────────────────── */
+@media (min-width: 1400px) {
+    .optimal-container {
+        /* Hard cap at 1400px already handled by min() — just ensure padding */
+        padding-inline: var(--space-lg);
+    }
+}
+
+/* ── Print ───────────────────────────────────────────────────────────────── */
+@media print {
+    .desktop-only { display: block !important; }
+    #mainNav, #mobileMenu { display: none !important; }
+    body { background: white; color: black; }
+}
+
+/* ==========================================================================
+   15. CUSTOM SCROLLBAR
+   ========================================================================== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--primary); }
+::-webkit-scrollbar-thumb { background: var(--dark); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #9ba5a3; }
+
+.wheel-alloy{
+transition: all .4s ease;
+}
+
+.wheel-zoom .wheel-alloy{
+opacity:0;
+transform:scale(0);
+}
