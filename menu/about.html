@@ -1,475 +1,92 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Dragons Caelestis | The Architecture of Motion</title>
-    <!-- Google Fonts for Premium Typography -->
+    <meta name="description" content="Who we are at Dark Dragons Caelestis.">
+    <title>Who We Are | Dark Dragons Caelestis</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="" rel="stylesheet">
-    
-    <!-- Site CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/style.css">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
     <style>
-        body {
-            background-color: #F7FDF9;
-            color: #052E16;
+        .about-page { --about-ink:#263232; --about-deep:#3f4a4a; --about-mint:#d9e6e1; --about-pale:#f4f8f6; --about-gold:#c6a75e; background:var(--about-pale); color:var(--about-ink); }
+        .about-page main { overflow:hidden; }
+        .about-wrap { width:min(100% - 2rem,1240px); margin-inline:auto; }
+        .about-kicker { display:inline-flex; align-items:center; gap:.65rem; color:var(--about-gold); font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
+        .about-kicker::before { content:''; width:2.5rem; height:1px; background:currentColor; }
+        .about-page h1,.about-page h2,.about-page h3 { font-family:var(--font-playfair); font-weight:600; }
+        .about-hero { min-height:min(780px,100svh); display:grid; align-items:center; padding:8rem 0 5rem; background:radial-gradient(circle at 78% 20%,rgba(198,167,94,.15),transparent 24rem),linear-gradient(135deg,#f8fbf9 0%,var(--about-mint) 100%); }
+        .hero-grid,.intro-grid,.journey-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(320px,1.1fr); gap:clamp(2rem,6vw,7rem); align-items:center; }
+        .hero-copy { max-width:620px; }
+        .about-page h1 { margin:1.5rem 0; color:var(--about-deep); font-size:clamp(3rem,7vw,6.8rem); letter-spacing:-.04em; line-height:.96; }
+        .about-page h1 em,.accent { color:var(--about-gold); font-style:italic; }
+        .hero-copy > p { max-width:34rem; color:#556363; font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.8; }
+        .hero-actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; }
+        .about-button { display:inline-flex; align-items:center; justify-content:center; min-height:3rem; padding:.75rem 1.25rem; border:1px solid var(--about-deep); color:var(--about-deep); font-size:.78rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:background .25s ease,color .25s ease,transform .25s ease; }
+        .about-button:hover { transform:translateY(-2px); }
+        .about-button.primary { background:var(--about-deep); color:#fff; }
+        .about-button.secondary:hover { background:#fff; }
+        .hero-visual { position:relative; min-height:470px; }
+        .hero-image { width:88%; height:470px; margin-left:auto; object-fit:cover; box-shadow:1.5rem 1.5rem 0 var(--about-gold); }
+        .hero-note { position:absolute; right:0; bottom:2rem; width:min(15rem,48%); padding:1.1rem; background:var(--about-deep); color:#fff; }
+        .hero-note strong { display:block; color:var(--about-gold); font-family:var(--font-playfair); font-size:2.2rem; line-height:1; }
+        .hero-note span { display:block; margin-top:.45rem; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; opacity:.8; }
+        .intro { padding:clamp(4.5rem,10vw,9rem) 0; background:#fff; }
+        .intro-grid { grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); align-items:start; }
+        .section-title { margin-top:1rem; color:var(--about-deep); font-size:clamp(2.3rem,4.5vw,4.5rem); line-height:1.02; }
+        .intro-copy { color:#5c6968; font-size:clamp(1rem,1.5vw,1.15rem); line-height:1.9; }
+        .intro-copy p + p { margin-top:1.25rem; }
+        .principles { padding:clamp(4.5rem,9vw,8rem) 0; background:var(--about-mint); }
+        .principles-heading { display:flex; justify-content:space-between; gap:2rem; align-items:end; margin-bottom:3rem; }
+        .principles-heading p { max-width:28rem; color:#5c6968; line-height:1.7; }
+        .principle-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:rgba(63,74,74,.22); }
+        .principle { min-height:18rem; padding:clamp(1.5rem,3vw,2.5rem); background:var(--about-mint); }
+        .principle-number { color:var(--about-gold); font-size:.75rem; font-weight:700; letter-spacing:.12em; }
+        .principle h3 { margin:3rem 0 1rem; color:var(--about-deep); font-size:clamp(1.45rem,2vw,2rem); }
+        .principle p { color:#5c6968; line-height:1.7; }
+        .journey-band { padding:clamp(4rem,8vw,7rem) 0; background:var(--about-deep); color:#fff; }
+        .journey-grid { grid-template-columns:1fr 1fr; }
+        .journey-band .section-title { color:#fff; }
+        .journey-band p { max-width:34rem; color:rgba(255,255,255,.7); line-height:1.8; }
+        .journey-band .about-button { border-color:var(--about-gold); color:var(--about-gold); margin-top:1.5rem; }
+        .journey-band .about-button:hover { background:var(--about-gold); color:var(--about-deep); }
+        .journey-stat { border-left:1px solid rgba(255,255,255,.22); padding-left:clamp(1.5rem,4vw,4rem); }
+        .journey-stat strong { display:block; color:var(--about-gold); font-family:var(--font-playfair); font-size:clamp(4rem,9vw,8rem); line-height:.9; }
+        .journey-stat span { display:block; margin-top:1rem; color:rgba(255,255,255,.7); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; }
+        .reveal { opacity:0; transform:translateY(1.5rem); transition:opacity .7s ease,transform .7s ease; }
+        .reveal.visible { opacity:1; transform:none; }
+        @media (max-width:760px) {
+            .about-hero { padding-top:7rem; }
+            .hero-grid,.intro-grid,.journey-grid { grid-template-columns:1fr; }
+            .hero-visual { min-height:23rem; margin-top:1rem; }
+            .hero-image { width:90%; height:22rem; box-shadow:.8rem .8rem 0 var(--about-gold); }
+            .hero-note { bottom:1rem; width:9.5rem; padding:.8rem; }
+            .hero-note strong { font-size:1.7rem; }
+            .hero-note span { font-size:.62rem; }
+            .principles-heading { display:block; }
+            .principles-heading p { margin-top:1rem; }
+            .principle-grid { grid-template-columns:1fr; }
+            .principle { min-height:auto; }
+            .principle h3 { margin-top:2rem; }
+            .journey-stat { border-left:0; border-top:1px solid rgba(255,255,255,.22); padding:2rem 0 0; }
         }
-        
-        /* Subtle Fade In Animation */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-            will-change: opacity, visibility;
-        }
-        
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: none;
-        }
-
-        .line-draw {
-            width: 0;
-            height: 1px;
-            background-color: #10B981;
-            transition: width 1.5s ease-in-out;
-        }
-        
-        .line-draw.active {
-            width: 100px;
-        }
-
-        /* Image hover zoom effect */
-        .img-zoom-container {
-            overflow: hidden;
-        }
-        .img-zoom-container img {
-            transition: transform 0.7s ease;
-        }
-        .group:hover .img-zoom-container img {
-            transform: scale(1.05);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #F7FDF9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #A7F3D0;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #10B981;
-        }
-
-        /* --- DDC CURVED CARD CSS --- */
-        .ddc-card-curve-bg {
-            /* This variable matches the section background #E6F4EA */
-            --curve-bg: #E6F4EA; 
-            --circle-size: 130px;
-        }
-
-        .ddc-card {
-            position: relative;
-            width: 100%;
-            max-width: 360px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin: 0 auto;
-            transition: transform 0.4s ease;
-        }
-        
-        .ddc-card:hover {
-            transform: translateY(-15px);
-        }
-
-        /* Top Box */
-        .ddc-card-top {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            background: #fff;
-            border-radius: 15px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            z-index: 10;
-        }
-        
-        .ddc-card-top .img-box {
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            overflow: hidden;
-        }
-        
-        .ddc-card-top .img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Bottom Box */
-        .ddc-card-bottom {
-            position: relative;
-            width: 100%;
-            height: 265px;
-            margin-top: 15px;
-            background: #fff;
-            border-radius: 15px;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            z-index: 10;
-            padding: 75px 25px 30px; /* Top padding clears circle */
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Circle */
-        .ddc-circle {
-            position: absolute;
-            top: 227.5px; /* Precisely centered in the 15px gap (220 + 7.5) */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: var(--circle-size);
-            height: var(--circle-size);
-            background: #fff;
-            border-radius: 50%;
-            border: 10px solid var(--curve-bg);
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.05); /* Slight mint tint inside */
-        }
-        
-        .ddc-circle i {
-            color: #052E16;
-            transition: color 0.3s ease;
-        }
-        
-        .ddc-card:hover .ddc-circle i {
-            color: #10B981;
-        }
-
-        /* Connectors - perfectly aligned with 130px circle */
-        /* Top Box Curves */
-        .ddc-card-top::before {
-            content: "";
-            position: absolute;
-            bottom: -1px;
-            left: 51%;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            transform: translateX(-85px); /* -(65px radius + 20px width) */
-            border-bottom-right-radius: 20px;
-            box-shadow: 6px 6px var(--curve-bg);
-            z-index: 15;
-        }
-        .ddc-card-top::after {
-            content: "";
-            position: absolute;
-            bottom: 0px;
-            left: 49%;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            transform: translateX(65px); /* Exactly at 65px radius */
-            border-bottom-left-radius: 20px;
-            box-shadow: -6px 6px var(--curve-bg);
-            z-index: 15;
-        }
-
-        /* Bottom Box Curves */
-        .ddc-card-bottom::before {
-            content: "";
-            position: absolute;
-            top: 0px;
-            left: 51%;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            transform: translateX(-85px);
-            border-top-right-radius: 20px;
-            box-shadow: 6px -6px var(--curve-bg);
-            z-index: 15;
-        }
-        .ddc-card-bottom::after {
-            content: "";
-            position: absolute;
-            top: 0px;
-            left: 49%;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            transform: translateX(65px);
-            border-top-left-radius: 20px;
-            box-shadow: -6px -6px var(--curve-bg);
-            z-index: 15;
-        }
+        @media (prefers-reduced-motion:reduce) { .reveal { opacity:1; transform:none; transition:none; } }
     </style>
 </head>
-<body class="antialiased font-sans font-light text-ddc-text">
-
+<body class="about-page">
     <div id="nav-container"></div>
-
-    <!-- Hero Section -->
-    <header class="relative h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 z-0 bg-gradient-to-br from-white via-ddc-main to-green-50"></div>
-        
-        <!-- Abstract Animated Blobs -->
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-green-200/30 rounded-full blur-[100px] animate-float"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-emerald-100/40 rounded-full blur-[80px] animate-float-delayed"></div>
-        
-        <div class="relative z-10 max-w-4xl fade-in-section is-visible">
-            <h1 class="font-serif text-[clamp(2.5rem,8vw+1rem,6.5rem)] leading-tight text-ddc-text mb-[var(--space-md)] tracking-tight">
-                <br>The Architecture <br> 
-                <span class="italic text-ddc-mint relative">
-                    of Motion
-                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-ddc-mint opacity-40" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C2.00025 6.99997 18.0007 2.00021 49.0002 2.00025C79.9997 2.00029 111.001 7.00017 141.001 7.00017C171.001 7.00017 197.001 3.00013 197.001 3.00013" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-                </span>
-            </h1>
-            <p class="text-[clamp(0.7rem,1vw,0.9rem)] tracking-widest uppercase text-ddc-subtext font-medium mt-[var(--space-md)] mb-[var(--space-lg)]">
-                Beyond the Tether. Beyond the Grid.
-            </p>
-            <div class="flex justify-center">
-                <a href="#vision" class="group flex flex-col items-center gap-[var(--space-xs)] text-ddc-mint transition-all duration-300 hover:text-ddc-text cursor-pointer">
-                    <span class="text-xs uppercase tracking-widest">Explore</span>
-                    <div class="h-12 w-[1px] bg-gradient-to-b from-ddc-mint to-transparent group-hover:h-16 transition-all duration-500"></div>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Vision / About Us Section -->
-    <section id="vision" class="py-[var(--space-2xl)] px-[var(--space-md)] md:px-[var(--space-xl)] lg:px-[var(--space-3xl)] bg-white relative">
-        <div class="max-w-4xl mx-auto fade-in-section">
-            <span class="block text-ddc-mint text-xs tracking-widest uppercase mb-8 font-bold">About Us</span>
-            
-            <h2 class="font-serif text-[var(--text-3xl)] md:text-[var(--text-5xl)] leading-tight text-ddc-text mb-[var(--space-md)]">
-                True luxury is the absence of friction. <br>
-                <span class="text-gray-400">In a world demanding clarity, the way we move has remained tethered.</span>
-            </h2>
-
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="space-y-6 text-ddc-subtext text-lg font-light leading-relaxed">
-                    <p>
-                        At Dark Dragons Caelestis, we perceive mobility not as a utility, but as a fluid, seamless art form. We are architects of a new kinetic reality. We observed a global landscape where billions of vehicles faced premature obsolescence and the promise of electrification was stalled by the limitations of static charging. 
-                    </p>
-                </div>
-                <div class="space-y-6 text-ddc-subtext text-lg font-light leading-relaxed">
-                    <p>
-                        Our response is a universal platform designed to dissolve these barriers. At the heart of DDC lies a modular Battery-as-a-Service ecosystem. We replace the anxiety of depletion with the confidence of continuity, offering fully automated energy exchanges in minutes rather than hours.
-                    </p>
-                    <div class="pt-4 flex items-center space-x-4">
-                        <div class="line-draw h-px bg-ddc-mint"></div>
-                        <span class="text-ddc-text font-serif italic text-xl">Ascend beyond the tether.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Platform (Three Pillars - Modified Card Design) -->
-    <section id="platform" class="py-[var(--space-2xl)] bg-ddc-panel ddc-card-curve-bg">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-[var(--space-xl)] fade-in-section">
-                <span class="text-ddc-mint text-xs tracking-widest uppercase font-bold">The Triad</span>
-                <h2 class="font-serif text-[var(--text-4xl)] text-ddc-text mt-4">The Platform</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-                
-                <!-- Pillar 1 Card -->
-                <div class="fade-in-section">
-                    <div class="ddc-card group">
-                        <div class="ddc-card-top">
-                            <div class="img-box">
-                                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" alt="Architecture">
-                            </div>
-                        </div>
-                        <div class="ddc-card-bottom">
-                            <h3 class="text-ddc-text font-serif text-2xl mb-2">Universal Core</h3>
-                            <span class="text-xs text-ddc-mint uppercase tracking-widest mb-4">Architecture</span>
-                            <p class="text-ddc-subtext text-xs leading-relaxed mb-6">
-                                A single, modular chassis capable of powering autonomous pods and retrofitting the internal combustion heritage.
-                            </p>
-                            <div class="flex gap-4 mb-4">
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-layer-group text-xs"></i></a>
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-arrow-right text-xs"></i></a>
-                            </div>
-                           
-                        </div>
-                        <div class="ddc-circle">
-                            <i class="fa-solid fa-city text-4xl"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pillar 2 Card -->
-                <div class="fade-in-section" style="transition-delay: 150ms;">
-                    <div class="ddc-card group">
-                        <div class="ddc-card-top">
-                            <div class="img-box">
-                                <img src="../images/bev-2.png" alt="Intelligence">
-                            </div>
-                        </div>
-                        <div class="ddc-card-bottom">
-                            <h3 class="text-ddc-text font-serif text-2xl mb-2">Kinetic AI</h3>
-                            <span class="text-xs text-ddc-mint uppercase tracking-widest mb-4">Intelligence</span>
-                            <p class="text-ddc-subtext text-xs leading-relaxed mb-6">
-                                Omnidirectional movement and summoning capabilities. Vehicles that think, adapt, and arrive before you need them.
-                            </p>
-                            <div class="flex gap-4 mb-4">
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-microchip text-xs"></i></a>
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-arrow-right text-xs"></i></a>
-                            </div>
-                        </div>
-                        <div class="ddc-circle">
-                            <i class="fa-solid fa-brain text-4xl"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- energy -->
-                <div class="fade-in-section" style="transition-delay: 300ms;">
-                    <div class="ddc-card group">
-                        <div class="ddc-card-top">
-                            <div class="img-box">
-                                <img src="../images/battery1.jpeg" alt="Power">
-                            </div>
-                        </div>
-                        <div class="ddc-card-bottom">
-                            <h3 class="text-ddc-text font-serif text-2xl mb-2">Energy Service</h3>
-                            <span class="text-xs text-ddc-mint uppercase tracking-widest mb-4">Power</span>
-                            <p class="text-ddc-subtext text-xs leading-relaxed mb-6">
-                                Decoupling ownership from energy. A 3-minute automated exchange that transforms the grid into a living current.
-                            </p>
-                            <div class="flex gap-4 mb-4">
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-bolt text-xs"></i></a>
-                                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-ddc-mint hover:text-white transition-colors"><i class="fa-solid fa-arrow-right text-xs"></i></a>
-                            </div>
-                        </div>
-                        <div class="ddc-circle">
-                            <i class="fa-solid fa-charging-station text-4xl"></i>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Immersive Feature Section -->
-    <section id="energy" class="min-h-screen relative flex items-center bg-white overflow-hidden py-[var(--space-xl)]">
-        
-        <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                
-                <div class="fade-in-section order-2 md:order-1">
-                     <div class="relative">
-                        <!-- Decorative square -->
-                        <div class="absolute -top-10 -left-10 w-40 h-40 bg-ddc-panel rounded-full blur-2xl"></div>
-                        <img src="../images/bev-2.png" alt="Luxury Car Detail" class="relative z-10 w-full rounded-sm shadow-2xl object-cover">
-                        <!-- Floating Card -->
-                        <div class="absolute -bottom-10 -right-10 bg-white p-6 shadow-xl max-w-xs animate-float z-10 rounded-xl border-b-2 border-ddc-mint backdrop-blur">
-                            <div class="text-ddc-mint text-4xl font-serif mb-2">02 <span class="text-sm font-sans tracking-wide text-gray-400">min</span></div>
-                            <div class="text-xs uppercase tracking-widest font-bold font-popins text-ddc-text">Average Swap Time</div>
-                        </div>
-                     </div>
-                </div>
-
-                <div class="fade-in-section order-1 md:order-2">
-                    <span class="text-ddc-mint text-sm font-bold tracking-widest uppercase mb-[var(--space-xs)] block">The Ecosystem</span>
-                    <h2 class="font-serif text-[var(--text-4xl)] md:text-[var(--text-6xl)] text-ddc-text mb-[var(--space-md)]">Invisible Infrastructure.</h2>
-                    <p class="text-ddc-subtext font-light text-lg leading-relaxed mb-8">
-                        We do not just build vehicles; we engineer time. By reclaiming moments previously lost to the grid, we are crafting a world where infrastructure is elegant, energy is shared, and the journey is as elevated as the destination.
-                    </p>
-                    <a href="contact.html" class="inline-flex items-center space-x-2 text-ddc-text hover:text-ddc-mint transition-colors group">
-                        <span class="text-sm tracking-widest uppercase border-b border-gray-300 pb-1 group-hover:border-ddc-mint">Inquire for access</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </a>
-                    <a href="journey.html" class="inline-flex items-center space-x-2 text-ddc-text hover:text-ddc-mint transition-colors group">
-                        <span class="text-sm tracking-widest uppercase border-b border-gray-300 pb-1 group-hover:border-ddc-mint">Our journey</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </section>
- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        
-                        // Check if child is a line-draw
-                        const line = entry.target.querySelector('.line-draw');
-                        if (line) {
-                            setTimeout(() => {
-                                line.classList.add('active');
-                            }, 500);
-                        }
-                    }
-                });
-            }, observerOptions);
-
-            const sections = document.querySelectorAll('.fade-in-section');
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-        });
-    </script>
-
- <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#d3e4df',
-                        'dark': '#474d4d',
-                        'accent': '#99eff0',
-                    },
-                    fontFamily: {
-                        sans: ['var(--font-jakarta)', 'sans-serif'],
-                        serif: ['var(--font-playfair)', 'serif'],
-                        orbitron: ['var(--font-orbitron)', 'sans-serif'],
-                        nanum: ['var(--font-nanum)', 'serif'],
-                        helvetica: ['var(--font-inter)', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- ░░ ANIMATED FOOTER — injected by footer.js ░░ -->
-    <!-- data-next tells footer.js which page to navigate to after the wheel animation -->
-<script src="../js/footer.js" data-next="journey.html"></script>
-<script src="../js/main.js"></script>
-<script src="../js/navbar.js"></script>
-<script src="../js/forms.js"></script>
-    
+    <main>
+        <section class="about-hero"><div class="about-wrap hero-grid"><div class="hero-copy reveal visible"><span class="about-kicker">Who we are</span><h1>Movement, <em>made meaningful.</em></h1><p>Dark Dragons Caelestis is building the intelligence, energy, and architecture for a more fluid way to move through the world.</p><div class="hero-actions"><a class="about-button primary" href="#story">Our point of view</a><a class="about-button secondary" href="journey.html">Explore our journey</a></div></div><div class="hero-visual reveal visible"><img class="hero-image" src="../images/bev-2.png" alt="DDC electric vehicle platform"><div class="hero-note"><strong>01</strong><span>One platform. Many ways forward.</span></div></div></div></section>
+        <section class="intro" id="story"><div class="about-wrap intro-grid"><div class="reveal"><span class="about-kicker">The DDC perspective</span><h2 class="section-title">We do not just build vehicles.</h2></div><div class="intro-copy reveal"><p>We engineer the conditions for better movement. The modern city asks people to spend too much time waiting, charging, parking, and planning around infrastructure that was never designed to keep up.</p><p>Our answer is a modular electric platform connected to intelligent autonomy and a battery service that keeps energy in motion. Every piece is designed to feel less like a machine and more like a natural extension of the journey.</p></div></div></section>
+        <section class="principles"><div class="about-wrap"><div class="principles-heading reveal"><div><span class="about-kicker">What guides us</span><h2 class="section-title">Three beliefs.<br><span class="accent">One direction.</span></h2></div><p>Our work sits where engineering discipline meets a more human idea of progress: less friction, more possibility, and technology that earns its place.</p></div><div class="principle-grid"><article class="principle reveal"><span class="principle-number">01 / CLARITY</span><h3>Make complexity feel simple.</h3><p>Great systems disappear into the experience. We design every interaction to be understood quickly and trusted completely.</p></article><article class="principle reveal"><span class="principle-number">02 / CONTINUITY</span><h3>Keep energy moving.</h3><p>Battery swapping and modular architecture turn downtime into forward motion, without asking the planet to carry the cost.</p></article><article class="principle reveal"><span class="principle-number">03 / POSSIBILITY</span><h3>Build beyond one vehicle.</h3><p>Our platform is a foundation for pods, services, and cities that can adapt as the way we live and move changes.</p></article></div></div></section>
+        <section class="journey-band"><div class="about-wrap journey-grid"><div class="reveal"><span class="about-kicker">From first sketch to next horizon</span><h2 class="section-title">The future is a practice.</h2><p>We are still early, which means every prototype, test, and conversation matters. Follow the milestones that shaped the DDC platform and the road ahead.</p><a class="about-button" href="journey.html">See the timeline</a></div><div class="journey-stat reveal"><strong>02</strong><span>Minutes to a new kind of departure</span></div></div></section>
+    </main>
+    <script>document.addEventListener('DOMContentLoaded',function(){const observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting)entry.target.classList.add('visible');});},{threshold:.12});document.querySelectorAll('.reveal').forEach(function(element){observer.observe(element);});});</script>
+    <script src="../js/footer.js" data-next="menu/journey.html"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="../js/forms.js"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
                         sublinks: [
                             { title: "About Us", url: "menu/about.html" },
                             { title: "Our Journey", url: "menu/journey.html" },
-                            { title: "Vision", url: "menu/about.html#vision" }
                         ]
                     },
                     { 
@@ -25,7 +24,6 @@
                         sublinks: [
                             { title: "Features", url: "technology.html" },
                             { title: "Battery Swapping", url: "menu/swapping.html" },
-                            { title: "The Ecosystem", url: "menu/about.html#energy" }
                         ]
                     },
                     { 
@@ -36,7 +34,7 @@
                 ],
                 secondaryLinks: [
                     { title: "Safety", url: "product.html#why-ddc" },
-                    { title: "tutorials", url: "menu/tutorials.html" },
+                            { title: "tutorials", url: "menu/tutorial.html" },
                     { title: "hop and go", url: "menu/booking.html" },
                     { title: "Press Room", url: "menu/blog.html#pressView" }
                 ]
@@ -44,6 +42,7 @@
 
             init(containerId) {
                 this.container = document.getElementById(containerId);
+                if (!this.container) return;
                 this.basePath = window.location.pathname.includes('/menu/') ? '../' : '';
                 this.renderStyles();
                 this.renderHTML();
@@ -64,6 +63,10 @@
                 const style = document.createElement('style');
                 style.textContent = `
                     .menu-transition { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease; }
+                    #mainNav { position: fixed; top: 1.5rem; z-index: 40; }
+                    #open-state { position: fixed; inset: 0; z-index: 60; }
+                    #open-state.hidden { display: none !important; }
+                    #open-state:not(.hidden) { display: block; }
                     .nav-link-item:hover .arrow-circle { background-color: rgba(255, 255, 255, 0.5); transform: scale(1.05); }
                     #menu-display-image { transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
                     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -219,23 +222,23 @@
         }
 
         @media (max-width: 640px) {
-            #navToggle {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 0.5rem;
-            }
-
             #mainNav {
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
             }
 
-            #mainNav .nav-links {
-                display: none;
+            #mainNav .nav-section {
+                display: none !important;
             }
 
-            #mainNav.open .nav-links {
+            #mainNav #mobileMenuBtn,
+            #mainNav.minimized #mobileMenuBtn {
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #mainNav.open .nav-section {
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
@@ -254,15 +257,10 @@
                 z-index: 60;
             }
 
-            #mainNav.open .nav-links a {
+            #mainNav.open .nav-section a {
                 display: block;
                 text-align: center;
                 padding: 0.5rem 0.75rem;
-            }
-
-            /* Hide the toggle when navbar is minimized (avoid overlap) */
-            #mainNav.minimized #navToggle {
-                display: none !important;
             }
         }
                 `;
@@ -373,7 +371,7 @@
                                         </div>
                                     `).join('')}
                                 </nav>
-                                <a herf="../contact.html">contact us</a>
+                                <a href="${this.resolvePath('menu/contact.html')}">contact us</a>
                                 <div class="grid grid-cols-2 gap-x-8 gap-y-4 pt-8 border-t border-emerald-900/10 mb-12">
                                     ${this.config.secondaryLinks.map(link => `
                                         <a href="${this.resolvePath(link.url)}" class="text-[clamp(12px,1vw,14px)] font-medium text-emerald-800/70 hover:text-emerald-600 transition-colors uppercase tracking-wider flex items-center gap-2 hover:translate-x-2">
@@ -444,14 +442,32 @@
                     if (e.key === 'Escape' && !openState.classList.contains('hidden')) toggleMenu(false);
                 });
                 const nav = document.getElementById("mainNav");
+                if (!nav) return;
 
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 80) {
-        nav.classList.add("minimized");
-    } else {
-        nav.classList.remove("minimized");
-    }
-});
+                let lastScrollY = window.scrollY;
+                let ticking = false;
+
+                const updateScrollState = () => {
+                    const currentScrollY = window.scrollY;
+                    const movingDown = currentScrollY > lastScrollY;
+                    const pastStart = currentScrollY > 80;
+
+                    if (pastStart && movingDown) {
+                        nav.classList.add("minimized");
+                    } else if (!movingDown || currentScrollY <= 80) {
+                        nav.classList.remove("minimized");
+                    }
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                };
+
+                window.addEventListener("scroll", () => {
+                    if (!ticking) {
+                        window.requestAnimationFrame(updateScrollState);
+                        ticking = true;
+                    }
+                }, { passive: true });
             }
         };
 

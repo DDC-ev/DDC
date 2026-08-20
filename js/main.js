@@ -14,6 +14,7 @@ icon.onload=()=>{
         const mobileMenu = document.getElementById('mobileMenu');
         
         function toggleMobileMenu() {
+            if (!mobileMenu) return;
             if (mobileMenu.classList.contains('hidden')) {
                 // Open menu
                 mobileMenu.classList.remove('hidden');
@@ -32,42 +33,18 @@ icon.onload=()=>{
             }
         }
 
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        closeMobileBtn.addEventListener('click', toggleMobileMenu);
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        if (closeMobileBtn) closeMobileBtn.addEventListener('click', toggleMobileMenu);
 
         // Close mobile menu when a link inside it is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', toggleMobileMenu);
-        });
+        if (mobileMenu) {
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+        }
 
-        // ================= DYNAMIC NAVBAR SCROLL =================
-        const navbar = document.getElementById('mainNav'); // Unified ID
-        let lastScrollY = window.scrollY;
-        const SCROLL_THRESHOLD = 10;
-
-        window.addEventListener('scroll', () => {
-            if (!navbar) return;
-            const currentScrollY = window.scrollY;
-            const scrollDelta = currentScrollY - lastScrollY;
-
-            // Always expand at the very top (Safety Anchor)
-            if (currentScrollY <= 50) {
-                navbar.classList.remove('minimized');
-            }
-            // Scrolling DOWN (significantly)
-            else if (scrollDelta > SCROLL_THRESHOLD && currentScrollY > 50) {
-                navbar.classList.add('minimized');
-                // close mobile menu when minimized to avoid floating orphans
-                navbar.classList.remove('open');
-            }
-            // Scrolling UP (significantly)
-            else if (scrollDelta < -SCROLL_THRESHOLD) {
-                navbar.classList.remove('minimized');
-            }
-
-            lastScrollY = currentScrollY;
-        }, { passive: true });
+        const navbar = document.getElementById('mainNav');
 
         // ================= MOBILE MENU TOGGLE =================
         // Variables mobileMenuBtn and mobileMenu are already declared at the top
@@ -177,7 +154,8 @@ icon.onload=()=>{
                 document.querySelectorAll('.card__button').forEach(b => b.classList.remove('show-icon'));
             }
         });
-        gsap.registerPlugin(ScrollTrigger);
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
 
         // 2. Parallax Grow Animation
         gsap.to("#grow-image-wrapper", {
@@ -204,4 +182,5 @@ icon.onload=()=>{
         });
 
         // 4. Fusion Section Scroll Animation
+        }
        

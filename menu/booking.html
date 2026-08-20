@@ -236,6 +236,7 @@
     <script src="../js/main.js"></script>
     <script src="../js/forms.js"></script>
     <script src="../js/navbar.js"></script>
+    <script src="../js/footer.js" data-next="menu/contact.html"></script>
     <script>
        
 
@@ -250,6 +251,8 @@
             'lunarite': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=1920', // Sleek dark aesthetic
             'orion': 'https://images.unsplash.com/photo-1536700503339-1e4b06520771?auto=format&fit=crop&q=80&w=1920'    // High tech/performance feel
         };
+
+        const requestedModel = new URLSearchParams(window.location.search).get('model');
 
         modelOptions.forEach(option => {
             option.addEventListener('click', function() {
@@ -283,6 +286,11 @@
                 }
             });
         });
+
+        const requestedOption = requestedModel && document.querySelector(`[data-model="${requestedModel}"]`);
+        if (requestedOption && selectedModelInput.value !== requestedModel) {
+            requestedOption.click();
+        }
         
     </script>
     <script>

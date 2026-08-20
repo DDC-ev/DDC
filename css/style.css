@@ -123,13 +123,14 @@ svg {
 html {
     font-size: 16px; /* Base REM reference */
     scroll-behavior: smooth;
+    overflow-x: clip;
 }
 
 body {
     font-family: var(--font-main);
     font-size: var(--text-base);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     /* Ensures perfect fluid width without horizontal scrolling */
     width: clamp(320px, 100%, 100vw);
     background-color: var(--primary);
@@ -676,4 +677,66 @@ transition: all .4s ease;
 .wheel-zoom .wheel-alloy{
 opacity:0;
 transform:scale(0);
+}
+
+/* ========================================================================
+   16. SHARED RESPONSIVE SHELL
+   ======================================================================== */
+body { min-width: 0; }
+main, section, header, footer, article, div { min-width: 0; }
+button, input, select, textarea { max-width: 100%; }
+table { display: block; max-width: 100%; overflow-x: auto; }
+
+#nav-container { position: relative; z-index: 100; }
+#mainNav { width: min(95vw, 900px); max-width: calc(100vw - 1.5rem); }
+#mainNav .nav-section { min-width: 0; }
+#mainNav .nav-item-link { white-space: normal; text-align: center; }
+#open-state { max-width: 100vw; }
+
+#ddc-footer {
+    min-height: auto !important;
+    padding: clamp(4rem, 10vw, 7rem) clamp(1rem, 4vw, 3rem) 2rem !important;
+}
+
+#ddc-footer .footer-content { padding-top: 0 !important; }
+#ddc-footer img, #ddc-footer svg { max-width: 100%; }
+
+@media (max-width: 767px) {
+    .blog-page [style*="width:256px"],
+    .blog-page [style*="width:320px"] { max-width: 100vw; }
+
+    .swapping-page [class*="w-[800px]"],
+    .swapping-page [class*="w-[600px]"],
+    .swapping-page [class*="w-[500px]"] {
+        width: min(100vw, 800px) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .optimal-container { width: min(100% - 2rem, 1400px); }
+    .hero-section { min-height: 100svh; padding-block: 7rem 3rem; }
+    .hero-shape { right: 0; max-width: 100vw; }
+    .video-section { border-radius: 1rem; }
+
+    #mainNav { top: 0.75rem; min-height: 3.25rem; padding: 0.45rem 0.65rem; }
+    #mainNav.minimized { width: 8rem; height: 3.25rem; }
+    #mainNav .logo-container { max-width: calc(100% - 4rem); }
+    #mainNav .logo-icon img { width: 3.25rem !important; }
+
+    #open-state > div { overflow-y: auto; }
+    #open-state .mobile-nav-group > a { gap: 0.75rem; }
+    #open-state .mobile-nav-group > a span { overflow-wrap: anywhere; }
+
+    #ddc-footer .footer-content > div { grid-template-columns: 1fr 1fr !important; }
+    #ddc-footer .footer-wheel { width: 4.5rem !important; height: 4.5rem !important; }
+    .scene { overflow: hidden; }
+    .fusion-result { width: calc(100vw - 2rem) !important; max-width: none; }
+    .feature-panel { width: min(92vw, 430px); padding: 1.25rem; }
+    .ddc-card-bottom { height: auto; min-height: 265px; padding-inline: 1.25rem; }
+    .ddc-circle { --circle-size: 6rem; }
+}
+
+@media (max-width: 420px) {
+    #ddc-footer .footer-content > div { grid-template-columns: 1fr !important; }
+    #ddc-footer .footer-wheel { width: 3.75rem !important; height: 3.75rem !important; }
 }

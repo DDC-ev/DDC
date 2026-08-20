@@ -103,6 +103,14 @@
             background-attachment: fixed;
         }
 
+        @media (max-width: 820px) {
+            .hero-section {
+                background-attachment: scroll;
+            }
+
+            .section-height { height: 125vh !important; }
+        }
+
         .hero-title {
             font-size: var(--text-7xl);
             font-family: var(--font-orbitron);
@@ -148,7 +156,7 @@
         /* ============================================
            SCROLL TECHNOLOGY SECTION
         ============================================ */
-        .section-height { height: 300vh; position: relative; }
+        .section-height { height: 100vh; position: relative; }
 
         .sticky-wrapper {
             position: sticky;
@@ -892,7 +900,7 @@
                 <div class="card-inner">
                     <div class="box">
                         <div class="imgBox">
-                            <img src="images/ORION.png" alt="Orion Pod" style="object-fit:fill;">
+                            <img src="images/orion.png" alt="Orion Pod" style="object-fit:fill;">
                         </div>
                         <div class="icon">
                             <a href="menu/booking.html?model=orion" class="iconBox">
