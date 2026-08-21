@@ -231,11 +231,14 @@
                 display: none !important;
             }
 
-            #mainNav #mobileMenuBtn,
-            #mainNav.minimized #mobileMenuBtn {
+            #mainNav #mobileMenuBtn {
                 display: inline-flex !important;
                 align-items: center;
                 justify-content: center;
+            }
+
+            #mainNav.minimized #mobileMenuBtn {
+                display: none !important;
             }
 
             #mainNav.open .nav-section {
@@ -332,7 +335,7 @@
                             <!-- IMAGE PANEL (Top on mobile) -->
                             <div class="w-full md:w-[55%] lg:w-[60%] p-4 md:p-10 order-1 md:order-2">
                                 <div class="w-full h-[40vh] md:h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden relative group shadow-2xl bg-emerald-900/10">
-                                    <img id="menu-display-image" src="${this.config.defaultImage}" class="w-full h-full object-cover">
+                                    <img id="menu-display-image" src="images/blured.png" class="w-full h-full object-cover">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                     <div class="absolute bottom-8 left-8 text-white">
                                         <p class="text-[clamp(10px,1.5vw,14px)] font-bold uppercase tracking-widest opacity-80 mb-2">Signature Series</p>
@@ -436,7 +439,9 @@
                     });
                 });
 
-                openBtn.addEventListener('click', () => toggleMenu(true));
+                openBtn.addEventListener('click', () => {
+                    if (!nav.classList.contains('minimized')) toggleMenu(true);
+                });
                 closeBtn.addEventListener('click', () => toggleMenu(false));
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape' && !openState.classList.contains('hidden')) toggleMenu(false);
@@ -453,6 +458,7 @@
                     const pastStart = currentScrollY > 80;
 
                     if (pastStart && movingDown) {
+                        toggleMenu(false);
                         nav.classList.add("minimized");
                     } else if (!movingDown || currentScrollY <= 80) {
                         nav.classList.remove("minimized");

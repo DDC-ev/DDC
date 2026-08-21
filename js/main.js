@@ -94,32 +94,37 @@ icon.onload=()=>{
         const imageCaption = document.getElementById('image-caption');
 
         if (triggerSection && expandingImage) {
-            window.addEventListener('scroll', () => {
-                const rect = triggerSection.getBoundingClientRect();
-                const sectionHeight = rect.height;
-                const windowHeight = window.innerHeight;
-                
-                const scrollableDistance = sectionHeight - windowHeight;
-                const distanceFromTop = -rect.top;
+            let targetWidth = 50;
+            let displayedWidth = 50;
+            let animationFrame;
 
-                if (distanceFromTop > 0 && distanceFromTop < scrollableDistance) {
-                    const progress = distanceFromTop / scrollableDistance;
-                    const newWidth = 50 + (progress * 50);
-                    expandingImage.style.width = `${newWidth}%`;
-                    
-                    if (progress > 0.8) {
-                        imageCaption.classList.remove('opacity-0');
-                    } else {
-                        imageCaption.classList.add('opacity-0');
-                    }
-                } else if (distanceFromTop <= 0) {
-                    expandingImage.style.width = '50%';
-                    imageCaption.classList.add('opacity-0');
-                } else if (distanceFromTop >= scrollableDistance) {
-                    expandingImage.style.width = '100%';
-                    imageCaption.classList.remove('opacity-0');
+            const updateImage = () => {
+                const rect = triggerSection.getBoundingClientRect();
+                const scrollableDistance = Math.max(rect.height - window.innerHeight, 1);
+                const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
+
+                targetWidth = 50 + progress * 50;
+                displayedWidth += (targetWidth - displayedWidth) * 0.12;
+                expandingImage.style.width = `${displayedWidth}%`;
+
+                imageCaption.classList.toggle('opacity-0', progress <= 0.8);
+
+                if (Math.abs(targetWidth - displayedWidth) > 0.01) {
+                    animationFrame = requestAnimationFrame(updateImage);
+                } else {
+                    displayedWidth = targetWidth;
+                    expandingImage.style.width = `${targetWidth}%`;
+                    animationFrame = null;
                 }
-            });
+            };
+
+            const requestImageUpdate = () => {
+                if (!animationFrame) animationFrame = requestAnimationFrame(updateImage);
+            };
+
+            window.addEventListener('scroll', requestImageUpdate, { passive: true });
+            window.addEventListener('resize', requestImageUpdate, { passive: true });
+            requestImageUpdate();
         }
 
         // ================= CARD INTERACTION LOGIC =================
