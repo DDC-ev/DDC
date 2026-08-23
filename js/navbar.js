@@ -335,7 +335,7 @@
                             <!-- IMAGE PANEL (Top on mobile) -->
                             <div class="w-full md:w-[55%] lg:w-[60%] p-4 md:p-10 order-1 md:order-2">
                                 <div class="w-full h-[40vh] md:h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden relative group shadow-2xl bg-emerald-900/10">
-                                    <img id="menu-display-image" src="images/blured.png" class="w-full h-full object-cover">
+                                    <img id="menu-display-image" src="images/underconstruction.jpeg" class="w-full h-full object-cover">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                     <div class="absolute bottom-8 left-8 text-white">
                                         <p class="text-[clamp(10px,1.5vw,14px)] font-bold uppercase tracking-widest opacity-80 mb-2">Signature Series</p>

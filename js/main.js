@@ -88,12 +88,50 @@ icon.onload=()=>{
             videoObserver.observe(video);
         }
 
+        const networkSection = document.getElementById('network-section');
+        if (networkSection) {
+            const networkObserver = new IntersectionObserver((entries, observer) => {
+                if (entries.some(entry => entry.isIntersecting)) {
+                    networkSection.classList.add('is-visible');
+                    observer.disconnect();
+                }
+            }, { threshold: 0.2 });
+            networkObserver.observe(networkSection);
+        }
+
         // ================= EXPANDING IMAGE LOGIC =================
         const triggerSection = document.getElementById('expand-trigger');
         const expandingImage = document.getElementById('expanding-image');
         const imageCaption = document.getElementById('image-caption');
 
-        if (triggerSection && expandingImage) {
+        const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+
+        if (triggerSection && expandingImage && isMobileViewport && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.set(expandingImage, { width: '100%', yPercent: 100, scale: 1.08, opacity: 0.35 });
+            gsap.to(expandingImage, {
+                yPercent: 0,
+                scale: 1,
+                opacity: 1,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: triggerSection,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.8
+                }
+            });
+            gsap.to(imageCaption, {
+                y: 0,
+                opacity: 1,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: triggerSection,
+                    start: 'top 55%',
+                    end: 'top 25%',
+                    scrub: 0.6
+                }
+            });
+        } else if (triggerSection && expandingImage) {
             let targetWidth = 50;
             let displayedWidth = 50;
             let animationFrame;
@@ -103,11 +141,19 @@ icon.onload=()=>{
                 const scrollableDistance = Math.max(rect.height - window.innerHeight, 1);
                 const progress = Math.min(Math.max(-rect.top / scrollableDistance, 0), 1);
 
-                targetWidth = 50 + progress * 50;
-                displayedWidth += (targetWidth - displayedWidth) * 0.12;
-                expandingImage.style.width = `${displayedWidth}%`;
-
-                imageCaption.classList.toggle('opacity-0', progress <= 0.8);
+                if (window.matchMedia('(max-width: 767px)').matches) {
+                    const easedProgress = progress * progress * (3 - 2 * progress);
+                    expandingImage.style.width = '100%';
+                    expandingImage.style.transform = `translateY(${(1 - easedProgress) * 100}%) scale(${1.08 - easedProgress * 0.08})`;
+                    expandingImage.style.opacity = `${0.35 + easedProgress * 0.65}`;
+                    imageCaption.classList.toggle('opacity-0', progress <= 0.55);
+                    imageCaption.style.transform = `translateY(${(1 - easedProgress) * 1.5}rem)`;
+                } else {
+                    targetWidth = 50 + progress * 50;
+                    displayedWidth += (targetWidth - displayedWidth) * 0.12;
+                    expandingImage.style.width = `${displayedWidth}%`;
+                    imageCaption.classList.toggle('opacity-0', progress <= 0.8);
+                }
 
                 if (Math.abs(targetWidth - displayedWidth) > 0.01) {
                     animationFrame = requestAnimationFrame(updateImage);

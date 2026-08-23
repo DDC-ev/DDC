@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/style.css">
     
 </head>
-<body >
+<body class="index-page">
 
     <!-- Navigation -->
     <div id="nav-container"></div>
@@ -104,7 +104,7 @@
                     
                     <!-- Image Side (Right - Expands) -->
                     <div id="expanding-image" class="absolute right-0 top-0 h-full w-1/2 bg-emerald-900 z-10 shadow-2xl" style="will-change: width; width: 0%;">
-                         <img src="images/under-construction.webp" class="w-full h-full object-cover" alt="Industrial Design High Fidelity">
+                         <img src="images/underconstruction.jpeg" class="w-full h-full object-cover" alt="Industrial Design High Fidelity">
                          <!-- Gradient Overlay -->
                          <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/20 to-transparent"></div>
                          
@@ -156,6 +156,34 @@
         </div>
     </section>
 
+    <section class="network-section" id="network-section" aria-labelledby="network-title">
+        <div class="network-copy">
+            <span class="network-kicker">THE DDC NETWORK</span>
+            <h2 id="network-title">Movement that thinks <em>in loops.</em></h2>
+            <p>Every DDC vehicle is part of a living system: sensing the street, finding the shortest path, and returning energy to the network when it matters.</p>
+            <div class="network-metrics" aria-label="Network metrics">
+                <div><strong>90°</strong><span>steering range</span></div>
+                <div><strong>03:00</strong><span>battery exchange</span></div>
+            </div>
+        </div>
+        <div class="network-map" aria-label="Animated vehicle network diagram">
+            <div class="network-grid"></div>
+            <div class="network-ring network-ring-one"></div>
+            <div class="network-ring network-ring-two"></div>
+            <div class="network-route route-one"></div>
+            <div class="network-route route-two"></div>
+            <div class="network-route route-three"></div>
+            <span class="network-node node-one"></span>
+            <span class="network-node node-two"></span>
+            <span class="network-node node-three"></span>
+            <span class="network-node node-four"></span>
+            <div class="network-pod"><img src="images/pod.png" alt="DDC electric pod"></div>
+            <span class="network-label label-one">SENSOR GRID</span>
+            <span class="network-label label-two">SWAP STATION</span>
+            <span class="network-status"><i></i> SYSTEMS ONLINE</span>
+        </div>
+    </section>
+
       <section id="fusion-section" style="padding-bottom: 70px;"
         class="w-full h-[80vh] md:h-screen min-h-[500px] md:min-h-[600px] bg-primary overflow-hidden relative z-20">
         <div class="w-full h-full relative mx-auto flex">
@@ -163,7 +191,7 @@
             <!-- Resulting Image (Center) -->
             <div
                 class="fusion-result absolute top-1/2 left-1/2 w-[90vw] md:w-[85vw] h-[50vh] md:h-[85vh] rounded-2xl md:rounded-[3rem] overflow-hidden shadow-2xl z-30 pointer-events-none"style="animation-delay: 10s;">
-                <img src="images/under-construction.webp" alt="New Image Result" class="w-full h-full object-cover">
+                <img src="images/underconstruction.jpeg" alt="New Image Result" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-dark/40 flex items-center justify-center">
                     <div class="text-center px-4">
                         <span class="text-accent uppercase tracking-[0.3em] text-sm md:text-lg font-bold mb-4 block"style="color: #99eff0;">The
@@ -419,17 +447,35 @@
         };
  gsap.set(".fusion-result", { xPercent: -50, yPercent: -50, scale: 0.75, opacity: 0 });
 
+        const isMobile = window.matchMedia('(max-width: 767px)').matches;
         const fusionTl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#fusion-section",
                 start: "top top",
-                end: "+=150%",
+            end: isMobile ? "+=90%" : "+=150%",
                 pin: true,
                 scrub: 1.4,
                 anticipatePin: 1
             }
         });
 
+        if (isMobile) {
+            fusionTl.to(".fusion-left", {
+                yPercent: -18,
+                opacity: 0,
+                scale: 0.94,
+                duration: 1.4,
+                ease: "power2.inOut"
+            }, 0)
+                .to(".fusion-result", {
+                    opacity: 1,
+                    scale: 1,
+                    yPercent: -46,
+                    rotation: 0,
+                    duration: 1.6,
+                    ease: "back.out(1.2)"
+                }, 0.45);
+        } else {
         fusionTl.to(".fusion-left", {
             left: "50%",
             xPercent: -50,
@@ -452,6 +498,7 @@
                 duration: 1.5,
                 ease: "power2.out"
             }, 1);
+            }
 
 
         // 7. Hero Text Reveal Animation
